@@ -18,13 +18,43 @@
 
 \maketitle
 
+\section{Definitions}
+
+\textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
+biological brain\cite{Goodfellow-et-al-2016-Book}.
+
 \section{Paper Summaries}
+ 
+\subsection{DeepPose: Human Pose Estimation via Deep Neural
+            Networks\cite{DBLP:journals/corr/ToshevS13}}
+
+This paper uses DNNs as a method for human pose estimation, based on the
+success of \cite{NIPS2013_5207} and \cite{DBLP:journals/corr/GirshickDDM13} for
+object detection using DNNs.
+
+This is in contrast to the existing work in human pose estimation at the time,
+which focused on explicitly designed pose models. Papers about these methods
+can be found in the ``Related Work'' section of
+\cite{DBLP:journals/corr/ToshevS13}.
+
+The input to the 7-layered convolutional DNN (based on
+AlexNet\cite{NIPS2012_4824}) is the full image.
 
 \subsection{Dropout: A Simple Way to Prevent Neural Networks from
             Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
 
 \textbf{Dropout} is a technique used to overcome the problem of overfitting in
-deep neural nets with large numbers of parameters.
+deep neural nets with large numbers of parameters. The idea is to train using
+many ``thinned'' networks, chosen by randomly removing subsets of units and
+their connections. The predictions from the thinned networks are approximately
+averaged at test time by using a single, unthinned, network with reduced
+weights.
+
+\begin{itemize}
+        \item Existing regularization methods: stopping training as soon as
+                validation error stops improving, L1 and L2 regularization, and
+                weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
+\end{itemize}
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,ml-reading-notes}
