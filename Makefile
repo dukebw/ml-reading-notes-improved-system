@@ -1,10 +1,6 @@
 NOTES=ml-reading-notes
 
-.phony: srs poc test_plan
-
-all: srs poc test_plan
-
-srs:
+all:
 	xelatex $(NOTES).tex
 	bibtex $(NOTES).aux
 	xelatex $(NOTES).tex
