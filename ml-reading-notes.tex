@@ -2,6 +2,7 @@
 
 \usepackage{cite}
 \usepackage{amsmath}
+\usepackage{bm}
 \usepackage{fullpage}
 \usepackage{url}
 \usepackage{graphicx}
@@ -23,6 +24,19 @@
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
 biological brain\cite{Goodfellow-et-al-2016-Book}.
 
+The \textbf{softmax function} is a continuous differentiable version of the
+argmax function, where the result is represented as a one-hot
+vector\cite[Chapter~6]{Goodfellow-et-al-2016-Book}. Softmax is a way of
+representing probability distributions over a discrete variable that can take
+on $n$ possible values.
+
+Formally, softmax is given by Equation~\ref{softmax_eqn}.
+
+\begin{equation}
+        \textrm{softmax}(\boldsymbol{z})_i = \frac{e^{z_i}}{\sum_je^{z_j}}
+        \label{softmax_eqn}
+\end{equation}
+
 \textbf{Mahalanobis Distance}
 
 \textbf{Neighbourhood Components Analysis (NCA)} is a method of learning a
@@ -36,6 +50,43 @@ defined as the diagonal across the annotated head rectangle in the MPII data,
 multiplied by a factor of 0.6. Details can be found by examining the MATLAB
 \href{http://human-pose.mpi-inf.mpg.de/results/mpii_human_pose/evalMPII.zip}{evaluation script}
 provided with the MPII dataset.
+
+\phantomsection
+\label{nonmax_supression}
+\textbf{Non-maximum suppression} in object detection, in general, is a set of
+methods used to prune an initial set of object bounding boxes that may be
+uncorrelated with the actual object detections in an image, down to a subset
+that are\cite{DBLP:conf/accv/RotheGG14}. In edge detection, non-maximum
+suppression is used to suppress any pixels (i.e. not include them in the set of
+detected edges) that are not the maximum response in their neighbourhood.
+
+\phantomsection
+\label{LSTM}
+% TODO(brendan): Diagrams and equations for LSTM. Definition for RNNs. Should
+% be a distillation of Chapter 10 of Goodfellow book.
+\textbf{LSTM} (Long Short Term
+Memory) neural networks are a type of recurrent neural network whose
+characteristic feature is the presence of a gated self-loop that allows
+retention of its ``cell state'', which are the pre-non-linearity activations of
+the previous time step\cite[Chapter~10]{Goodfellow-et-al-2016-Book}.
+
+Cell state is updated at each time step according to
+Equation~\ref{lstm_cell_state_update}.
+
+\begin{equation}
+        s_i^{(t)} = f_i^{(t)} s_i^{(t - 1)} + g_i^{(t)}
+                \sigma \left( b_i + \sum_j U_{i, j} x_j^{(t)} + \sum_j W_{i, j} h_j^{(t - 1)}\right)
+        \label{lstm_cell_state_update}
+\end{equation}
+
+The vectors $\boldsymbol{f^{(t)}}$ and $\boldsymbol{g^{(t)}}$ in
+Equation~\ref{lstm_cell_state_update} also take inputs from $\boldsymbol{x^{(t)}}$
+and $\boldsymbol{h^{(t - 1)}}$, with their own weight tensors
+$\boldsymbol{U}^f$ and $\boldsymbol{W}^f$, $\boldsymbol{U}^g$ and
+$\boldsymbol{W}^g$, respectively.
+
+Similar gate functions exist to gate the inputs and outputs to the LSTM, as
+well.
 
 \section{Paper Summaries}
  
@@ -69,6 +120,18 @@ weights.
                 validation error stops improving, L1 and L2 regularization, and
                 weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
 \end{itemize}
+
+\subsection{End-to-end people detection in crowded
+            scenes\cite{DBLP:journals/corr/StewartA15}}
+
+This paper is focused on jointly creating a set of bounding-box predictions for
+people in crowded scenes, in such a way that post-processing steps such as
+\hyperref[nonmax_supression]{Non-maximum suppression} are not necessary.
+
+A \hyperref[LSTM]{recurrent LSTM layer} is used in a model that is trained
+end-to-end, with a new loss function that operates on sets of bounding-box
+predictions. A new training set for human detection in crowded scenes, called
+``Brainwash'', is produced.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,ml-reading-notes}
