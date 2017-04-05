@@ -79,7 +79,7 @@
 - "Spatial Pyramid Matching" Lazebnik, Schmid and Ponce, 2006. Using SVM and
   kernel modules to recognize a scene.
 
-- "Histogram of Gridents (HoG) Dalal and Triggs, 2005.
+- "Histogram of Gradients (HoG) Dalal and Triggs, 2005.
 
 - "Deformable Part Model" Feizenswalb, McAllester, Ramanan, 2009.
 
