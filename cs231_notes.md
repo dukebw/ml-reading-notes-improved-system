@@ -150,7 +150,7 @@
 - No obvious way to hardcode an algorithm.
     - Attempts to make explicit recognition algorithm have been made.
 
-- Rather take data-driver approach.
+- Rather take data-driven approach.
     1. Collect a dataset of images and labels.
     2. Use Machine Learning to train an image classifier.
     3. Evaluate the classifier on a withheld set of test images.
@@ -183,7 +183,7 @@
 - k is a hyperparamter in k-Nearest Neighbour.
     - Find the k nearest images, and have them vote on the label.
 
-- What is the accuracy of kNN on the training data, using Euclidean distance?
+- What is the accuracy of Nearest Neighbour on the training data, using Euclidean distance?
     - 100%
     - Manhatten distance?
 
@@ -226,3 +226,36 @@
 
 - Loss function will quantify the intuition of what is good and what is bad.
     - Look for a W that minimizes the loss.
+
+## Lecture 3: Linear Classification II
+
+- TODO: 1. Define a loss function that quantifies the dissatisfaction with the
+           scores across training data.
+        2. Come up with a way to efficiently determine the parameters that
+           minimize the loss.
+
+- Multiclass SVM loss:
+    \begin{equation}
+        L_i = \sum_{j \neq y_i} \textrm{max}(0, s_j - s_{y_i} + 1)
+        \label{multi_svm_loss}
+    \end{equation}
+
+    where s_{y_i} is the score of the ground truth label.
+    - Loss is the average of this: $L = \frac{1}{N}\sum_{i=1}{N}L_i$.
+        - Scaling or translating this loss by a constant would produce the same
+          minimum.
+        - Squared hinge loss takes square of max term in
+          Equation~\ref{multi_svm_loss}.
+
+```python
+def L_i_vectorized(x, y, W):
+    scores = W.dot(x)
+    margins = np.maximum(0, scores - scores[y] + 1)
+    margins[y] = 0
+    loss_i = np.sum(margins)
+    return loss_i
+```
+
+    - Problem with current loss function $L$: infinite solutions by scaling the
+      weight vector $W$ that achieves a loss of zero by a constant greater than
+      one.
