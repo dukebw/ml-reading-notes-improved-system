@@ -547,6 +547,20 @@
                 loss functions either.
         },
         comments = {
-                asdf
+                Extends the idea of GANs from (Goodfellow et al., 2014) to
+                cGANs (conditional GANs) and applies cGANs to various
+                image-to-image translation tasks, such as generating images
+                from segmentation masks or edges.
+
+                Shows that for generative structured graphical tasks, it is
+                possible to learn a loss for the generative network in the form
+                of the discriminator loss. The discriminator convolves over and
+                tries to classify whether NxN regions of the output are samples
+                from the ground truth distribution or from the generated
+                distribution. Optimal N is found to be 70px.
+
+                It is left as an open question to figure out how to generate
+                stochastic outputs so as to mimic the true distribution of
+                outputs.
         }
 }
