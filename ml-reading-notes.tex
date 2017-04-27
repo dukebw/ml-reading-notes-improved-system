@@ -22,6 +22,8 @@
 \usepackage{txfonts}
 \usepackage{bbold}
 
+\newcommand\phantomlabel[1]{\phantomsection\label{#1}}
+
 \date{\today}
 \title{Machine Learning Reading Notes} 
 
@@ -33,47 +35,14 @@
 
 \section{Definitions}
 
+% TODO(brendan):
+\phantomlabel{backprop}
+\textbf{Back propagation}
+
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
 biological brain\cite{Goodfellow-et-al-2016-Book}.
 
-The \textbf{softmax function} is a continuous differentiable version of the
-argmax function, where the result is represented as a one-hot
-vector\cite[Chapter~6]{Goodfellow-et-al-2016-Book}. Softmax is a way of
-representing probability distributions over a discrete variable that can take
-on $n$ possible values.
-
-Formally, softmax is given by Equation~\ref{softmax_eqn}.
-
-\begin{equation}
-        \textrm{softmax}(\boldsymbol{z})_i = \frac{e^{z_i}}{\sum_je^{z_j}}
-        \label{softmax_eqn}
-\end{equation}
-
-\textbf{Mahalanobis Distance}
-
-\textbf{Neighbourhood Components Analysis (NCA)} is a method of learning a
-Mahalanobis distance metric, and can also be used in linear dimensionality
-reduction\cite{NIPS2004_2566}.
-
-The \textbf{PCKh} metric, used by the MPII Human Pose Dataset, defines a joint
-estimate as matching the ground truth if the estimate lies within 50\% of the
-head segment length\cite{andriluka-2d-2014-853}. The head segment length is
-defined as the diagonal across the annotated head rectangle in the MPII data,
-multiplied by a factor of 0.6. Details can be found by examining the MATLAB
-\href{http://human-pose.mpi-inf.mpg.de/results/mpii_human_pose/evalMPII.zip}{evaluation script}
-provided with the MPII dataset.
-
-\phantomsection
-\label{nonmax_supression}
-\textbf{Non-maximum suppression} in object detection, in general, is a set of
-methods used to prune an initial set of object bounding boxes that may be
-uncorrelated with the actual object detections in an image, down to a subset
-that are\cite{DBLP:conf/accv/RotheGG14}. In edge detection, non-maximum
-suppression is used to suppress any pixels (i.e. not include them in the set of
-detected edges) that are not the maximum response in their neighbourhood.
-
-\phantomsection
-\label{LSTM}
+\phantomlabel{LSTM}
 % TODO(brendan): Diagrams and equations for LSTM. Definition for RNNs. Should
 % be a distillation of Chapter 10 of Goodfellow book.
 \textbf{LSTM} (Long Short Term
@@ -100,6 +69,49 @@ $\boldsymbol{W}^g$ and $\boldsymbol{b}^f$, respectively.
 Similar gate functions exist to gate the inputs and outputs to the LSTM, as
 well.
 
+\textbf{Mahalanobis Distance}
+
+\phantomlabel{multilayer_perceptron}
+\textbf{Multi-Layer Perceptrons (MLPs)} are mathematical functions mapping some
+set of input values to some set of output
+values\cite{Goodfellow-et-al-2016-Book}.
+
+\textbf{Neighbourhood Components Analysis (NCA)} is a method of learning a
+Mahalanobis distance metric, and can also be used in linear dimensionality
+reduction\cite{NIPS2004_2566}.
+
+The \textbf{PCKh} metric, used by the MPII Human Pose Dataset, defines a joint
+estimate as matching the ground truth if the estimate lies within 50\% of the
+head segment length\cite{andriluka-2d-2014-853}. The head segment length is
+defined as the diagonal across the annotated head rectangle in the MPII data,
+multiplied by a factor of 0.6. Details can be found by examining the MATLAB
+\href{http://human-pose.mpi-inf.mpg.de/results/mpii_human_pose/evalMPII.zip}{evaluation script}
+provided with the MPII dataset.
+
+\phantomlabel{nonmax_supression}
+\textbf{Non-maximum suppression} in object detection, in general, is a set of
+methods used to prune an initial set of object bounding boxes that may be
+uncorrelated with the actual object detections in an image, down to a subset
+that are\cite{DBLP:conf/accv/RotheGG14}. In edge detection, non-maximum
+suppression is used to suppress any pixels (i.e. not include them in the set of
+detected edges) that are not the maximum response in their neighbourhood.
+
+The \textbf{softmax function} is a continuous differentiable version of the
+argmax function, where the result is represented as a one-hot
+vector\cite[Chapter~6]{Goodfellow-et-al-2016-Book}. Softmax is a way of
+representing probability distributions over a discrete variable that can take
+on $n$ possible values.
+
+Formally, softmax is given by Equation~\ref{softmax_eqn}.
+
+\begin{equation}
+        \textrm{softmax}(\boldsymbol{z})_i = \frac{e^{z_i}}{\sum_je^{z_j}}
+        \label{softmax_eqn}
+\end{equation}
+
+\phantomlabel{rectified_linear_units}
+\textbf{Rectified linear units (ReLUs)}\cite{icml2010_NairH10}
+
 \section{Paper Summaries}
  
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
@@ -119,6 +131,7 @@ AlexNet\cite{NIPS2012_4824}) is the full image.
 
 \subsection{Dropout: A Simple Way to Prevent Neural Networks from
             Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
+\label{dropout}
 
 \textbf{Dropout} is a technique used to overcome the problem of overfitting in
 deep neural nets with large numbers of parameters. The idea is to train using
@@ -279,6 +292,22 @@ referred to as motivating ``very deep'' models.
 
 % TODO(brendan): Read [1], [9] for vanishing gradient, R-CNN series for
 % localization.
+
+\subsection{Generative Adversarial Networks\cite{NIPS2014_5423}}
+
+A method of generating probability distributions is presented that can be
+trained end-to-end when used with \hyperref[multilayer_perceptron]{MLPs}. In
+the given method, a discriminator network $D$ is optimized to distinguish from
+ground truth the samples from the generated distribution $G$. $G$ is optimized
+to cause $D$ to become $\frac{1}{2}$ everywhere.
+
+Motivation points to \cite{deepSpeechReviewSPM2012} and \cite{NIPS2012_4824} as
+successful uses of deep discriminative networks for classification based on
+\hyperref[backprop]{back propagation}, \hyperref[dropout]{dropout} and
+piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
+
+\subsection{Image-to-Image Translation with Conditional Adversarial
+            Networks\cite{DBLP:journals/corr/IsolaZZE16}}
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,ml-reading-notes}

@@ -259,3 +259,29 @@ def L_i_vectorized(x, y, W):
     - Problem with current loss function $L$: infinite solutions by scaling the
       weight vector $W$ that achieves a loss of zero by a constant greater than
       one.
+        - Why does the constant have to be greater than one?
+
+- Weight regularization: Add $\lambda R(W)$ to loss term.
+        - L2 regularization          $R(W) = \sum_k \sum_l W_{k,l}^2$
+        - L1 regularization          $R(W) = \sum_k \sum_l |W_{k,l}|$
+        - Elastic net (L1 + L2)      $R(W) = \sum_k \sum_l \beta W_{k,l}^2 + |W_{k,l}|$
+        - Max norm regularization
+        - Dropout
+
+- L2 regularization: motivation
+        - Favours spreading the same absolute sum of weights evenly over
+          different indices of the weight matrix.
+                - Takes input features into account more evenly than favouring
+                  less input dimensions.
+
+- Softmax Classifier (Multinomial Logistic Regression)
+        - Scores are unnormalized log probabilities.
+        - P(Y = k | X = x_i) = e^{s_k} / \sum_j e^{s_j}, where s = f(x_i; W)
+        - L_i = -log P(Y = y_i | X = x_i)
+                - Want to maximize log likelihood, or minimize negative log
+                  likelihood.
+        - Should start at 1/NUM_CLASSES, then go to zero as the optimization
+          progresses.
+
+- SVM: L_i = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + 1)
+        - The +1 gives a max-margin property (ref. cs229)

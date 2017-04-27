@@ -33,7 +33,7 @@
         acmid = {148169},
         publisher = {MIT Press},
         address = {Cambridge, MA, USA},
-} 
+}
 
 @article{DBLP:journals/corr/ToshevS13,
   author    = {Alexander Toshev and Christian Szegedy},
@@ -198,7 +198,7 @@
 
 @article{VisualPhrases,
         author = {Sadeghi, Mohammad Amin and Farhadi, Ali},
-        title = {Recognition using Visual Phrases}, 
+        title = {Recognition using Visual Phrases},
         conferense = {Computer Vision and Pattern Recognition (CVPR)},
         year = {2011},
 }
@@ -213,7 +213,7 @@
         number = {1},
         pages = {58--69},
         publisher = {Springer}
-} 
+}
 
 @article{Felzenszwalb:2010:ODD:1850486.1850574,
         author = {Felzenszwalb, Pedro F. and Girshick, Ross B. and McAllester, David and Ramanan, Deva},
@@ -389,31 +389,29 @@
         biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/HeZRS15},
         bibsource = {dblp computer science bibliography, http://dblp.org},
         abstract = {
-                Deeper neural networks are more difficult to train. We present
-                a residual learning framework to ease the training of
-                networks that are substantially deeper than those used
-                previously. We explicitly reformulate the layers as
-                learn- ing residual functions with reference to the
-                layer inputs, in- stead of learning unreferenced
-                functions. We provide com- prehensive empirical
-                evidence showing that these residual networks are
-                easier to optimize, and can gain accuracy from
-                considerably increased depth. On the ImageNet dataset
-                we evaluate residual nets with a depth of up to 152
-                layers—8× deeper than VGG nets [41] but still having
-                lower complex- ity. An ensemble of these residual nets
-                achieves 3.57% error on the ImageNet test set. This
-                result won the 1st place on the ILSVRC 2015
-                classification task. We also present analysis on
-                CIFAR-10 with 100 and 1000 layers.  The depth of
-                representations is of central importance for many
-                visual recognition tasks. Solely due to our ex- tremely
-                deep representations, we obtain a 28% relative im-
-                provement on the COCO object detection dataset. Deep
-                residual nets are foundations of our submissions to
-                ILSVRC & COCO 2015 competitions 1 , where we also won
-                the 1st places on the tasks of ImageNet detection,
-                ImageNet local- ization, COCO detection, and COCO segmentation.
+                Deeper neural networks are more difficult to train. We present a residual
+                learning framework to ease the training of networks that are
+                substantially deeper than those used previously. We explicitly
+                reformulate the layers as learning residual functions with
+                reference to the layer inputs, instead of learning unreferenced
+                functions. We provide comprehensive empirical evidence showing
+                that these residual networks are easier to optimize, and can
+                gain accuracy from considerably increased depth. On the
+                ImageNet dataset we evaluate residual nets with a depth of up
+                to 152 layers---8x deeper than VGG nets but still having lower
+                complexity. An ensemble of these residual nets achieves 3.57%
+                error on the ImageNet test set. This result won the 1st place
+                on the ILSVRC 2015 classification task. We also present
+                analysis on CIFAR-10 with 100 and 1000 layers.
+
+                The depth of representations is of central importance for many
+                visual recognition tasks. Solely due to our extremely deep
+                representations, we obtain a 28% relative improvement on the
+                COCO object detection dataset. Deep residual nets are
+                foundations of our submissions to ILSVRC & COCO 2015
+                competitions, where we also won the 1st places on the tasks of
+                ImageNet detection, ImageNet localization, COCO detection, and
+                COCO segmentation.
         },
         comments = {
                 Presents a way of training deeper networks via residual
@@ -433,4 +431,122 @@
         timestamp = {Wed, 01 Oct 2014 15:00:05 +0200},
         biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/SimonyanZ14a},
         bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@incollection{NIPS2014_5423,
+        title = {Generative Adversarial Nets},
+        author = {Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and
+                  Xu, Bing and Warde-Farley, David and Ozair, Sherjil and
+                  Courville, Aaron and Bengio, Yoshua},
+        booktitle = {Advances in Neural Information Processing Systems 27},
+        editor = {Z. Ghahramani and M. Welling and C. Cortes and N. D. Lawrence
+                and K. Q. Weinberger},
+        pages = {2672--2680},
+        year = {2014},
+        publisher = {Curran Associates, Inc.},
+        url = {http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf},
+        abstract = {
+                We propose a new framework for estimating generative models via
+                an adversarial process, in which we simultaneously train two
+                models: a generative model G that captures the data
+                distribution, and a discriminative model D that estimates the
+                probability that a sample came from the training data rather
+                than G. The training procedure for G is to maximize the
+                probability of D making a mistake. This framework corresponds
+                to a minimax two-player game. In the space of arbitrary
+                functions G and D, a unique solution exists, with G recovering
+                the training data distribution and D equal to 1/2 everywhere.
+                In the case where G and D are defined by multilayer
+                perceptrons, the entire system can be trained with
+                backpropagation. There is no need for any Markov chains or
+                unrolled approximate inference networks during either training
+                or generation of samples. Experiments demonstrate the potential
+                of the framework through qualitative and quantitative
+                evaluation of the generated samples.
+        },
+        comments = {
+                Original paper presenting GANs. Presents GAN algorithm, and
+                formally proves that the optimal discriminator guesses randomly
+                between the data distribution and the generated distribution.
+                Shows qualitative generative results on CIFAR-10 using MLPs and
+                ConvNets. Suggests issues with GANs such as no exact model of
+                the probability distribution p_g produced by the generator.
+        }
+}
+
+@article{deepSpeechReviewSPM2012,
+        author={Geoffrey E. Hinton and Li Deng and Dong Yu and George E. Dahl
+                and Abdel{-}rahman Mohamed and Navdeep Jaitly and Andrew Senior
+                and Vincent Vanhoucke and Patrick Nguyen and Tara N. Sainath
+                and Brian Kingsbury},
+        title     = {Deep Neural Networks for Acoustic Modeling in Speech Recognition:
+                     The Shared Views of Four Research Groups},
+        journal   = {IEEE Signal Process. Mag.},
+        volume    = {29},
+        number    = {6},
+        year      = {2012},
+        pages     = {82-97},
+        abstract = {
+        }
+}
+
+@inproceedings{icml2010_NairH10,
+        Publisher = {Omnipress},
+        Title = {Rectified Linear Units Improve Restricted Boltzmann Machines},
+        Url = {http://www.icml2010.org/papers/432.pdf},
+        Booktitle = {Proceedings of the 27th International Conference on Machine Learning (ICML-10)},
+        Author = {Vinod Nair and Geoffrey E. Hinton},
+        Editor = {Johannes Fürnkranz and Thorsten Joachims},
+        Year = {2010},
+        Pages = {807-814},
+        abstract = {
+              Restricted Boltzmann machines were devel- oped using binary
+              stochastic hidden units.  These can be generalized by
+              replacing each binary unit by an infinite number of
+              copies that all have the same weights but have pro-
+              gressively more negative biases. The learning and
+              inference rules for these “Stepped Sig- moid Units” are
+              unchanged. They can be ap- proximated efficiently by
+              noisy, rectified lin- ear units. Compared with binary
+              units, these units learn features that are better for
+              object recognition on the NORB dataset and face
+              verification on the Labeled Faces in the Wild dataset.
+              Unlike binary units, rectified linear units preserve
+              information about relative in- tensities as information
+              travels through mul- tiple layers of feature detectors.
+        }
+   }
+
+@article{DBLP:journals/corr/IsolaZZE16,
+        author    = {Phillip Isola and
+                Jun{-}Yan Zhu and
+                        Tinghui Zhou and
+                        Alexei A. Efros},
+        title     = {Image-to-Image Translation with Conditional Adversarial Networks},
+        journal   = {CoRR},
+        volume    = {abs/1611.07004},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1611.07004},
+        timestamp = {Thu, 01 Dec 2016 19:32:08 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/IsolaZZE16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We investigate conditional adversarial networks as a
+                general-purpose solution to image-to-image translation
+                problems. These networks not only learn the mapping
+                from input image to output image, but also learn a loss
+                function to train this mapping. This makes it possible
+                to apply the same generic approach to problems that
+                traditionally would require very different loss
+                formulations. We demonstrate that this approach is
+                effective at synthesizing photos from label maps,
+                reconstructing objects from edge maps, and colorizing images,
+                among other tasks. As a community, we no longer hand-engineer
+                our mapping functions, and this work suggests we can
+                achieve reasonable results without hand-engineering our
+                loss functions either.
+        },
+        comments = {
+                asdf
+        }
 }
