@@ -564,3 +564,43 @@
                 outputs.
         }
 }
+
+@article{maas_rectified_nonlinearities,
+        author = {
+                Andrew L. Maas and Awni Y. Hannun and Andrew Y. Ng
+        },
+        title = {Rectifier Nonlinearities Improve Neural Network Acoustic
+                 Models},
+        journal = {ICML},
+        year = {2013},
+        url = {http://ai.stanford.edu/~amaas/papers/relu_hybrid_icml2013_final.pdf},
+        abstract = {
+                Deep neural network acoustic models produce
+                substantial gains in large vocabulary
+                continuous speech recognition systems.
+                Emerging work with rectified linear (ReL)
+                hidden units demonstrates additional gains
+                in final system performance relative to more
+                commonly used sigmoidal nonlinearities. In
+                this work, we explore the use of deep rectifier
+                networks as acoustic models for the 300 hour
+                Switchboard conversational speech recognition
+                task. Using simple training procedures
+                without pretraining, networks with rectifier
+                nonlinearities produce 2% absolute reductions
+                in word error rates over their sigmoidal
+                counterparts. We analyze hidden layer representations
+                to quantify differences in how ReL
+                units encode inputs as compared to sigmoidal
+                units. Finally, we evaluate a variant of the
+                ReL unit with a gradient more amenable to
+                optimization in an attempt to further improve
+                deep rectifier networks.
+        },
+        comments = {
+                Introduces Leaky ReLUs to deal with vanishing gradient problem
+                (leaky ReLUs have non-zero gradient over their domain). Leaky
+                ReLUs are found to perform similarly to ReLUs, and to converge
+                slightly faster.
+        }
+}

@@ -112,6 +112,19 @@ Formally, softmax is given by Equation~\ref{softmax_eqn}.
 \phantomlabel{rectified_linear_units}
 \textbf{Rectified linear units (ReLUs)}\cite{icml2010_NairH10}
 
+\textbf{Leaky rectified linear units (LReLs)}\cite{maas_rectified_nonlinearities}
+
+\begin{equation}
+        h^{(i)} = \textrm{max}\left(w^{(i)T}x, 0.01w^{(i)T}x\right) =
+        \begin{cases}
+                w^{(i)T}x & \textrm{if } w^{(i)T}x > 0 \\
+                0.01w^{(i)T}x & \textrm{otherwise}
+        \end{cases}
+\end{equation}
+
+Leaky ReLUs have non-zero gradient over their domain, and were therefore
+motivated in reducing the vanishing gradient problem.
+
 \section{Paper Summaries}
  
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
