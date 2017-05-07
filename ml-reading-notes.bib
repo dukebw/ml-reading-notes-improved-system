@@ -604,3 +604,1040 @@
                 slightly faster.
         }
 }
+
+@article{DBLP:journals/corr/PathakKDDE16,
+        author    = {Deepak Pathak and
+                     Philipp Kr{\"{a}}henb{\"{u}}hl and
+                     Jeff Donahue and
+                     Trevor Darrell and
+                     Alexei A. Efros},
+        title     = {Context Encoders: Feature Learning by Inpainting},
+        journal   = {CoRR},
+        volume    = {abs/1604.07379},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1604.07379},
+        timestamp = {Mon, 02 May 2016 18:22:52 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/PathakKDDE16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We present an unsupervised visual feature learning algorithm driven by
+                context-based pixel prediction. By analogy with auto-encoders,
+                we propose Context Encoders -- a convolutional neural network
+                trained to generate the contents of an arbitrary image region
+                conditioned on its surroundings. In order to succeed at this
+                task, context encoders need to both understand the content of
+                the entire image, as well as produce a plausible hypothesis for
+                the missing part(s).  When training context encoders, we have
+                experimented with both a standard pixel-wise reconstruction
+                loss, as well as a reconstruction plus an adversarial loss. The
+                latter produces much sharper results because it can better
+                handle multiple modes in the output. We found that a context
+                encoder learns a representation that captures not just
+                appearance but also the semantics of visual structures. We
+                quantitatively demonstrate the effectiveness of our learned
+                features for CNN pre-training on classification, detection, and
+                segmentation tasks. Furthermore, context encoders can be used
+                for semantic inpainting tasks, either stand-alone or as
+                initialization for non-parametric methods.
+        }
+}
+
+@article{DBLP:journals/corr/ZhangIE16,
+        author    = {Richard Zhang and
+                Phillip Isola and
+                        Alexei A. Efros},
+        title     = {Colorful Image Colorization},
+        journal   = {CoRR},
+        volume    = {abs/1603.08511},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1603.08511},
+        timestamp = {Sat, 02 Apr 2016 11:49:48 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ZhangIE16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Given a grayscale photograph as input, this paper attacks the problem of
+                hallucinating a plausible color version of the photograph. This problem
+                is clearly underconstrained, so previous approaches have either relied
+                on significant user interaction or resulted in desaturated
+                colorizations. We propose a fully automatic approach that produces
+                vibrant and realistic colorizations. We embrace the underlying
+                uncertainty of the problem by posing it as a classification task and
+                use class-rebalancing at training time to increase the diversity of
+                colors in the result. The system is implemented as a feed-forward pass
+                in a CNN at test time and is trained on over a million color images. We
+                evaluate our algorithm using a "colorization Turing test," asking human
+                participants to choose between a generated and ground truth color
+                image. Our method successfully fools humans on 32% of the trials,
+                significantly higher than previous methods. Moreover, we show that colorization
+                can be a powerful pretext task for self-supervised feature learning,
+                acting as a cross-channel encoder. This approach results in state-of-the-art
+                performance on several feature learning benchmarks.
+        }
+}
+
+@article{DBLP:journals/corr/DentonCSF15,
+        author    = {Emily L. Denton and
+                Soumith Chintala and
+                        Arthur Szlam and
+                        Robert Fergus},
+        title     = {Deep Generative Image Models using a Laplacian Pyramid of Adversarial
+                Networks},
+        journal   = {CoRR},
+        volume    = {abs/1506.05751},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1506.05751},
+        timestamp = {Wed, 01 Jul 2015 15:10:24 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/DentonCSF15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                In this paper we introduce a generative parametric model capable of producing
+                high quality samples of natural images. Our approach uses a cascade of
+                convolutional networks within a Laplacian pyramid framework to generate
+                images in a coarse-to-fine fashion. At each level of the pyramid, a
+                separate generative convnet model is trained using the Generative
+                Adversarial Nets (GAN) approach (Goodfellow et al.). Samples drawn from
+                our model are of significantly higher quality than alternate
+                approaches. In a quantitative assessment by human evaluators, our
+                CIFAR10 samples were mistaken for real images around 40% of the time,
+                compared to 10% for samples drawn from a GAN baseline model. We also show
+                samples from models trained on the higher resolution images of the LSUN
+                scene dataset.
+        }
+}
+
+@article{DBLP:journals/corr/RadfordMC15,
+        author    = {Alec Radford and
+                Luke Metz and
+                        Soumith Chintala},
+        title     = {Unsupervised Representation Learning with Deep Convolutional Generative
+                Adversarial Networks},
+        journal   = {CoRR},
+        volume    = {abs/1511.06434},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1511.06434},
+        timestamp = {Tue, 01 Dec 2015 19:22:34 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RadfordMC15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                In recent years, supervised learning with convolutional networks (CNNs) has
+                seen huge adoption in computer vision applications. Comparatively,
+                unsupervised learning with CNNs has received less attention. In this work we
+                hope to help bridge the gap between the success of CNNs for supervised
+                learning and unsupervised learning. We introduce a class of CNNs called
+                deep convolutional generative adversarial networks (DCGANs), that have
+                certain architectural constraints, and demonstrate that they are a
+                strong candidate for unsupervised learning. Training on various image
+                datasets, we show convincing evidence that our deep convolutional
+                adversarial pair learns a hierarchy of representations from object
+                parts to scenes in both the generator and discriminator. Additionally,
+                we use the learned features for novel tasks - demonstrating their applicability
+                as general image representations.
+        }
+}
+
+@article{DBLP:journals/corr/SalimansGZCRC16,
+        author    = {Tim Salimans and
+                Ian J. Goodfellow and
+                        Wojciech Zaremba and
+                        Vicki Cheung and
+                        Alec Radford and
+                        Xi Chen},
+        title     = {Improved Techniques for Training GANs},
+        journal   = {CoRR},
+        volume    = {abs/1606.03498},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1606.03498},
+        timestamp = {Fri, 01 Jul 2016 17:39:49 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/SalimansGZCRC16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We present a variety of new architectural features and training procedures that
+                we apply to the generative adversarial networks (GANs) framework. We
+                focus on two applications of GANs: semi-supervised learning, and the
+                generation of images that humans find visually realistic. Unlike most
+                work on generative models, our primary goal is not to train a model
+                that assigns high likelihood to test data, nor do we require the model
+                to be able to learn well without using any labels. Using our new
+                techniques, we achieve state-of-the-art results in semi-supervised
+                classification on MNIST, CIFAR-10 and SVHN. The generated images are of
+                high quality as confirmed by a visual Turing test: our model generates
+                MNIST samples that humans cannot distinguish from real data, and
+                CIFAR-10 samples that yield a human error rate of 21.3%. We also
+                present ImageNet samples with unprecedented resolution and show that
+                our methods enable the model to learn recognizable features of ImageNet
+                classes.
+        }
+}
+
+@article{DBLP:journals/corr/ZhaoML16,
+        author    = {Junbo Jake Zhao and
+                Micha{\"{e}}l Mathieu and
+                        Yann LeCun},
+        title     = {Energy-based Generative Adversarial Network},
+        journal   = {CoRR},
+        volume    = {abs/1609.03126},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1609.03126},
+        timestamp = {Fri, 16 Dec 2016 19:42:02 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ZhaoML16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We introduce the "Energy-based Generative Adversarial Network" model (EBGAN)
+                which views the discriminator as an energy function that attributes low
+                energies to the regions near the data manifold and higher energies to
+                other regions. Similar to the probabilistic GANs, a generator is seen
+                as being trained to produce contrastive samples with minimal energies,
+                while the discriminator is trained to assign high energies to these generated
+                samples. Viewing the discriminator as an energy function allows to use
+                a wide variety of architectures and loss functionals in
+                addition to the usual binary classifier with logistic output.
+                Among them, we show one instantiation of EBGAN framework as
+                using an auto-encoder architecture, with the energy being the
+                reconstruction error, in place of the discriminator. We show
+                that this form of EBGAN exhibits more stable behavior than
+                regular GANs during training. We also show that a single-scale
+                architecture can be trained to generate high-resolution images.
+        }
+}
+
+@article{DBLP:journals/corr/ShelhamerLD16,
+        author    = {Evan Shelhamer and
+                Jonathan Long and
+                        Trevor Darrell},
+        title     = {Fully Convolutional Networks for Semantic Segmentation},
+        journal   = {CoRR},
+        volume    = {abs/1605.06211},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1605.06211},
+        timestamp = {Wed, 01 Jun 2016 15:51:08 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ShelhamerLD16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Convolutional networks are powerful visual models that yield hierarchies of
+                features. We show that convolutional networks by themselves, trained
+                end-to-end, pixels-to-pixels, improve on the previous best result in
+                semantic segmentation. Our key insight is to build "fully
+                convolutional" networks that take input of arbitrary size and produce
+                correspondingly-sized output with efficient inference and learning. We
+                define and detail the space of fully convolutional networks, explain
+                their application to spatially dense prediction tasks, and draw
+                connections to prior models. We adapt contemporary classification
+                networks (AlexNet, the VGG net, and GoogLeNet) into fully convolutional
+                networks and transfer their learned representations by fine-tuning to
+                the segmentation task. We then define a skip architecture that combines
+                semantic information from a deep, coarse layer with appearance
+                information from a shallow, fine layer to produce accurate and detailed
+                segmentations. Our fully convolutional network achieves improved
+                segmentation of PASCAL VOC (30% relative improvement to 67.2% mean IU
+                on 2012), NYUDv2, SIFT Flow, and PASCAL-Context, while inference takes
+                one tenth of a second for a typical image.
+        }
+}
+
+@article{DBLP:journals/corr/XieT15,
+        author    = {Saining Xie and
+                Zhuowen Tu},
+        title     = {Holistically-Nested Edge Detection},
+        journal   = {CoRR},
+        volume    = {abs/1504.06375},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1504.06375},
+        timestamp = {Sat, 02 May 2015 17:50:32 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/XieT15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We develop a new edge detection algorithm that tackles two important issues in
+                this long-standing vision problem: (1) holistic image training and
+                prediction; and (2) multi-scale and multi-level feature learning. Our
+                proposed method, holistically-nested edge detection (HED), performs
+                image-to-image prediction by means of a deep learning model that
+                leverages fully convolutional neural networks and deeply-supervised
+                nets. HED automatically learns rich hierarchical representations
+                (guided by deep supervision on side responses) that are important in
+                order to approach the human ability resolve the challenging ambiguity
+                in edge and object boundary detection. We significantly advance the
+                state-of-the-art on the BSD500 dataset (ODS F-score of .782) and the
+                NYU Depth dataset (ODS F-score of .746), and do so with an improved
+                speed (0.4 second per image) that is orders of magnitude faster than
+                some recent CNN-based edge detection algorithms.
+        }
+}
+
+@Article{IizukaSIGGRAPH2016,
+        author  = {Satoshi Iizuka and Edgar Simo-Serra and Hiroshi Ishikawa},
+        title   = {{Let there be Color!: Joint End-to-end Learning of Global and Local Image Priors for Automatic Image Colorization with Simultaneous Classification}},
+        journal = {ACM Transactions on Graphics (Proc. of SIGGRAPH 2016)},
+        year    = {2016},
+        volume  = {35},
+        number  = {4},
+        pages   = {110:1--110:11},
+        abstract = {
+                We present a novel technique to automatically colorize grayscale images that
+                combines both global priors and local image features. Based on
+                Convolutional Neural Networks, our deep network features a fusion layer
+                that allows us to elegantly merge local information dependent on small
+                image patches with global priors computed using the entire image. The
+                entire framework, including the global and local priors as well as the
+                colorization model, is trained in an end-to-end fashion. Furthermore,
+                our architecture can process images of any resolution, unlike most existing
+                approaches based on CNN. We leverage an existing large-scale scene
+                classification database to train our model, exploiting the class labels
+                of the dataset to more efficiently and discriminatively learn the
+                global priors. We validate our approach with a user study and compare
+                against the state of the art, where we show significant improvements.
+                Furthermore, we demonstrate our method extensively on many different
+                types of images, including black-and-white photography from over a
+                hundred years ago, and show realistic colorizations.
+        }
+}
+
+@article{DBLP:journals/corr/LarssonMS16,
+        author    = {Gustav Larsson and
+                Michael Maire and
+                        Gregory Shakhnarovich},
+        title     = {Learning Representations for Automatic Colorization},
+        journal   = {CoRR},
+        volume    = {abs/1603.06668},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1603.06668},
+        timestamp = {Sat, 02 Apr 2016 11:49:48 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/LarssonMS16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We develop a fully automatic image colorization system. Our approach leverages
+                recent advances in deep networks, exploiting both low-level and
+                semantic representations. As many scene elements naturally appear
+                according to multimodal color distributions, we train our model to
+                predict per-pixel color histograms. This intermediate output can be
+                used to automatically generate a color image, or further manipulated
+                prior to image formation. On both fully and partially automatic
+                colorization tasks, we outperform existing methods. We also explore
+                colorization as a vehicle for self-supervised visual representation
+                learning.
+        }
+}
+
+@article{DBLP:journals/corr/ChenPKMY14,
+        author    = {Liang{-}Chieh Chen and
+                George Papandreou and
+                        Iasonas Kokkinos and
+                        Kevin Murphy and
+                        Alan L. Yuille},
+        title     = {Semantic Image Segmentation with Deep Convolutional Nets and Fully
+                Connected CRFs},
+        journal   = {CoRR},
+        volume    = {abs/1412.7062},
+        year      = {2014},
+        url       = {http://arxiv.org/abs/1412.7062},
+        timestamp = {Fri, 08 Jan 2016 17:51:34 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ChenPKMY14},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Deep Convolutional Neural Networks (DCNNs) have recently shown state of the art
+                performance in high level vision tasks, such as image classification
+                and object detection. This work brings together methods from DCNNs and
+                probabilistic graphical models for addressing the task of pixel-level
+                classification (also called "semantic image segmentation"). We show
+                that responses at the final layer of DCNNs are not sufficiently
+                localized for accurate object segmentation. This is due to the very
+                invariance properties that make DCNNs good for high level tasks. We
+                overcome this poor localization property of deep networks by combining
+                the responses at the final DCNN layer with a fully connected
+                Conditional Random Field (CRF). Qualitatively, our "DeepLab" system is
+                able to localize segment boundaries at a level of accuracy which is
+                beyond previous methods. Quantitatively, our method sets the new
+                state-of-art at the PASCAL VOC-2012 semantic image segmentation task,
+                reaching 71.6% IOU accuracy in the test set. We show how these results can be
+                obtained efficiently: Careful network re-purposing and a novel
+                application of the 'hole' algorithm from the wavelet community allow
+                dense computation of neural net responses at 8 frames per second on a
+                modern GPU.
+        }
+}
+
+@article{DBLP:journals/corr/DosovitskiyB16,
+        author    = {Alexey Dosovitskiy and
+                Thomas Brox},
+        title     = {Generating Images with Perceptual Similarity Metrics based on Deep
+                Networks},
+        journal   = {CoRR},
+        volume    = {abs/1602.02644},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1602.02644},
+        timestamp = {Tue, 01 Mar 2016 17:47:25 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/DosovitskiyB16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Image-generating machine learning models are typically trained with loss
+                functions based on distance in the image space. This often leads to
+                over-smoothed results. We propose a class of loss functions, which we
+                call deep perceptual similarity metrics (DeePSiM), that mitigate this
+                problem. Instead of computing distances in the image space, we compute
+                distances between image features extracted by deep neural networks.
+                This metric better reflects perceptually similarity of images and thus
+                leads to better results. We show three applications: autoencoder
+                training, a modification of a variational autoencoder, and inversion of
+                deep convolutional networks. In all cases, the generated images look
+                sharp and resemble natural images.
+        }
+}
+
+@article{DBLP:journals/corr/LiW16,
+        author    = {Chuan Li and
+                Michael Wand},
+        title     = {Combining Markov Random Fields and Convolutional Neural Networks for
+                Image Synthesis},
+        journal   = {CoRR},
+        volume    = {abs/1601.04589},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1601.04589},
+        timestamp = {Mon, 01 Feb 2016 15:36:05 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/LiW16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                This paper studies a combination of generative Markov random
+                field (MRF) models and discriminatively trained deep
+                convolutional neural networks (dCNNs) for synthesizing 2D
+                images. The generative MRF acts on higher-levels of a dCNN
+                feature pyramid, controling the image layout at an abstract
+                level. We apply the method to both photographic and
+                non-photo-realistic (artwork) synthesis tasks. The MRF
+                regularizer prevents over-excitation artifacts and reduces
+                implausible feature mixtures common to previous dCNN inversion
+                approaches, permitting synthezing photographic content with
+                increased visual plausibility. Unlike standard MRF-based
+                texture synthesis, the combined system can both match and adapt
+                local features with considerable variability, yielding results
+                far out of reach of classic generative MRF methods.
+        }
+}
+
+@article{DBLP:journals/corr/XieHT15,
+        author    = {Saining Xie and Xun Huang and Zhuowen Tu},
+        title     = {Convolutional Pseudo-Prior for Structured Labeling},
+        journal   = {CoRR},
+        volume    = {abs/1511.07409},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1511.07409},
+        timestamp = {Tue, 01 Dec 2015 19:22:34 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/XieHT15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Current practice in convolutional neural networks (CNN) remains
+                largely bottom-up and the role of top-down process in CNN for
+                pattern analysis and visual inference is not very clear. In
+                this paper, we propose a new method for structured labeling by
+                developing convolutional pseudo-prior (ConvPP) on the
+                ground-truth labels. Our method has several interesting
+                properties: (1) compared with classical machine learning
+                algorithms like CRFs and Structural SVM, ConvPP automatically
+                learns rich convolutional kernels to capture both short- and
+                long- range contexts; (2) compared with cascade classifiers
+                like Auto-Context, ConvPP avoids the iterative steps of
+                learning a series of discriminative classifiers and
+                automatically learns contextual configurations; (3) compared
+                with recent efforts combing CNN models with CRFs and RNNs,
+                ConvPP learns convolution in the labeling space with much
+                improved modeling capability and less manual specification; (4)
+                compared with Bayesian models like MRFs, ConvPP capitalizes on
+                the rich representation power of convolution by automatically
+                learning priors built on convolutional filters. We accomplish
+                our task using pseudo-likelihood approximation to the prior
+                under a novel fixed-point network structure that facilitates an
+                end-to-end learning process. We show state-of-the-art results
+                on sequential labeling and image labeling benchmarks.
+        }
+}
+
+@article{DBLP:journals/corr/JohnsonAL16,
+        author    = {Justin Johnson and
+                     Alexandre Alahi and
+                     Fei{-}Fei Li},
+        title     = {Perceptual Losses for Real-Time Style Transfer and Super-Resolution},
+        journal   = {CoRR},
+        volume    = {abs/1603.08155},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1603.08155},
+        timestamp = {Sat, 02 Apr 2016 11:49:48 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/JohnsonAL16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We consider image transformation problems, where an input image
+                is transformed into an output image. Recent methods for such
+                problems typically train feed-forward convolutional neural
+                networks using a \emph{per-pixel} loss between the output and
+                ground-truth images. Parallel work has shown that high-quality
+                images can be generated by defining and optimizing
+                \emph{perceptual} loss functions based on high-level features
+                extracted from pretrained networks. We combine the benefits of
+                both approaches, and propose the use of perceptual loss
+                functions for training feed-forward networks for image
+                transformation tasks. We show results on image style transfer,
+                where a feed-forward network is trained to solve the
+                optimization problem proposed by Gatys et al in real-time.
+                Compared to the optimization-based method, our network gives
+                similar qualitative results but is three orders of magnitude
+                faster. We also experiment with single-image super-resolution,
+                where replacing a per-pixel loss with a perceptual loss gives
+                visually pleasing results.
+        }
+}
+
+@article{DBLP:journals/corr/MirzaO14,
+        author    = {Mehdi Mirza and
+                     Simon Osindero},
+        title     = {Conditional Generative Adversarial Nets},
+        journal   = {CoRR},
+        volume    = {abs/1411.1784},
+        year      = {2014},
+        url       = {http://arxiv.org/abs/1411.1784},
+        timestamp = {Mon, 01 Dec 2014 14:32:13 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/MirzaO14},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Generative Adversarial Nets [8] were recently introduced as a
+                novel way to train generative models. In this work we introduce
+                the conditional version of generative adversarial nets, which
+                can be constructed by simply feeding the data, y, we wish to
+                condition on to both the generator and discriminator. We show
+                that this model can generate MNIST digits conditioned on class
+                labels. We also illustrate how this model could be used to
+                learn a multi-modal model, and provide preliminary examples of
+                an application to image tagging in which we demonstrate how
+                this approach can generate descriptive tags which are not part
+                of training labels.
+        }
+}
+
+@article{DBLP:journals/corr/ReedAYLSL16,
+        author    = {Scott E. Reed and
+                     Zeynep Akata and
+                     Xinchen Yan and
+                     Lajanugen Logeswaran and
+                     Bernt Schiele and
+                     Honglak Lee},
+        title     = {Generative Adversarial Text to Image Synthesis},
+        journal   = {CoRR},
+        volume    = {abs/1605.05396},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1605.05396},
+        timestamp = {Wed, 01 Jun 2016 15:51:08 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ReedAYLSL16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Automatic synthesis of realistic images from text would be
+                interesting and useful, but current AI systems are still far
+                from this goal. However, in recent years generic and powerful
+                recurrent neural network architectures have been developed to
+                learn discriminative text feature representations. Meanwhile,
+                deep convolutional generative adversarial networks (GANs) have
+                begun to generate highly compelling images of specific
+                categories, such as faces, album covers, and room interiors. In
+                this work, we develop a novel deep architecture and GAN
+                formulation to effectively bridge these advances in text and
+                image model- ing, translating visual concepts from characters
+                to pixels. We demonstrate the capability of our model to
+                generate plausible images of birds and flowers from detailed
+                text descriptions.
+        }
+}
+
+@article{DBLP:journals/corr/WangG16,
+        author    = {Xiaolong Wang and
+                     Abhinav Gupta},
+        title     = {Generative Image Modeling using Style and Structure Adversarial Networks},
+        journal   = {CoRR},
+        volume    = {abs/1603.05631},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1603.05631},
+        timestamp = {Sat, 02 Apr 2016 11:49:48 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/WangG16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Current generative frameworks use end-to-end learning and
+                generate images by sampling from uniform noise distribution.
+                However, these approaches ignore the most basic principle of
+                image formation: images are product of: (a) Structure: the
+                underlying 3D model; (b) Style: the texture mapped onto
+                structure. In this paper, we factorize the image generation
+                process and propose Style and Structure Generative Adversarial
+                Network (S^2-GAN). Our S^2-GAN has two components: the
+                Structure-GAN generates a surface normal map; the Style-GAN
+                takes the surface normal map as input and generates the 2D
+                image. Apart from a real vs. generated loss function, we use an
+                additional loss with computed surface normals from generated
+                images. The two GANs are first trained independently, and then
+                merged together via joint learning. We show our S^2-GAN model
+                is interpretable, generates more realistic images and can be
+                used to learn unsupervised RGBD representations.
+        }
+}
+
+@inproceedings{zhu2016generative,
+        title={Generative Visual Manipulation on the Natural Image Manifold},
+        author={Zhu, Jun-Yan and Kr{\"a}henb{\"u}hl, Philipp and Shechtman, Eli and Efros, Alexei A.},
+        booktitle={Proceedings of European Conference on Computer Vision (ECCV)},
+        year={2016},
+        abstract = {
+                Realistic image manipulation is challenging because it requires
+                modifying the image appearance in a user-controlled way, while
+                preserving the realism of the result. Unless the user has
+                considerable artistic skill, it is easy to "fall off" the
+                manifold of natural images while editing. In this paper, we
+                propose to learn the natural image manifold directly from data
+                using a generative adversarial neural network. We then define a
+                class of image editing operations, and constrain their output
+                to lie on that learned manifold at all times. The model
+                automatically adjusts the output keeping all edits as realistic
+                as possible. All our manipulations are expressed in terms of
+                constrained optimization and are applied in near-real time. We
+                evaluate our algorithm on the task of realistic photo
+                manipulation of shape and color. The presented method can
+                further be used for changing one image to look like the other,
+                as well as generating novel imagery from scratch based on
+                user's scribbles.
+        }
+}
+
+@article{DBLP:journals/corr/MathieuCL15,
+        author    = {Micha{\"{e}}l Mathieu and
+                     Camille Couprie and
+                     Yann LeCun},
+        title     = {Deep multi-scale video prediction beyond mean square error},
+        journal   = {CoRR},
+        volume    = {abs/1511.05440},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1511.05440},
+        timestamp = {Tue, 01 Dec 2015 19:22:34 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/MathieuCL15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Learning to predict future images from a video sequence
+                involves the construction of an internal representation that
+                models the image evolution accurately, and therefore, to some
+                degree, its content and dynamics. This is why pixel-space video
+                prediction may be viewed as a promising avenue for unsupervised
+                feature learning. In addition, while optical flow has been a
+                very studied problem in computer vision for a long time, future
+                frame prediction is rarely approached. Still, many vision
+                applications could benefit from the knowledge of the next
+                frames of videos, that does not require the complexity of
+                tracking every pixel trajectories. In this work, we train a
+                convolutional network to generate future frames given an input
+                sequence. To deal with the inherently blurry predictions
+                obtained from the standard Mean Squared Error (MSE) loss
+                function, we propose three different and complementary feature
+                learning strategies: a multi-scale architecture, an adversarial
+                training method, and an image gradient difference loss
+                function. We compare our predictions to different published
+                results based on recurrent neural networks on the UCF101
+                dataset
+        }
+}
+
+@article{DBLP:journals/corr/ZhouB16b,
+        author    = {Yipin Zhou and
+                     Tamara L. Berg},
+        title     = {Learning Temporal Transformations From Time-Lapse Videos},
+        journal   = {CoRR},
+        volume    = {abs/1608.07724},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1608.07724},
+        timestamp = {Fri, 02 Sep 2016 17:46:24 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/ZhouB16b},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Based on life-long observations of physical, chemical, and
+                biologic phenomena in the natural world, humans can often
+                easily picture in their minds what an object will look like in
+                the future. But, what about computers? In this paper, we learn
+                computational models of object transformations from time-lapse
+                videos. In particular, we explore the use of generative models
+                to create depictions of objects at future times. These models
+                explore several different prediction tasks: generating a future
+                state given a single depiction of an object, generating a
+                future state given two depictions of an object at different
+                times, and generating future states recursively in a recurrent
+                framework. We provide both qualitative and quantitative
+                evaluations of the generated results, and also conduct a human
+                evaluation to compare variations of our models.
+        }
+}
+
+@article{DBLP:journals/corr/YooKPPK16,
+        author    = {Donggeun Yoo and
+                     Namil Kim and
+                     Sunggyun Park and
+                     Anthony S. Paek and
+                     In{-}So Kweon},
+        title     = {Pixel-Level Domain Transfer},
+        journal   = {CoRR},
+        volume    = {abs/1603.07442},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1603.07442},
+        timestamp = {Sat, 02 Apr 2016 11:49:48 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/YooKPPK16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We present an image-conditional image generation model. The
+                model transfers an input domain to a target domain in semantic
+                level, and generates the target image in pixel level. To
+                generate realistic target images, we employ the
+                real/fake-discriminator as in Generative Adversarial Nets, but
+                also introduce a novel domain-discriminator to make the
+                generated image relevant to the input image. We verify our
+                model through a challenging task of generating a piece of
+                clothing from an input image of a dressed person. We present a
+                high quality clothing dataset containing the two domains, and
+                succeed in demonstrating decent results.
+        }
+}
+
+@article{DBLP:journals/corr/LiW16b,
+        author    = {Chuan Li and
+                     Michael Wand},
+        title     = {Precomputed Real-Time Texture Synthesis with Markovian Generative
+                     Adversarial Networks},
+        journal   = {CoRR},
+        volume    = {abs/1604.04382},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1604.04382},
+        timestamp = {Mon, 02 May 2016 18:22:52 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/LiW16b},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                This paper proposes Markovian Generative Adversarial Networks
+                (MGANs), a method for training generative neural networks for
+                efficient texture synthesis. While deep neural network
+                approaches have recently demonstrated remarkable results in
+                terms of synthesis quality, they still come at considerable
+                computational costs (minutes of run-time for low-res images).
+                Our paper addresses this efficiency issue. Instead of a
+                numerical deconvolution in previous work, we precompute a
+                feed-forward, strided convolutional network that captures the
+                feature statistics of Markovian patches and is able to directly
+                generate outputs of arbitrary dimensions. Such network can
+                directly decode brown noise to realistic texture, or photos to
+                artistic paintings. With adversarial training, we obtain
+                quality comparable to recent neural texture synthesis methods.
+                As no optimization is required any longer at generation time,
+                our run-time performance (0.25M pixel images at 25Hz) surpasses
+                previous neural texture synthesizers by a significant margin
+                (at least 500 times faster). We apply this idea to texture
+                synthesis, style transfer, and video stylization.
+        }
+}
+
+@article{DBLP:journals/corr/RonnebergerFB15,
+        author    = {Olaf Ronneberger and
+                     Philipp Fischer and
+                     Thomas Brox},
+        title     = {U-Net: Convolutional Networks for Biomedical Image Segmentation},
+        journal   = {CoRR},
+        volume    = {abs/1505.04597},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1505.04597},
+        timestamp = {Mon, 01 Jun 2015 14:13:54 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RonnebergerFB15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                There is large consent that successful training of deep
+                networks requires many thousand annotated training samples. In
+                this paper, we present a network and training strategy that
+                relies on the strong use of data augmentation to use the
+                available annotated samples more efficiently. The architecture
+                consists of a contracting path to capture context and a
+                symmetric expanding path that enables precise localization. We
+                show that such a network can be trained end-to-end from very
+                few images and outperforms the prior best method (a
+                sliding-window convolutional network) on the ISBI challenge for
+                segmentation of neuronal structures in electron microscopic
+                stacks. Using the same network trained on transmitted light
+                microscopy images (phase contrast and DIC) we won the ISBI cell
+                tracking challenge 2015 in these categories by a large margin.
+                Moreover, the network is fast. Segmentation of a 512x512 image
+                takes less than a second on a recent GPU. The full
+                implementation (based on Caffe) and the trained networks are
+                available at this http URL .
+        }
+}
+
+@article{DBLP:journals/corr/LarsenSW15,
+        author    = {Anders Boesen Lindbo Larsen and
+                     S{\o}ren Kaae S{\o}nderby and
+                     Ole Winther},
+        title     = {Autoencoding beyond pixels using a learned similarity metric},
+        journal   = {CoRR},
+        volume    = {abs/1512.09300},
+        year      = {2015},
+        url       = {http://arxiv.org/abs/1512.09300},
+        timestamp = {Sat, 02 Jan 2016 11:38:49 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/LarsenSW15},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We present an autoencoder that leverages learned
+                representations to better measure similarities in data space.
+                By combining a variational autoencoder with a generative
+                adversarial network we can use learned feature representations
+                in the GAN discriminator as basis for the VAE reconstruction
+                objective. Thereby, we replace element-wise errors with
+                feature-wise errors to better capture the data distribution
+                while offering invariance towards e.g. translation. We apply
+                our method to images of faces and show that it outperforms VAEs
+                with element-wise similarity measures in terms of visual
+                fidelity. Moreover, we show that the method learns an embedding
+                in which high-level abstract visual features (e.g. wearing
+                glasses) can be modified using simple arithmetic.
+        }
+}
+
+@article{DBLP:journals/corr/UlyanovVL16,
+        author    = {Dmitry Ulyanov and
+                     Andrea Vedaldi and
+                     Victor S. Lempitsky},
+        title     = {Instance Normalization: The Missing Ingredient for Fast Stylization},
+        journal   = {CoRR},
+        volume    = {abs/1607.08022},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1607.08022},
+        timestamp = {Tue, 02 Aug 2016 12:59:27 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/UlyanovVL16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                It this paper we revisit the fast stylization method introduced
+                in Ulyanov et. al. (2016). We show how a small change in the
+                stylization architecture results in a significant qualitative
+                improvement in the generated images. The change is limited to
+                swapping batch normalization with instance normalization, and
+                to apply the latter both at training and testing times. The
+                resulting method can be used to train high-performance
+                architectures for real-time image generation. The code will is
+                made available on github.
+        }
+}
+
+@article{DBLP:journals/corr/CordtsORREBFRS16,
+        author    = {Marius Cordts and
+                     Mohamed Omran and
+                     Sebastian Ramos and
+                     Timo Rehfeld and
+                     Markus Enzweiler and
+                     Rodrigo Benenson and
+                     Uwe Franke and
+                     Stefan Roth and
+                     Bernt Schiele},
+        title     = {The Cityscapes Dataset for Semantic Urban Scene Understanding},
+        journal   = {CoRR},
+        volume    = {abs/1604.01685},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1604.01685},
+        timestamp = {Mon, 02 May 2016 18:22:52 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/CordtsORREBFRS16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                Visual understanding of complex urban street scenes is an
+                enabling factor for a wide range of applications. Object
+                detection has benefited enormously from large-scale datasets,
+                especially in the context of deep learning. For semantic urban
+                scene understanding, however, no current dataset adequately
+                captures the complexity of real-world urban scenes. 
+
+                To address this, we introduce Cityscapes, a benchmark suite and
+                large-scale dataset to train and test approaches for
+                pixel-level and instance-level semantic labeling. Cityscapes is
+                comprised of a large, diverse set of stereo video sequences
+                recorded in streets from 50 different cities. 5000 of these
+                images have high quality pixel-level annotations; 20000
+                additional images have coarse annotations to enable methods
+                that leverage large volumes of weakly-labeled data. Crucially,
+                our effort exceeds previous attempts in terms of dataset size,
+                annotation richness, scene variability, and complexity. Our
+                accompanying empirical study provides an in-depth analysis of
+                the dataset characteristics, as well as a performance
+                evaluation of several state-of-the-art approaches based on our
+                benchmark.
+        }
+}
+
+@article{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14,
+        author    = {Olga Russakovsky and
+                     Jia Deng and
+                     Hao Su and
+                     Jonathan Krause and
+                     Sanjeev Satheesh and
+                     Sean Ma and
+                     Zhiheng Huang and
+                     Andrej Karpathy and
+                     Aditya Khosla and
+                     Michael S. Bernstein and
+                     Alexander C. Berg and
+                     Fei{-}Fei Li},
+        title     = {ImageNet Large Scale Visual Recognition Challenge},
+        journal   = {CoRR},
+        volume    = {abs/1409.0575},
+        year      = {2014},
+        url       = {http://arxiv.org/abs/1409.0575},
+        timestamp = {Mon, 01 Jun 2015 08:26:31 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RussakovskyDSKSMHKKBBF14},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                The ImageNet Large Scale Visual Recognition Challenge is a
+                benchmark in object category classification and
+                detection on hundreds of object categories and millions
+                of images. The challenge has been run annually from
+                2010 to present, attracting participation from more
+                than fifty institutions. 
+
+                This paper describes the creation of this benchmark dataset and
+                the advances in object recognition that have been possible as a
+                result. We discuss the challenges of collecting large-scale
+                ground truth annotation, highlight key breakthroughs in
+                categorical object recognition, provide a detailed analysis of
+                the current state of the field of large-scale image
+                classification and object detection, and compare the
+                state-of-the-art computer vision accuracy with human accuracy.
+                We conclude with lessons learned in the five years of the
+                challenge, and propose future directions and improvements.
+        }
+}
+
+@InProceedings{fine-grained,
+        author = {A. Yu and K. Grauman},
+        title = {{F}ine-{G}rained {V}isual {C}omparisons with {L}ocal {L}earning},
+        booktitle = {Computer Vision and Pattern Recognition (CVPR)},
+        month = {June},
+        year = {2014},
+        abstract = {
+                Given two images, we want to predict which exhibits a
+                particular visual attribute more than the other — even
+                when the two images are quite similar. Existing
+                relative attribute methods rely on global ranking
+                functions; yet rarely will the visual cues relevant to
+                a comparison be constant for all data, nor will humans’
+                perception of the attribute necessarily permit a global
+                ordering. To address these issues, we propose a local
+                learning approach for fine-grained visual comparisons.
+                Given a novel pair of images, we learn a local ranking
+                model on the fly, using only analogous training
+                comparisons. We show how to identify these analogous
+                pairs using learned metrics. With results on three
+                challenging datasets — including a large newly curated
+                dataset for fine-grained comparisons — our method
+                outperforms stateof-the-art methods for relative
+                attribute prediction.
+        }
+}
+
+@article{Eitz:2012:HSO:2185520.2185540,
+        author = {Eitz, Mathias and Hays, James and Alexa, Marc},
+        title = {How Do Humans Sketch Objects?},
+        journal = {ACM Trans. Graph.},
+        issue_date = {July 2012},
+        volume = {31},
+        number = {4},
+        month = jul,
+        year = {2012},
+        issn = {0730-0301},
+        pages = {44:1--44:10},
+        articleno = {44},
+        numpages = {10},
+        url = {http://doi.acm.org/10.1145/2185520.2185540},
+        doi = {10.1145/2185520.2185540},
+        acmid = {2185540},
+        publisher = {ACM},
+        address = {New York, NY, USA},
+        keywords = {crowd-sourcing, learning, recognition, sketch},
+        abstract = {
+                Humans have used sketching to depict our visual world since
+                prehistoric times. Even today, sketching is possibly
+                the only rendering technique readily available to all
+                humans. This paper is the first large scale exploration
+                of human sketches. We analyze the distribution of
+                non-expert sketches of everyday objects such as
+                'teapot' or 'car'. We ask humans to sketch objects of a
+                given category and gather 20,000 unique sketches evenly
+                distributed over 250 object categories. With this
+                dataset we perform a perceptual study and find that
+                humans can correctly identify the object category of a
+                sketch 73% of the time. We compare human performance
+                against computational recognition methods. We develop a
+                bag-of-features sketch representation and use
+                multi-class support vector machines, trained on our
+                sketch dataset, to classify sketches. The resulting
+                recognition method is able to identify unknown sketches
+                with 56% accuracy (chance is 0.4%). Based on the
+                computational model, we demonstrate an interactive
+                sketch recognition system. We release the complete
+                crowd-sourced dataset of sketches to the community.
+        }
+}
+
+@article {Laffont14,
+        title = {Transient Attributes for High-Level Understanding and Editing of Outdoor Scenes},
+        author = {Pierre-Yves Laffont and Zhile Ren and Xiaofeng Tao and Chao Qian and James Hays},
+        journal = {ACM Transactions on Graphics (proceedings of SIGGRAPH)},
+        volume = {33},
+        number = {4},
+        year = {2014},
+        abstract = {
+                We live in a dynamic visual world where the appearance of
+                scenes changes dramatically from hour to hour or season to
+                season. In this work we study “transient scene attributes” –
+                high level properties which affect scene appearance, such as
+                “snow”, “autumn”, “dusk”, “fog”. We define 40 transient
+                attributes and use crowdsourcing to annotate thousands of
+                images from 101 webcams. We use this “transient attribute
+                database” to train regressors that can predict the presence of
+                attributes in novel images. We demonstrate a photo organization
+                method based on predicted attributes. Finally we propose a
+                high-level image editing method which allows a user to adjust
+                the attributes of a scene, e.g. change a scene to be “snowy” or
+                “sunset”. To support attribute manipulation we introduce a
+                novel appearance transfer technique which is simple and fast
+                yet competitive with the state-of-the-art. We show that we can
+                convincingly modify many transient attributes in outdoor
+                scenes.
+        }
+}
+
+@article{DBLP:journals/corr/WuSH16e,
+        author    = {Zifeng Wu and
+                     Chunhua Shen and
+                     Anton van den Hengel},
+        title     = {Wider or Deeper: Revisiting the ResNet Model for Visual Recognition},
+        journal   = {CoRR},
+        volume    = {abs/1611.10080},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1611.10080},
+        timestamp = {Thu, 01 Dec 2016 19:32:08 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/WuSH16e},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                The trend towards increasingly deep neural networks has been
+                driven by a general observation that increasing depth
+                increases the performance of a network. Recently,
+                however, evidence has been amassing that simply increasing
+                depth may not be the best way to increase performance,
+                particularly given other limitations. Investigations into deep
+                residual networks have also suggested that they may not
+                in fact be operating as a single deep network, but
+                rather as an ensemble of many relatively shallow
+                networks. We examine these issues, and in doing so
+                arrive at a new interpretation of the unravelled view
+                of deep residual networks which explains some of the
+                behaviours that have been observed experimentally. As a
+                result, we are able to derive a new, shallower,
+                architecture of residual networks which significantly
+                outperforms much deeper models such as ResNet-200 on
+                the ImageNet classification dataset. We also show that
+                this performance is transferable to other problem
+                domains by developing a semantic segmentation approach
+                which outperforms the state-of-the-art by a remarkable
+                margin on datasets including PASCAL VOC, PASCAL
+                Context, and Cityscapes. The architecture that we
+                propose thus outperforms its comparators, including
+                very deep ResNets, and yet is more efficient in memory
+                use and sometimes also in training time. The code and
+                models are available at this https URL
+        }
+}
