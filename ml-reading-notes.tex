@@ -27,6 +27,11 @@
 
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 
+\DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{%
+        #1\;\delimsize\|\;#2%
+}
+\newcommand{\infdiv}{D_{KL}\infdivx}
+
 \date{\today}
 \title{Machine Learning Reading Notes} 
 
@@ -47,6 +52,18 @@
 
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
 biological brain\cite{Goodfellow-et-al-2016-Book}.
+
+\phantomlabel{kl}
+\textbf{KL divergence} is given in Equation~\ref{kleqn}\cite[Chapter~3]{Goodfellow-et-al-2016-Book}.
+
+\begin{equation}
+        \infdiv{P}{Q} = \varmathbb{E}_{x \sim P}\left[\log P(x) - \log Q(x)\right]
+        \label{kleqn}
+\end{equation}
+
+\textbf{Cross-entropy} is related to \hyperref[kl]{KL divergence} by
+$H(P, Q) = H(P) + \infdiv{P}{Q}$, where $H(P)$, the \textbf{Shannon entropy}, is
+$H(P) = -\varmathbb{E}_{x \sim P} \left[\log P(x)\right]$.
 
 \phantomlabel{LSTM}
 % TODO(brendan): Diagrams and equations for LSTM. Definition for RNNs. Should

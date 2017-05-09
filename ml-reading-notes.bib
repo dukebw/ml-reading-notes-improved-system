@@ -1641,3 +1641,64 @@
                 models are available at this https URL
         }
 }
+
+@article{DBLP:journals/corr/BaoCWLH17,
+        author    = {Jianmin Bao and
+                     Dong Chen and
+                     Fang Wen and
+                     Houqiang Li and
+                     Gang Hua},
+        title     = {{CVAE-GAN:} Fine-Grained Image Generation through Asymmetric Training},
+        journal   = {CoRR},
+        volume    = {abs/1703.10155},
+        year      = {2017},
+        url       = {http://arxiv.org/abs/1703.10155},
+        timestamp = {Mon, 03 Apr 2017 12:41:34 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/BaoCWLH17},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                We present variational generative adversarial networks, a
+                general learning framework that combines a variational
+                auto-encoder with a generative adversarial network, for
+                synthesizing images of fine-grained categories, such as
+                faces of a specific person or objects in a category.
+                Our approach models an image as a composition of label
+                and latent attributes in a probabilistic model. By
+                varying the fine-grained category label fed to the
+                resulting generative model, we can generate images in a
+                specific category by randomly drawn values on a latent
+                attribute vector. The novelty of our approach comes
+                from two aspects. Firstly, we propose to adopt a cross
+                entropy loss for the discriminative and classifier
+                network, but a mean discrepancy objective for the
+                generative network. This kind of asymmetric loss
+                function makes the training of the GAN more stable.
+                Secondly, we adopt an encoder network to learn the
+                relationship between the latent space and the real
+                image space, and use pairwise feature matching to keep
+                the structure of generated images. We experiment with
+                natural images of faces, flowers, and birds, and
+                demonstrate that the proposed models are capable of
+                generating realistic and diverse samples with
+                fine-grained category labels. We further show that our
+                models can be applied to other tasks, such as image
+                inpainting, super-resolution, and data augmentation for
+                training better face recognition models.
+        },
+        comments = {
+                Uses a conditional VAE-GAN architecture with feature-matching
+                losses. L2 losses are placed on the discriminator and
+                classifier features of generated samples. In total the
+                introduced loss function has six terms:
+                L = L_{KL} + L_G + L_{GD} + L_{GC} + L_D + L_C.
+
+                L_{KL} is KL divergence between a sample from a prior
+                distribution of latent space, and the statistics q(z | x_r, c)
+                produced by the VAE.
+
+                L_{GD} and L_{GC} are mean feature matching between the
+                generated feature maps and the real feature maps. L_{GD} is
+                using a moving average, while L_{GD} is just over the current
+                batch.
+        }
+}
