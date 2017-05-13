@@ -1440,7 +1440,7 @@
                 detection has benefited enormously from large-scale datasets,
                 especially in the context of deep learning. For semantic urban
                 scene understanding, however, no current dataset adequately
-                captures the complexity of real-world urban scenes. 
+                captures the complexity of real-world urban scenes.
 
                 To address this, we introduce Cityscapes, a benchmark suite and
                 large-scale dataset to train and test approaches for
@@ -1486,7 +1486,7 @@
                 detection on hundreds of object categories and millions
                 of images. The challenge has been run annually from
                 2010 to present, attracting participation from more
-                than fifty institutions. 
+                than fifty institutions.
 
                 This paper describes the creation of this benchmark dataset and
                 the advances in object recognition that have been possible as a
@@ -1700,5 +1700,61 @@
                 generated feature maps and the real feature maps. L_{GD} is
                 using a moving average, while L_{GD} is just over the current
                 batch.
+        }
+}
+
+@article{DBLP:journals/corr/HuangLPHB16,
+        author    = {Xun Huang and
+                     Yixuan Li and
+                     Omid Poursaeed and
+                     John E. Hopcroft and
+                     Serge J. Belongie},
+        title     = {Stacked Generative Adversarial Networks},
+        journal   = {CoRR},
+        volume    = {abs/1612.04357},
+        year      = {2016},
+        url       = {http://arxiv.org/abs/1612.04357},
+        timestamp = {Mon, 02 Jan 2017 11:09:15 +0100},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/HuangLPHB16},
+        bibsource = {dblp computer science bibliography, http://dblp.org},
+        abstract = {
+                In this paper, we propose a novel generative model named
+                Stacked Generative Adversarial Networks (SGAN), which
+                is trained to invert the hierarchical representations
+                of a bottom-up discriminative network. Our model
+                consists of a top-down stack of GANs, each learned to
+                generate lower-level representations conditioned on
+                higher-level representations. A representation
+                discriminator is introduced at each feature hierarchy
+                to encourage the representation manifold of the
+                generator to align with that of the bottom-up
+                discriminative network, leveraging the powerful
+                discriminative representations to guide the generative
+                model. In addition, we introduce a conditional loss
+                that encourages the use of conditional information from
+                the layer above, and a novel entropy loss that
+                maximizes a variational lower bound on the conditional
+                entropy of generator outputs. We first train each stack
+                independently, and then train the whole model
+                end-to-end. Unlike the original GAN that uses a single
+                noise vector to represent all the variations, our SGAN
+                decomposes variations into multiple levels and
+                gradually resolves uncertainties in the top-down
+                generative process. Based on visual inspection,
+                Inception scores and visual Turing test, we demonstrate that
+                SGAN is able to generate images of much higher quality
+                than GANs without stacking.
+        },
+        comments = {
+                Trains a stacked GAN with a different discriminator at each
+                level of the feature hierarchy, which discriminates between
+                feature maps from a classifier and the generated feature maps
+                at each level.
+
+                Also includes an entropy loss (via mean squared error on
+                reconstructed noise from a "Q-Net").
+
+                There is also a conditional (MSE?) loss on E_i being able to
+                reconstruct h_{i + 1} from h_i.
         }
 }

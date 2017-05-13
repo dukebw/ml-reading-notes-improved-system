@@ -285,3 +285,11 @@ def L_i_vectorized(x, y, W):
 
 - SVM: L_i = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + 1)
         - The +1 gives a max-margin property (ref. cs229)
+        - Refer to notes about why specifically +1 is used. +1 is not a
+          hyper-parameter.
+
+- Softmax vs. SVM: If a data point is taken and shaken around when there is a
+  large amount of margin already, the SVM expresses no preference for greater
+  margin. But, softmax does prefer a larger margin.
+
+(47m linear classify demo)
