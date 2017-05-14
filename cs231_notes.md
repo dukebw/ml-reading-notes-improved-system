@@ -292,4 +292,125 @@ def L_i_vectorized(x, y, W):
   large amount of margin already, the SVM expresses no preference for greater
   margin. But, softmax does prefer a larger margin.
 
-(47m linear classify demo)
+- Recap: - dataset of (x, y)
+         - score function: s = f(x; W) = Wx
+         - softmax/svm
+
+- Take analytical gradient to do weight updates at each step
+        - Check implementation using numerical gradient (gradient check).
+
+- Gradient descent:
+
+```python
+while True:
+        data_batch = sample_training_data(data, 256)
+        weights_grad = evaluate_gradient(loss_fun, data, weights)
+        weights += -step_size*weights_grad
+```
+
+- Weight regularization parameter and learning rate are largest "headaches" to
+  worry about in hyper-parameter optimization.
+        - Can start out with high learning rate and decay over time.
+
+- Common mini-batch sizes are 32/64/128 examples. Set based on whatever fits on
+  your GPU.
+
+- Many forms of parameter update: momentum, Adagrad, RMSProp, Adam, ...
+
+- Before ConvNets came about:
+        - Computed many different feature types of images, piped those features
+          into large vectors, and used linear classifiers on them.
+                - Feature types: e.g. colour (hue) histogram, HOG/SIFT
+                  features, GIST, LBP, Texton, SSIM, ...
+                - Bag of words pipelines: look at patches and come up with
+                  visual word vectors, then learn k-means centroids
+
+## Lecture 4: Backpropagation
+
+- On forward pass, can compute df/dx for each "gate" or computational node
+  using the current activation.
+
+- d \sig(x)/dx = (1 - \sig(x))\sig(x)
+
+- Want to understand intuitively how gradients flow in a computation graph.
+        - E.g. to debug vanishing gradient problem.
+        - Add gate: gradient distributor
+        - Max gate: gradient router
+        - Mul gate: gradient... "switcher"?
+
+- Gradients add when they backpropagate back through a computation graph.
+
+```python
+class ComputationalGraph(object):
+        def forward(inputs):
+                for gate in self.graph.nodes_topologically_sorted():
+                        gate.forward()
+                return loss
+
+        def backward():
+                for gate in reversed(self.graph.nodes_topologically_sorted()):
+                        gate.backward()
+                return inputs_gradients
+
+class MultiplyGate(object):
+        def forward(x, y):
+                z = x*y
+                self.x = x
+                self.y = y
+                return z
+
+        def backward(dz):
+                dx = self.y * dz
+                dy = self.x * dz
+                return [dx, dy]
+```
+
+- Memory blows up in forward pass, and is consumed during backward pass.
+
+- E.g. Torch layers
+        - Giant collection of layer objects in GitHub repo.
+
+- Gradients for vectors are stored in a Jacobian matrix (dz/dx is an entire
+  matrix of the derivative of every element of z with respect to every element
+  of x).
+        - In practice never (?) need to explicitly calculate the Jacobian.
+
+- E.g. f(x) = max(0, x) example, with x.shape = [4096]. Jacobian (4096x4096 in
+  principle) is diagonal with 1s wherever x_i > 0 and 0s otherwise.
+        - With minibatch of 100, Jacobian actually in principle
+          [409600, 409600].
+
+- Communication between gates is always vectors.
+        - Multiple gradients need to be kept track of in parallel if there are
+          multiple loss functions.
+
+- Writing SVM/Softmax:
+
+```python
+# forward pass
+scores = #...
+margins = #...
+data_loss = #...
+reg_loss = #...
+loss = data_loss + reg_loss
+
+# backward pass
+dmargins = #...
+dscores = #...
+dW = #...
+```
+
+- Two-layer neural network: f = W_2*max(0, W_1*x)
+
+- Writing two-layer net:
+
+```python
+h1 = #...
+scores = #...
+loss = #...
+
+# backward pass
+dscores = #...
+dh1, dW2, db2 = #...
+dW1, db1 = #...
+```
