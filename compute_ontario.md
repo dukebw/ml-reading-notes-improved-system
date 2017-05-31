@@ -120,3 +120,18 @@
 - `std::vector` can contain move-only, e.g. `std::thread`, objects.
 
 ## Programming clusters with MPI
+
+- Message-passing library for communication between distributed-memory
+  machines.
+
+- General MPI program structure:
+        - MPI include files
+        - (Serial code)
+        - Initialize MPI environment (parallel code begins)
+                - `MPI_Init(&argc, &argv)`
+        - Do work and make message passing calls.
+        - Terminate MPI environment.
+                - `MPI_Finalize()`
+        - (Serial code)
+
+- `MPI_Comm_size`
