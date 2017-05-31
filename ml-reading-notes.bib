@@ -1758,3 +1758,253 @@
                 reconstruct h_{i + 1} from h_i.
         }
 }
+
+@article{carreira2017quo,
+  title={Quo Vadis, Action Recognition? A New Model and the Kinetics Dataset},
+  author={Carreira, Joao and Zisserman, Andrew},
+  journal={arXiv preprint arXiv:1705.07750},
+  year={2017},
+  abstract = {
+        The paucity of videos in current action classification datasets
+        (UCF-101 and HMDB-51) has made it difficult to identify good
+        video architectures, as most methods obtain similar performance
+        on existing small-scale benchmarks. This paper re-evaluates
+        state-of-the-art architectures in light of the new Kinetics
+        Human Action Video dataset. Kinetics has two orders of
+        magnitude more data, with 400 human action classes and over 400
+        clips per class, and is collected from realistic, challenging
+        YouTube videos. We provide an analysis on how current
+        architectures fare on the task of action classification on this
+        dataset and how much performance improves on the smaller
+        benchmark datasets after pre-training on Kinetics. 
+
+        We also introduce a new Two-Stream Inflated 3D ConvNet (I3D) that is
+        based on 2D ConvNet inflation: filters and pooling kernels of very deep
+        image classification ConvNets are expanded into 3D, making it possible
+        to learn seamless spatio-temporal feature extractors from video while
+        leveraging successful ImageNet architecture designs and even their
+        parameters. We show that, after pre-training on Kinetics, I3D models
+        considerably improve upon the state-of-the-art in action
+        classification, reaching 80.7% on HMDB-51 and 98.0% on UCF-101.
+  }
+}
+
+@article{DBLP:journals/corr/TranBFTP14,
+  author    = {Du Tran and
+               Lubomir D. Bourdev and
+               Rob Fergus and
+               Lorenzo Torresani and
+               Manohar Paluri},
+  title     = {{C3D:} Generic Features for Video Analysis},
+  journal   = {CoRR},
+  volume    = {abs/1412.0767},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1412.0767},
+  timestamp = {Thu, 01 Jan 2015 19:51:08 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/TranBFTP14},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        We propose a simple, yet effective approach for spatiotemporal feature learning
+        using deep 3-dimensional convolutional networks (3D ConvNets) trained
+        on a large scale supervised video dataset. Our findings are three-fold:
+        1) 3D ConvNets are more suitable for spatiotemporal feature learning
+        compared to 2D ConvNets; 2) A homogeneous architecture with small 3x3x3
+        convolution kernels in all layers is among the best performing
+        architectures for 3D ConvNets; and 3) Our learned features, namely C3D
+        (Convolutional 3D), with a simple linear classifier outperform
+        state-of-the-art methods on 4 different benchmarks and are comparable
+        with current best methods on the other 2 benchmarks. In addition, the
+        features are compact: achieving 52.8% accuracy on UCF101 dataset with
+        only 10 dimensions and also very efficient to compute due to the fast
+        inference of ConvNets. Finally, they are conceptually very simple and
+        easy to train and use.
+  }
+}
+
+@article{DBLP:journals/corr/abs-1212-0402,
+  author    = {Khurram Soomro and
+               Amir Roshan Zamir and
+               Mubarak Shah},
+  title     = {{UCF101:} {A} Dataset of 101 Human Actions Classes From Videos in
+               The Wild},
+  journal   = {CoRR},
+  volume    = {abs/1212.0402},
+  year      = {2012},
+  url       = {http://arxiv.org/abs/1212.0402},
+  timestamp = {Wed, 02 Jan 2013 09:49:04 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/abs-1212-0402},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        We introduce UCF101 which is currently the largest dataset of human actions. It
+        consists of 101 action classes, over 13k clips and 27 hours of video
+        data. The database consists of realistic user uploaded videos
+        containing camera motion and cluttered background. Additionally, we
+        provide baseline action recognition results on this new dataset using
+        standard bag of words approach with overall performance of 44.5%. To
+        the best of our knowledge, UCF101 is currently the most challenging
+        dataset of actions due to its large number of classes, large number of
+        clips and also unconstrained nature of such clips.
+  }
+}
+
+@inproceedings{KarpathyCVPR14,
+  title     = {Large-scale Video Classification with Convolutional Neural Networks},
+  author    = {Andrej Karpathy and George Toderici and Sanketh Shetty and
+               Thomas Leung and Rahul Sukthankar and Li Fei-Fei},
+  year      = {2014},
+  booktitle = {CVPR},
+  abstract = {
+        Convolutional Neural Networks (CNNs) have been established as a powerful class
+        of models for image recognition problems. Encouraged by these results, we
+        provide an extensive empirical evaluation of CNNs on large-scale video
+        classification using a new dataset of 1 million YouTube videos belonging to 487
+        classes. We study multiple approaches for extending the connectivity of a CNN
+        in time domain to take advantage of local spatio-temporal information and
+        suggest a multiresolution, foveated architecture as a promising way of speeding
+        up the training. Our best spatio-temporal networks display significant
+        performance improvements compared to strong feature-based baselines (55.3% to
+        63.9%), but only a surprisingly modest improvement compared to single-frame
+        models (59.3% to 60.9%). We further study the generalization performance of our
+        best model by retraining the top layers on the UCF-101 Action Recognition
+        dataset and observe significant performance improvements compared to the
+        UCF-101 baseline model (63.3% up from 43.9%).
+  }
+}
+
+@article{DBLP:journals/corr/NgHVVMT15,
+  author    = {Joe Yue{-}Hei Ng and
+               Matthew J. Hausknecht and
+               Sudheendra Vijayanarasimhan and
+               Oriol Vinyals and
+               Rajat Monga and
+               George Toderici},
+  title     = {Beyond Short Snippets: Deep Networks for Video Classification},
+  journal   = {CoRR},
+  volume    = {abs/1503.08909},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1503.08909},
+  timestamp = {Thu, 09 Apr 2015 11:33:20 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/NgHVVMT15},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        Convolutional neural networks (CNNs) have been extensively applied for
+        image recognition problems giving state-of-the-art results on
+        recognition, detection, segmentation and retrieval. In this work we
+        propose and evaluate several deep neural network architectures to
+        combine image information across a video over longer time periods than
+        previously attempted. We propose two methods capable of handling full
+        length videos. The first method explores various convolutional temporal
+        feature pooling architectures, examining the various design choices
+        which need to be made when adapting a CNN for this task. The second
+        proposed method explicitly models the video as an ordered sequence of
+        frames. For this purpose we employ a recurrent neural network that uses
+        Long Short-Term Memory (LSTM) cells which are connected to the output
+        of the underlying CNN. Our best networks exhibit significant
+        performance improvements over previously published results on the
+        Sports 1 million dataset (73.1% vs. 60.9%) and the UCF-101 datasets
+        with (88.6% vs. 88.0%) and without additional optical flow information
+        (82.6% vs. 72.8%).
+  }
+}
+
+@INPROCEEDINGS{Wang2013,
+  author={Heng Wang and Cordelia Schmid},
+  title={Action Recognition with Improved Trajectories},
+  booktitle= {IEEE International Conference on Computer Vision},
+  year={2013},
+  address={Sydney, Australia},
+  url={http://hal.inria.fr/hal-00873267},
+  abstract = {
+        Recently dense trajectories were shown to be an efficient video
+        representation for action recognition and achieved state-of-the-art
+        results on a variety of datasets. This paper improves their performance
+        by taking into account camera motion to correct them. To estimate
+        camera motion, we match feature points between frames using SURF
+        descriptors and dense optical flow, which are shown to be
+        complementary. These matches are, then, used to robustly estimate a
+        homography with RANSAC. Human motion is in general different from
+        camera motion and generates inconsistent matches. To improve the
+        estimation, a human detector is employed to remove these matches. Given
+        the estimated camera motion, we remove trajectories consistent with it.
+        We also use this estimation to cancel out camera motion from the
+        optical flow. This significantly improves motion-based descriptors,
+        such as HOF and MBH. Experimental results on four challenging action
+        datasets (i.e., Hollywood2, HMDB51, Olympic Sports and UCF50)
+        significantly outperform the current state of the art.
+  }
+}
+
+@inproceedings{Le:2011:LHI:2191740.2192108,
+ author = {Le, Q. V. and Zou, W. Y. and Yeung, S. Y. and Ng, A. Y.},
+ title = {Learning Hierarchical Invariant Spatio-temporal Features for Action
+ Recognition with Independent Subspace Analysis},
+ booktitle = {Proceedings of the 2011 IEEE Conference on Computer Vision and Pattern Recognition},
+ series = {CVPR '11},
+ year = {2011},
+ isbn = {978-1-4577-0394-2},
+ pages = {3361--3368},
+ numpages = {8},
+ url = {http://dx.doi.org/10.1109/CVPR.2011.5995496},
+ doi = {10.1109/CVPR.2011.5995496},
+ acmid = {2192108},
+ publisher = {IEEE Computer Society},
+ address = {Washington, DC, USA},
+ keywords = {YouTube action recognition dataset, hierarchical invariant
+ spatio-temporal feature learning technique, action recognition, hand-designed
+ local feature, SIFT, HOG, static image, video domain, unsupervised feature
+ learning, video data, independent subspace analysis algorithm, hierarchical
+ representation, UCF, KTH},
+ abstract = {
+        Previous work on action recognition has focused on adapting
+        hand-designed local features, such as SIFT or HOG, from static images
+        to the video domain. In this paper, we propose using unsupervised
+        feature learning as a way to learn features directly from video data.
+        More specifically, we present an extension of the Independent Subspace
+        Analysis algorithm to learn invariant spatio-temporal features from
+        unlabeled video data. We discovered that, despite its simplicity, this
+        method performs surprisingly well when combined with deep learning
+        techniques such as stacking and convolution to learn hierarchical
+        representations. By replacing hand-designed features with our learned
+        features, we achieve classification results superior to all previous
+        published results on the Hollywood2, UCF, KTH and YouTube action
+        recognition datasets. On the challenging Hollywood2 and YouTube action
+        datasets we obtain 53.3% and 75.8% respectively, which are
+        approximately 5% better than the current best published results.
+        Further benefits of this method, such as the ease of training and the
+        efficiency of training and prediction, will also be discussed. You can
+        download our code and learned spatio-temporal features here:
+        http://ai.stanford.edu/~wzou/.
+ }
+}
+
+@article{DBLP:journals/corr/SimonyanZ14,
+  author    = {Karen Simonyan and
+               Andrew Zisserman},
+  title     = {Two-Stream Convolutional Networks for Action Recognition in Videos},
+  journal   = {CoRR},
+  volume    = {abs/1406.2199},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1406.2199},
+  timestamp = {Tue, 01 Jul 2014 11:58:08 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/SimonyanZ14},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        We investigate architectures of discriminatively trained deep
+        Convolutional Networks (ConvNets) for action recognition in video. The
+        challenge is to capture the complementary information on appearance
+        from still frames and motion between frames. We also aim to generalise
+        the best performing hand-crafted features within a data-driven learning
+        framework. 
+        Our contribution is three-fold. First, we propose a two-stream ConvNet
+        architecture which incorporates spatial and temporal networks. Second,
+        we demonstrate that a ConvNet trained on multi-frame dense optical flow
+        is able to achieve very good performance in spite of limited training
+        data. Finally, we show that multi-task learning, applied to two
+        different action classification datasets, can be used to increase the
+        amount of training data and improve the performance on both. 
+        Our architecture is trained and evaluated on the standard video actions
+        benchmarks of UCF-101 and HMDB-51, where it is competitive with the
+        state of the art. It also exceeds by a large margin previous attempts
+        to use deep nets for video classification.
+  }
+}
