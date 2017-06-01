@@ -2008,3 +2008,107 @@
         to use deep nets for video classification.
   }
 }
+
+@article{kay2017kinetics,
+  title={The Kinetics Human Action Video Dataset},
+  author={Kay, Will and Carreira, Joao and Simonyan, Karen and Zhang, Brian and
+          Hillier, Chloe and Vijayanarasimhan, Sudheendra and Viola, Fabio and
+          Green, Tim and Back, Trevor and Natsev, Paul and others},
+  journal={arXiv preprint arXiv:1705.06950},
+  year={2017},
+  abstract = {
+        We describe the DeepMind Kinetics human action video dataset. The
+        dataset contains 400 human action classes, with at least 400 video
+        clips for each action. Each clip lasts around 10s and is taken from a
+        different YouTube video. The actions are human focussed and cover a
+        broad range of classes including human-object interactions such as
+        playing instruments, as well as human-human interactions such as
+        shaking hands. We describe the statistics of the dataset, how it was
+        collected, and give some baseline performance figures for neural
+        network architectures trained and tested for human action
+        classification on this dataset. We also carry out a preliminary
+        analysis of whether imbalance in the dataset leads to bias in the
+        classifiers.
+  }
+}
+
+@InProceedings{Kuehne11,
+   author= "Kuehne, H. and Jhuang, H. and Garrote, E. and Poggio, T. and Serre, T.",
+   title = "{HMDB}: a large video database for human motion recognition",
+   booktitle = "Proceedings of the International Conference on Computer Vision (ICCV)",
+   year = "2011",
+   abstract = {
+        With nearly one billion online videos viewed everyday, an emerging new
+        frontier in computer vision research is recognition and search in
+        video. While much effort has been devoted to the collection and
+        annotation of large scalable static image datasets containing thousands
+        of image categories, human action datasets lag far behind. Current
+        action recognition databases contain on the order of ten different
+        action categories collected under fairly controlled conditions.
+        State-of-the-art performance on these datasets is now near ceiling and
+        thus there is a need for the design and creation of new benchmarks. To
+        address this issue we collected the largest action video database
+        to-date with 51 action categories, which in total contain around 7,000
+        manually annotated clips extracted from a variety of sources ranging
+        from digitized movies to YouTube. The goal of this effort is to provide
+        a tool to evaluate the performance of computer vision systems for
+        action recognition and explore the robustness of these methods under
+        various conditions such as camera motion, viewpoint, video quality and
+        occlusion.
+   }
+}
+
+@article{DBLP:journals/corr/FeichtenhoferPZ16,
+  author    = {Christoph Feichtenhofer and
+               Axel Pinz and
+               Andrew Zisserman},
+  title     = {Convolutional Two-Stream Network Fusion for Video Action Recognition},
+  journal   = {CoRR},
+  volume    = {abs/1604.06573},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1604.06573},
+  timestamp = {Mon, 02 May 2016 18:22:52 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/FeichtenhoferPZ16},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        Recent applications of Convolutional Neural Networks (ConvNets) for
+        human action recognition in videos have proposed different solutions
+        for incorporating the appearance and motion information. We study a
+        number of ways of fusing ConvNet towers both spatially and temporally
+        in order to best take advantage of this spatio-temporal information. We
+        make the following findings: (i) that rather than fusing at the softmax
+        layer, a spatial and temporal network can be fused at a convolution
+        layer without loss of performance, but with a substantial saving in
+        parameters; (ii) that it is better to fuse such networks spatially at
+        the last convolutional layer than earlier, and that additionally fusing
+        at the class prediction layer can boost accuracy; finally (iii) that
+        pooling of abstract convolutional features over spatiotemporal
+        neighbourhoods further boosts performance. Based on these studies we
+        propose a new ConvNet architecture for spatiotemporal fusion of video
+        snippets, and evaluate its performance on standard benchmarks where
+        this architecture achieves state-of-the-art results.
+  }
+}
+
+@INPROCEEDINGS{Zach07aduality,
+    author = {C. Zach and T. Pock and H. Bischof},
+    title = {A duality based approach for realtime tv-l1 optical flow},
+    booktitle = {In Ann. Symp. German Association Patt. Recogn},
+    year = {2007},
+    pages = {214--223},
+    abstract = {
+        Variational methods are among the most successful approaches to
+        calculate the optical flow between two image frames. A particularly
+        appealing formulation is based on total variation (TV) regularization
+        and the robust L 1 norm in the data fidelity term. This formulation can
+        preserve discontinuities in the flow field and offers an increased
+        robustness against illumination changes, occlusions and noise. In this
+        work we present a novel approach to solve the TV-L 1 formulation. Our
+        method results in a very efficient numerical scheme, which is based on
+        a dual formulation of the TV energy and employs an efficient point-wise
+        thresholding step. Additionally, our approach can be accelerated by
+        modern graphics processing units. We demonstrate the real-time
+        performance (30 fps) of our approach for video inputs at a resolution
+        of 320 × 240 pixel.
+    }
+}

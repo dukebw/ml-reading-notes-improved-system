@@ -148,6 +148,13 @@ Formally, softmax is given by Equation~\ref{softmax_eqn}.
 Leaky ReLUs have non-zero gradient over their domain, and were therefore
 motivated in reducing the vanishing gradient problem.
 
+\section{Datasets}
+
+\subsection{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
+\label{ucf101}
+
+101 classes, 13k clips and 27 hours of video data in total.
+
 \section{Paper Summaries}
 
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
@@ -557,13 +564,145 @@ class IoU using the wide ResNets of~\cite{DBLP:journals/corr/WuSH16e}.
 \subsection{Quo Vadis, Action Recognition? A New Model and the Kinetics
             Dataset\cite{carreira2017quo}}
 
+\subsubsection{Data}
+
+The Kinetics Human Action Video Dataset\cite{kay2017kinetics}, which has 400
+human action classes each with more than 400 examples. The classes are focused
+on human actions, such as pouring or kissing, as opposed to activities (such as
+tennis or baseball). The clips are 10s long.
+
+The Kinetics test set is 100 clips for each class.
+
+A miniKinetics version of the dataset was used in the paper, and for
+experimentation, with 213 classes and 120k clips split into three subsets: one
+for training with 150 to 1000 clips per class, and one split each for
+validation and test, containing 25 and 75 clips per class each, respectively.
+
+\hyperref[ucf101]{UCF-101}.
+
+HMDB-51\cite{Kuehne11}, which contains 7000 clips extracted from movies and
+YouTube then manually annotated with 51 class labels.
+
+Transfer learning is done on UCF-101 and HMDB-51, these two smaller datasets,
+from the larger Kinetics dataset.
+
+\subsubsection{Model}
+
+Inception-V1 with batch normalization is used as a common ``backbone''
+architecture for all models.
+
+\textbf{Two-Stream Inflated 3D ConvNets (I3D)}. All kernels in the Inception-V1
+model are inflated, i.e. $(N, N)$ kernels become $(N, N, N)$ kernels.
+
+Weights of $2D$ filters are tiled $N$ times across the time dimension.
+
+The first two max-pooling layers of Inception-V1 were altered to be
+$(1, 3, 3)$, and have unity stride in time.
+
+\textbf{2D ConvNets with LSTMs on top}. An LSTM layer with batch normalization,
+and 512 hidden units, is placed after the last average pooling layer in
+Inception-V1. A fully connected layer is added on top for classification.
+
+\textbf{Two-stream networks with different stream fusion techniques}.
+Predictions from an RGB frame are averaged with predictions from pre-computed
+optical flow for ten frames surrounding the RGB frame.
+
+The flow stream has twice as many input channels as flow frames: one for each
+of up and down flow directions.
+
+The two streams are fused after the last convolutional layer.
+
+Inputs to the two-stream model are a sequence of five frames, sampled ten
+frames apart from a 25 fps video, as well as the corresponding optical flow
+features.
+
+Features from the $(5, 7, 7)$ activations before the last average pooling layer
+of Inception-V1 are passed through a $C_{512} \rightarrow P_3 \rightarrow FC_{?}$ 3D
+convolutional network, where $P_3$ is a $(3, 3, 3)$ max-pooling layer. These
+layers are initialized with Gaussians.
+
+The averaging process is learnable.
+
+\textbf{C3D}. A network with eight convolutional layers, five pooling layers
+and two fully connected layers at the top is used. Inputs are 16-frame,
+$(112, 112)$ clips, as in~\cite{DBLP:journals/corr/TranBFTP14}. Batch
+normalization is used after each (convolutional and fully connected) layer. In
+the first layer, a temporal stride of two (compared with one) is used, in order
+to fit 15 videos per batch per K40 GPU\@.
+
+\subsubsection{Inference}
+
+Video streams are decoded at 25 fps.
+
+Standard SGD with momentum set to 0.9 is used, with synchronous data
+parallelization across 32 GPUs for all models except C3D, for which data
+parallelization across 64 GPUs was used.
+
+Models are trained on miniKinetics for 35k steps, and for 100k steps on
+Kinetics, with a 10x reduction on learning rate when validation loss plateaued.
+
+Models were trained for up to 5k steps on UCF-101 and HMDB-51, using 16 GPUs.
+
+\textbf{Data augmentations} used are random cropping, by resizing the smaller
+video side to 256 pixels then randomly cropping a $(224, 224)$ patch, and
+temporal random cropping. Random left-right flipping was applied.
+
+Shorter videos are looped to satisfy each model's input requirements.
+
+Training with \textbf{Two-Stream Inflated 3D ConvNets (I3D)} is done with
+64-frame snippets, and test is done using entire videos.
+
+Test inference is done by taking $(224, 224)$ center crops.
+
+Optical flow is computed using the TV-$L^1$ algorithm
+from~\cite{Zach07aduality}, which runs at 30 fps on $(320, 240)$ videos (on
+decade-old GPU technology).
+
+\subsubsection{Criticism}
+
+For \textbf{2D ConvNets with LSTMs on top}, a cross-entropy loss is placed on
+the outputs at all time steps.
+
+\subsubsection{Results}
+
+78.7\% on miniKinetics with Two-Stream I3D, compared with 74.0\% for 3D-Fused,
+72.9\% for Two-Stream, 60.0\% for C3D and 69.9\% for Conv2D with LSTM\@.
+
+Using pre-training on Kinetics, 98.0\% and 80.7\% is achieved, compared with
+state of the art of 94.6\% and 70.3\% respectively on UCF-101 and HMDB-51.
+
+\subsubsection{Questions}
+
+\begin{itemize}
+        \item \textbf{Future work?} Action tubes, or attention mechanisms to
+                focus in on human actors.
+
+                The authors suggest that the optical flow streams produce
+                significant improvements, compared to the RGB stream alone, due
+                to their optical flow algorithm's recurrent nature
+                (optimization is done iteratively).  This could be disproved by
+                using purely feed-forward optical flow computations, e.g.
+                FlowNet 2.0.
+
+                The authors mention specifically that they will repeat all
+                experiments with Kinetics instead of miniKinetics, and compare
+                with and without ImageNet pre-training. They will also compare
+                inflating of different 2D ConvNet architectures (besides
+                Inception-V1).
+\end{itemize}
+
+\subsubsection{Similar Work}
+
+Convolutional Two-Stream Network Fusion for Video Action
+Recognition\cite{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
+networks by fusing the streams' respective features earlier.
+
 \subsection{Learning Spatiotemporal Features with 3D Convolutional
             Networks\cite{DBLP:journals/corr/TranBFTP14}}
 
 \subsubsection{Data}
 
-UCF101\cite{DBLP:journals/corr/abs-1212-0402} (101 classes, 13k clips and 27
-hours of video data in total).
+UCF-101\ref{ucf101}.
 
 Sports-1M\cite{KarpathyCVPR14} (1.1 million sports videos, with 487 classes).
 
@@ -583,8 +722,8 @@ $P_2$ refers to the $(2, 2, 2)$ max-pooling layer.
 
 Full model structure (best results):
 $C_{64} \rightarrow P_1 \rightarrow C_{128} \rightarrow P_2 \rightarrow
-{(C_{256})}^2 \rightarrow P_2 \rightarrow P_2 \rightarrow
-{(C_{512})}^2 \rightarrow P_2 \rightarrow {(FC_{4096})}^2 \rightarrow
+{(C_{256})}^2 \rightarrow P_2 \rightarrow
+{({(C_{512})}^2 \rightarrow P_2)}^2 \rightarrow {(FC_{4096})}^2 \rightarrow
 \textrm{softmax}$.
 
 The last fully connected layer above goes to an $L2$ normalization, followed by
@@ -594,13 +733,17 @@ a linear SVM\@.
 
 Inputs were resized to $(171, 128)$ then randomly cropped to $(112, 112)$.
 
-Non-overlapping 16-frame clips were used, therefore batches of
+Non-overlapping 16-frame clips were used during training, therefore batches of
 $(\verb|batch_size|, 16, 112, 112, 3)$ were input to the model.
 
 Hyper-parameters: batch size of 30, learning rate of 0.003 divided by four
 every four epochs, for sixteen in total.
 
 Five two-second long clips were extracted from each video and trained on.
+
+For predictions on UCF101, a trained C3D model was used to extract features
+from 16-frame clips, with overlap of 8-frames between subsequences. A linear
+SVM was then trained on these C3D features.
 
 \subsubsection{Criticism}
 
