@@ -9,7 +9,7 @@
         - futures/promises/packaged_tasks/async
 
 - Two ampersands side-by-side: rvalue reference.
-- In C++98, `const&` acceptions _both_ lvalue and rvalue references.
+- In C++98, `const&` accepts _both_ lvalue and rvalue references.
 - C++ standard explicitly leaves memory location of references ambiguous, to
   allow compiler optimizations.
 
