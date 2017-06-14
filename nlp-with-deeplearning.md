@@ -532,3 +532,348 @@
   (multi-modal translation system). -> no improvements so far.
 
 - (Caglayan et al., 2016; Elliott and Kadar, 2017)
+
+## Character level neural MT
+
+- What is the minimal unit of meaning, in language?
+
+- Choice of words as minimal unit somewhat ad hoc: belief of lexeme (word) as
+  basic unit of meaning, "fear" of data sparsity, concern about training RNNs.
+
+        - State space grows exponentially with length of input
+          (1M**20 vs. 50**100).
+
+        - Neural language model projects discrete input space into continuous
+          latent space, avoiding data sparsity issue by placing similar input
+          vectors close together.
+
+- Issues with treating each token separately: sub-optimal
+  segmentation/tokenization (run, runs, ran, running).
+  (Chung et al., 2016; Almahairi et al., 2016; Both and Blunsom, 2014).
+
+- Issues with tokenizing words if the language allows compounding of words.
+
+- Consider word as sequence of characters:
+  (Luong and Manning, 2016; Ling et al., 2015ab; Kim et al., 2015;
+   Bellesteros et al., 2015; dos Santos and Zadrozny 2014).
+
+        - Hybrid approach of using character level translation when the neural
+          MT word-level model says that the word is rare.
+
+        - "Decoder within decoder"
+
+        - Still does not solve the compound-word problem, since the full source
+          sequence must still be represented by a single vector.
+
+- Source: a sequence of byte pair encoding based character n-grams.
+
+        - Byte pair encoding: (Sennrich et al., 2015) gives statistically
+          coherent encoding.
+
+- Target: an unbroken sequence of characters.
+
+- Outperforms word-level model
+
+- Attention intermittently target end-of-sentence: potentially the model is
+  learning to constantly compare the length of the generated target sentence
+  with the length of the source sentence.
+
+- Issue: Training slow due to serial nature of RNNs.
+
+- Fully character-level translation: CNN + RNN (Lee et al., 2017)
+
+        - Convolutional-recurrent encoder, where kernels have different sizes.
+
+        - Kernel size two detects bigrams, size three detects trigrams, etc. up
+          to kernel size of eight.
+
+                - Eight-gram in order to, on average, cover 1-2 words.
+
+        - Then apply pooling to reduce the sequence size by a factor of 5-10
+          (max pooling with stride 5).
+
+                - Max size of conv kernel must be larger than the pooling size.
+
+        - Four layer highway network.
+
+        - Single-layer bidirectional GRU.
+
+        - char -> char outperforms bpe -> char.
+
+        - Multi-lingual models perform well (except for German).
+
+        - Takes 2-3 weeks to train. Due to bi-directional RNN, and the fact
+          that the attention is quadratic. Also converges faster with
+          convolution -- conjectured to be due to convnets extracting abstracts
+          on which the RNNs operate.
+
+- Intra-sentence code switching to test multi-lingual language model
+  (Lee et al., 2017; Johnson et al., 2016; Ha et al., 2016).
+
+        - Able to manage intra-sentence code switching without explicit
+          training.
+
+- Character level more robust to spelling mistakes, rare and nonce words.
+
+- Character-level for question-answer, dialogue models, social media?
+
+## A general question-answering machine
+
+- Question -> Q-module (processes query) -> S-module (selects answers) -> A-module -> Answer
+                |                               ^
+                |                               |
+                --> R-module (retrieves relevant documents) <-> Knowledge source
+
+- Problem: models trained on massive training set of all possible
+  question-answer pairs will have to be re-trained to answer questions about
+  newly-generated knowledge.
+
+- Train a neural net to access a knowledge source.
+
+        - Use off-the-shelf search engine.
+
+        - Retrieved information assumed noisy.
+
+        - Learn to use the search engine under these conditions.
+
+- Can neural machine translation also use a search engine? (Gu et al., 2017)
+
+        - Can add example source/target pairs to the search engine, and the
+          neural MT can use those pairs to translate similar examples, without
+          re-training.
+
+        - I.e. train a model to use an external knowledge source, and then
+          augment that knowledge source.
+
+        - Similar idea: skip-thought vectors + instance-based learning
+
+                - Doesn't help with adding new knowledge of new
+                  source -> target mappings.
+
+- Retrieval stage:
+
+        - Query indexed database of millions of (source, target) sentence
+          pairs.
+
+        - Reduce the results from hundreds down to one using fuzzy scores from
+          neural network.
+
+- Translation stage (1):
+
+        - Store the retrieved pair in key-value memory
+          (Gulcehre et al., 2016; Henaff et al., 2017).
+
+        - Use attention-based neural MT, where key is context vector and value
+          is target symbol.
+
+- Translation stage (2):
+
+        - Retrieves relevant target symbol from memory using input context
+          vector.
+
+        - Consider \beta values from memory as actual probability distribution
+          over all the target symbols.
+
+                - Have softmax probability distribution of words and \beta
+                  distribution over memory. Take convex sum over these words.
+                  Decides whether the usual translation distribution is used or
+                  the the non-parametric distribution is used.
+
+- Translation with more consistent style and word choice / personalized
+  translation (e.g. legal document translation).
+
+- Translation often one-to-one in order to exactly capture nuance.
+
+- Retrieval important because of inability to compress entire word knowledge
+  into a single sentence.
+
+## Reinforcement learning
+
+- Issue: how to deal with weak learning signal when the state space is large,
+  as in machine translation?
+
+- Supervised + reinforcement learning (feature extraction by unsupervised
+  learning)
+
+        - By looking at unlabelled data, reduce size of state space.
+
+- Imitation learning (Ross et al., 2011; Daume et al., 2007)
+
+        - Supervisor adjusts the reward signal from the world.
+
+        - Issue: where does the supervisor come from?
+
+        - (SafeDAgger) SafetyNet skips easy examples past the supervisor, so
+          that the learner learns from difficult examples.
+
+                - SafetyNet looks at internal structure of learning, and ground
+                  truth label, and decides whether to gate or allow supervision
+                  for the given example.
+
+                - E.g. driver takes over from model when SafetyNet predicts
+                  that the decision is dangerous, thereby generating an extra
+                  ground truth for the difficult example.
+
+                - SafetyNet is trained by a held-out set.
+
+- Combine supervised/unsupervised/reinforcement learning in creative ways.
+
+## Simultaneous Translation (Gu, Cho and Li, 2016)
+
+- Decoding:
+
+        1. Pre-train neural MT model (as classifier for each example?)
+
+        2. Build simultaneous decoder.
+
+        3. Decoder either forces pretrained model to output a target symbol, or
+           wait for the next source symbol.
+
+- Learning:
+
+        1. Delay vs. quality tradeoff.
+
+                - Reward is interpolation between delay and translation
+                  quality.
+
+        2. Stochastic policy gradient (REINFORCE).
+
+- Objective functions beyond log p(Y|X) maximum log likelihood function.
+
+        - E.g. use only 4000 most common phrases.
+
+- Trained Encoder-Decoder-Attention model with supervised learning
+
+- Pre-trained neural MT model summarizes source context vector,
+  already-translated sentence and next action into a single vector.
+  (ct, z*, y*)
+
+- Variable length attention in simultaneous translation: invariant to length of
+  input.
+
+- Take advantage of existing trainable systems to "meta-learn" your problem.
+
+- Next-word prediction (E.g. president of the united _).
+
+- Erase potentially not yet addressed (i.e. backtracking in the output buffer,
+  given more source input).
+
+        - Potentially problematic due to evaluating the "delay" value in the
+          objective function.
+
+        - Also computational difficulty of implementing backtracking on GPU.
+
+- Neural net that can both view and manipulate internal state of another neural
+  net.
+
+## Trainable decoding algorithm (2) (Gu, Cho and Li, 2017)
+
+- Decoding:
+
+        1. Start with pre-trained neural MT model.
+
+        2. Trainable decoder intercepts and interprets incoming signal.
+
+        3. Trainable decoder sends out altering signal back to the pre-trained
+           model.
+
+        - Updates according to zt = \phi(z{t-1} + b, ct, y'{t-1})
+
+        - "+ b" term has been added by trainable decoder.
+
+        - Trainable decoder has 32 hidden units only.
+
+        - Greedy decoding: y'1 = argmax{y1} log p(y1|x), y'2 = argmax{y2} log p(y2|y'1 x)
+
+        - Learned virus: manipulates existing pre-trained neural MT model, in order to
+          achieve the virus's (agent's) objective.
+
+- Learning:
+
+        1. Deterministic policy gradient.
+
+        - Actor and critic
+
+        - Actor a = \pi(o)
+
+        - Critic Rt = C(o, a)
+
+        - Use gradient of C approximation to arbitrary objective function to
+          update model parameters.
+
+        2. Maximize any arbitrary objective.
+
+## (1) Trainable decoding algorithm
+
+1. Actor \pi : R{3d} -> R{d}
+
+## Future ideas
+
+- Single visual cortex used for Q&A, object detection, driving etc.
+
+- Single language model used for talking to parents, understanding news etc.
+
+- Single motor control system...
+
+- Does end-to-end learning make sense with this goal in mind?
+
+- Idea: neural networks are modules (software engineering)
+
+        - Each module used for multiple tasks.
+
+        - Communication of information between modules using shared
+          representations.
+
+        - E.g. manipulate motor control NN module to drive a car.
+
+        - Issue: target tasks are not known at training time.
+
+        - Need access to internals of NN modules when re-using for new tasks.
+
+        - This is the motivation for trainable gradient decoding and
+          simultaneous translation.
+
+- E.g. image captioning: should have trained a language model with a large
+  corpus, and then use a higher level module to look at the features produced
+  by the convnet, and use the language model to produce a description
+  corresponding to the image.
+
+- Curriculum learning: difficult to decide on the curriculum.
+
+        - Automatic curriculum learning: Alex Graves Google Deepmind.
+
+- Limitation of existing translation systems: input is segmented into
+  sentences, which are translated independently.
+
+        - How to incorporate the textual context of the entire paragraph in the
+          translation?
+
+        - Issue: improvement from the context is difficult to evaluate.
+
+        - E.g. score difference from translating "it" to correctly-gendered
+          pro-noun in French based on surrounding context will hardly register
+          in overall BLEU score.
+
+        - Evaluation metrics (such as gender one) can be exploited (e.g. by
+          surrounding word differences).
+
+## Learning to Google
+
+- Motivation: compressing universal word knowledge into a fixed set of
+  parameters is unrealistic.
+
+- In general, two different short search inputs will cause search engines to
+  retrieve different results, one set of which will be better than the other.
+
+        - Want to reformulate "google artificial intelligence paper asian board
+          game" into "deepmind go paper".
+
+- Multiple reformulations of an original search query, which fetch results,
+  which are scored (reward).
+
+- Future work: automated researcher - hypothesis -> result -> reformulation.
+
+- At every step can we run the RNN a number of times to solve problems that
+  require computational complexity greater than O(n).
+
+- Emergent language learning (two NNs communicating).
