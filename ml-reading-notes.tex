@@ -128,7 +128,7 @@ on $n$ possible values.
 Formally, softmax is given by Equation~\ref{softmax_eqn}.
 
 \begin{equation}
-        \textrm{softmax}(\boldsymbol{z})_i = \frac{e^{z_i}}{\sum_je^{z_j}}
+        \textrm{softmax}{(\boldsymbol{z})}_i = \frac{e^{z_i}}{\sum_je^{z_j}}
         \label{softmax_eqn}
 \end{equation}
 
@@ -697,7 +697,7 @@ state of the art of 94.6\% and 70.3\% respectively on UCF-101 and HMDB-51.
 \subsubsection{Similar Work}
 
 Convolutional Two-Stream Network Fusion for Video Action
-Recognition\cite{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
+Recognition~\cite{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
 networks by fusing the streams' respective features earlier.
 
 \subsection{Learning Spatiotemporal Features with 3D Convolutional
@@ -705,9 +705,9 @@ networks by fusing the streams' respective features earlier.
 
 \subsubsection{Data}
 
-UCF-101\ref{ucf101}.
+UCF-101~\ref{ucf101}.
 
-Sports-1M\cite{KarpathyCVPR14} (1.1 million sports videos, with 487 classes).
+Sports-1M~\cite{KarpathyCVPR14} (1.1 million sports videos, with 487 classes).
 
 I380K (internal dataset, finetuned from).
 
@@ -786,6 +786,107 @@ Beyond Short Snippets: Deep Networks for Video
 Classification\cite{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
 explores other temporal feature pooling models that work on Conv2D-extracted
 features.
+
+\subsection{CDC\@: Convolutional-De-Convolutional Networks for Precise Temporal
+            Action Localization in Untrimmed
+            Videos\cite{DBLP:journals/corr/ShouCZMC17}}
+
+\subsubsection{Data}
+
+THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
+classes. THUMOS action classes are from UCF-101~\ref{ucf101}. All videos are
+from YouTube, and are labelled with action class and temporal span of the
+action. THUMOS~2014 contains 20 action classes, 2755 trimmed training videos
+and 1010 untrimmed validation videos containing 3007 action instances. 213 test
+videos, with 3358 action instances, exist that are not entirely background.
+
+The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
+background untrimmed videos.
+
+ActivityNet challenge 2016~\cite{Heilbron_2015_CVPR} has 203 activity
+categories, with 137 untrimmed videos per class on average. ActivityNet 2016
+has an average of 1.41 activity instances per video, and 849 hours of video in
+total. Activitynet 2016 encompasses untrimmed video classification, trimmed
+video classification and activity detection.
+
+\subsubsection{Model}
+
+The C3D architecture
+from~\cite{DBLP:journals/corr/TranBFTP15, DBLP:journals/corr/TranBFTP14} up to
+and including layer \verb|pool5| is built upon. \verb|pool5| is changed to only
+pool in spatial dimensions.
+
+\verb|pool5| is then followed by \verb|conv6|, which is a layer with filter
+size $[4, 4, 4]$, with strides $[2, 1, 1]$, and the temporal part of the filter
+doing an up-convolution while the spatial part does down-convolution (?). No
+spatial padding, and ``same'' temporal padding is used, such that the input
+$[L/8, 4, 4]$ feature map becomes a $[L/4, 1, 1]$ feature map.
+
+This layer is called \verb|CDC6|, after ``conv-deconv'' layers, and is followed
+by two temporal up-convolutional layers (both of filter size $[4, 1, 1]$ and
+stride $[2, 1, 1]$) for a final output of shape $[L, 1, 1]$.  The pre-logits
+layers \verb|CDC6| and \verb|CDC7| have 4096 channel outputs.
+
+Dropout is used for all \verb|CDC| layers, with 0.5 dropout ratio.
+
+\subsubsection{Inference}
+
+Non-overlapping segments of 32 frames are extracted and fed to the CDC network.
+During training, only segments with at least one frame with a non-background
+label are used.
+
+C3D is pre-trained on Sports-1M~\cite{KarpathyCVPR14}, and after this the CDC
+network converges within four epochs.
+
+Both CDC and C3D layers are trained jointly, with a learning rate of
+$10^{-5}$ used for all layers except \verb|CDC8|, for which a learning rate
+of $10^{-4}$ is used.
+
+At test time, segment proposals from~\cite{DBLP:journals/corr/ShouWC16} are
+fed to the CDC network, with the proposals expanded by $1/8$ of the original
+proposal length on either end.
+
+Using the per-frame predictions on the segment proposal, Gaussian kernel
+density estimation is used to obtain $\mu$ and $\sigma$, and a refined segment
+from $[\mu - \sigma, \mu + \sigma]$ is produced. The predicted class scores are
+the average class scores over this refined segment.
+
+To make segment proposals for the temporal localization task, non-maximum
+suppression is used as
+in~\cite{DBLP:journals/corr/YeungRJAML15, DBLP:journals/corr/ShouWC16}.
+
+\subsubsection{Criticism}
+
+A cross-entropy per-frame loss is used on the class predictions.
+
+As an evaluation metric, mean average precision is computed over the
+predictions for each frame.
+
+For evaluation on the temporal localization task, mAP is computed over
+different IoU thresholds.
+
+\subsubsection{Results}
+
+Results on THUMOS~2014 are given below.
+
+Per-frame: 44.4 mAP compared with 41.3 mAP from
+MultiLSTM~\cite{DBLP:journals/corr/YeungRJAML15}, and 41.7 mAP using
+conv-deconv instead of CDC\@.
+
+Temporal localization at 0.5 IoU\@: 23.3 mAP, as compared with 19.0 mAP
+in~\cite{DBLP:journals/corr/ShouWC16}.
+
+On ActivityNet (at 0.75 IoU): 26.0 when based on the segment proposals
+of Wang and Tao in their ActivityNet 2016 challenge submission, as compared to
+4.1 mAP without CDC\@. At 0.5 IoU, CDC only improves the method of Wang and Tao
+from 45.1 to 45.3 mAP\@.
+
+\subsubsection{Questions}
+
+Tried conv-deconv vs. CDC, but what about deconv-conv? Or a series of 3d
+convolutions with spatial stride fixed, until the last layer? I.e.\ test
+whether the CDC filter is special when compared to simply adding more
+parameters to the temporal up-convolutional filters.
 
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
