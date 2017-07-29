@@ -155,6 +155,19 @@ motivated in reducing the vanishing gradient problem.
 
 101 classes, 13k clips and 27 hours of video data in total.
 
+\subsection{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
+\label{thumos}
+
+THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
+classes. THUMOS action classes are from UCF-101~\ref{ucf101}. All videos are
+from YouTube, and are labelled with action class and temporal span of the
+action. THUMOS~2014 contains 20 action classes, 2755 trimmed training videos
+and 1010 untrimmed validation videos containing 3007 action instances. 213 test
+videos, with 3358 action instances, exist that are not entirely background.
+
+The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
+background untrimmed videos.
+
 \section{Paper Summaries}
 
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
@@ -789,19 +802,11 @@ features.
 
 \subsection{CDC\@: Convolutional-De-Convolutional Networks for Precise Temporal
             Action Localization in Untrimmed
-            Videos\cite{DBLP:journals/corr/ShouCZMC17}}
+            Videos~\cite{DBLP:journals/corr/ShouCZMC17}}
 
 \subsubsection{Data}
 
-THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
-classes. THUMOS action classes are from UCF-101~\ref{ucf101}. All videos are
-from YouTube, and are labelled with action class and temporal span of the
-action. THUMOS~2014 contains 20 action classes, 2755 trimmed training videos
-and 1010 untrimmed validation videos containing 3007 action instances. 213 test
-videos, with 3358 action instances, exist that are not entirely background.
-
-The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
-background untrimmed videos.
+THUMOS~2014~\ref{thumos} was trained and evaluated on.
 
 ActivityNet challenge 2016~\cite{Heilbron_2015_CVPR} has 203 activity
 categories, with 137 untrimmed videos per class on average. ActivityNet 2016
@@ -887,6 +892,96 @@ Tried conv-deconv vs. CDC, but what about deconv-conv? Or a series of 3d
 convolutions with spatial stride fixed, until the last layer? I.e.\ test
 whether the CDC filter is special when compared to simply adding more
 parameters to the temporal up-convolutional filters.
+
+\subsection{Temporal Action Localization in Untrimmed Videos via Multi-stage
+            CNNs~\cite{DBLP:journals/corr/ShouWC16}}
+
+\subsubsection{Data}
+
+THUMOS~2014~\ref{thumos} was trained and evaluated on.
+
+MEXaction2~\cite{MEXaction2} is a dataset with two action classes: horseback
+riding, and ``bull charging cape''. The dataset is made up of YouTube, UCF101
+and INA videos, of which only INA videos are untrimmed. The untrimmed videos
+are 77 hours in total. The training set is 1336 instances, validation set is
+310 instances and test set is 329 instances.
+
+\subsubsection{Model}
+
+The model consists of three separate 3D convolutional networks based
+on C3D~\cite{DBLP:journals/corr/TranBFTP14}: proposal, classification and
+localization networks. C3D is pre-trained on Sports-1M.
+
+The proposal network has a binary ``action or not?'' output, the classification
+network outputs the class scores (plus background), and the localization
+network outputs class scores as well, except is trained with a different loss
+function.
+
+\subsubsection{Inference}
+
+Chunks of 16, 32, 64, 128, 256 and 512 frames are taken from the video at
+intervals overlapping by 75\% of the chunk size. 16 frames are then sampled
+uniformly from each of these chunks, and the resulting 16 frames are input to
+the proposal network.
+
+The classification network is trained first, then used to initialize the
+localization network.
+
+During evaluation, segments with proposal scores $\geq 0.7$ are kept.
+Post-processing is done to remove segments predicted as background, scale up
+confidence scores by the class distribution in the training set. Non-maximum
+suppression is done to remove redundant detections, with overlap threshold
+$\theta - 0.1$, where $\theta$ is the IoU overlap threshold.
+
+\subsubsection{Criticism}
+
+Ground truth labels for the proposal network are assigned as follows. Segments
+from trimmed videos are all assigned as ``action''. Segments with greater than
+0.7 IoU with a class are labelled as positive, whereas if segments have less
+than 0.3 IoU with any given class those segments are labelled as background.
+Finally, for each ground truth instance, if the instance has no segments
+assigned to it, a segment with greater than 0.5 IoU with that ground truth
+instance is chosen as a positively labelled segment. A number of background
+segments equal to the total number of positively labelled segments are randomly
+sampled.
+
+Ground truth labels for the classification network are gathered in a similar
+way as for the proposal network, except labels are action classes, and
+background class labels are reduced to match the average number of labels per
+class.
+
+An overlap loss is used to artificially increase the scores of predictions with
+higher overlap with the ground truth instance.
+
+\begin{equation}
+        \mathcal{L}_{\textrm{overlap}} = \frac{1}{N} \sum_n
+                \left(\frac{1}{2} \cdot
+                        \left(
+                                \frac{{\left( P_n^{k_n} \right)}^2}{v_n^\alpha}
+                                - 1
+                        \right)
+                        \cdot \left[ k_n > 0 \right]
+                \right)
+\end{equation}
+
+Where $\left[ k_n > 0 \right]$ is the indicator function for the true class
+label $k_n$ being positive, $v_n$ is the fraction of overlap of the segment
+with the ground truth instance, and $\alpha = 0.25$.
+
+\subsubsection{Results}
+
+At IoU threshold 0.5:
+
+7.4 mAP on MEXaction2, compared with 1.7 mAP baseline provided with the
+dataset.
+
+19.0 mAP on THUMOS~2014, compared with 15.0 mAP from the THUMOS~2014 challenge
+submission of~\cite{LearSubmissionThumos2014}.
+
+\subsubsection{Questions}
+
+Does uniform sampling mean random uniform sampling, or sampling at fixed,
+uniform intervals?
 
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
