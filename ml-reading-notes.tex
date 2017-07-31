@@ -43,15 +43,19 @@
 
 \section{Definitions}
 
+
 % TODO(brendan):
 \phantomlabel{backprop}
 \textbf{Back propagation}
 
+
 \phantomlabel{batchnorm}
 \textbf{Batch Normalization}
 
+
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
 biological brain\cite{Goodfellow-et-al-2016-Book}.
+
 
 \phantomlabel{kl}
 \textbf{KL divergence} is given in Equation~\ref{kleqn}\cite[Chapter~3]{Goodfellow-et-al-2016-Book}.
@@ -64,6 +68,7 @@ biological brain\cite{Goodfellow-et-al-2016-Book}.
 \textbf{Cross-entropy} is related to \hyperref[kl]{KL divergence} by
 $H(P, Q) = H(P) + \infdiv{P}{Q}$, where $H(P)$, the \textbf{Shannon entropy}, is
 $H(P) = -\varmathbb{E}_{x \sim P} \left[\log P(x)\right]$.
+
 
 \phantomlabel{LSTM}
 % TODO(brendan): Diagrams and equations for LSTM. Definition for RNNs. Should
@@ -92,12 +97,15 @@ $\boldsymbol{W}^g$ and $\boldsymbol{b}^f$, respectively.
 Similar gate functions exist to gate the inputs and outputs to the LSTM, as
 well.
 
+
 \textbf{Mahalanobis Distance}
+
 
 \phantomlabel{multilayer_perceptron}
 \textbf{Multi-Layer Perceptrons (MLPs)} are mathematical functions mapping some
 set of input values to some set of output
 values\cite{Goodfellow-et-al-2016-Book}.
+
 
 \textbf{Neighbourhood Components Analysis (NCA)} is a method of learning a
 Mahalanobis distance metric, and can also be used in linear dimensionality
@@ -110,6 +118,7 @@ defined as the diagonal across the annotated head rectangle in the MPII data,
 multiplied by a factor of 0.6. Details can be found by examining the MATLAB
 \href{http://human-pose.mpi-inf.mpg.de/results/mpii_human_pose/evalMPII.zip}{evaluation script}
 provided with the MPII dataset.
+
 
 \phantomlabel{nonmax_supression}
 \textbf{Non-maximum suppression} in object detection, in general, is a set of
@@ -132,8 +141,10 @@ Formally, softmax is given by Equation~\ref{softmax_eqn}.
         \label{softmax_eqn}
 \end{equation}
 
+
 \phantomlabel{rectified_linear_units}
 \textbf{Rectified linear units (ReLUs)}\cite{icml2010_NairH10}
+
 
 \textbf{Leaky rectified linear units (LReLs)}\cite{maas_rectified_nonlinearities}
 
@@ -147,6 +158,31 @@ Formally, softmax is given by Equation~\ref{softmax_eqn}.
 
 Leaky ReLUs have non-zero gradient over their domain, and were therefore
 motivated in reducing the vanishing gradient problem.
+
+
+\phantomlabel{dilated_convolutions}
+\textbf{Dilated Convolutions}~\cite{DBLP:journals/corr/YuK15} can be defined as
+follows.
+
+Let $F: \mathbb{Z}^2 \rightarrow \mathbb{R}$ be a discrete
+function, let $\Omega_r = {[-r, r]}^2 \cap \mathbb{Z}^2$ and let
+$k: \Omega_r \rightarrow \mathbb{R}$ be a discrete filter of size
+${(2r + 1)}^2$. Then the convolution operator is defined by
+Equation~\ref{conv-op}.
+
+\begin{equation}
+        (F * k)(\mathbf{p}) = \sum_{\mathbf{s} + \mathbf{t} = \mathbf{p}} F(\mathbf{s}) + k(\mathbf{t})
+        \label{conv-op}
+\end{equation}
+
+Furthermore, the dilated convolution operator, denoted by $*_l$, is defined by
+Equation~\ref{dilated-conv-op}.
+
+\begin{equation}
+        (F *_l k)(\mathbf{p}) = \sum_{\mathbf{s} + l\mathbf{t} = \mathbf{p}} F(\mathbf{s}) + k(\mathbf{t})
+        \label{dilated-conv-op}
+\end{equation}
+
 
 \section{Datasets}
 
@@ -982,6 +1018,101 @@ submission of~\cite{LearSubmissionThumos2014}.
 
 Does uniform sampling mean random uniform sampling, or sampling at fixed,
 uniform intervals?
+
+\subsection{Temporal Convolutional Networks for Action Segmentation and
+            Detection\cite{DBLP:journals/corr/LeaFVRH16}}
+
+\subsubsection{Data}
+
+50 salads~\cite{Stein:2013:CEA:2493432.2493482} is a dataset of 50 sequences of
+food preparation video, with about 30 action annotations, such as ``cutting a
+tomato'', per sequence. RGB and depth maps at $640 \times 480$ and 30Hz, 3-axis
+accelerometer data from a device attached to various cooking utensils, as well
+as synchronization parameters between the accelerometer and RGB-D data are
+provided.
+
+Annotations in 50 salads consist of ``pre-'', ``core'', and ``post-'' phases of
+each action in a recipe.
+
+25 different people in total are in the 50 salads videos.
+
+The MERL shopping dataset~\cite{merl-shopping-singh} is a human action dataset
+consisting of 96 two-minute surveillance-style videos, with a single shopper
+per video.  The shoppers perform one of five actions, plus a background class:
+``reach to shelf'', ``retract hand from shelf'', ``hand in shelf'', ``inspect
+product'', and ``inspect shelf'', each action normally being a few seconds
+long.
+
+Georgia Tech Egocentric Activities (GTEA)~\cite{Fathi:2011:LRO:2191740.2191834}
+contains 28 videos of household activities, such as making coffee, taken from a
+head-mounted camera.  Videos are on average a minute long, and on average
+contain 19 action instances per video.
+
+\subsubsection{Model}
+
+Two models are investigated, one called an ``Encoder-Decoder Temporal
+Convolutional Network (ED-TCN)'', and the other called a ``Dilated TCN''.
+
+In the TCN encoder, layers consist of a convolution plus bias, a non-linear
+unit, followed by a max-pool. TCN decoder layers are a nearest-neighbour
+upsample, followed by a convolution plus bias then a non-linear unit.
+
+The dilated TCN consists of a series of blocks, where each block consists of a
+sequence of layers. In each subsequent dilated convolutional layer within the
+same block, each unit at time $t$ takes weighted input from the two previous
+units at time $t$ and $t - s$, where $s$ is the same as the $l$-dilation
+parameter as defined in~\cite{DBLP:journals/corr/YuK15}.
+
+The set of outputs from all of the blocks are summed, followed by a ReLU, then
+a fully-connected layer and another ReLU\@, which is input to a softmax
+function, the output of which forms the frame-wise predictions.
+
+For ED-TCN, each layer $l$ has $96 + 32l$ filters. For dilated TCN, each layer
+has 128 filters.
+
+Causal and decausal models are evaluated. For ED-TCN, models convolve from $t -
+d$ to $t$ in the causal case, and from $t - d/2$ to $t + d/2$ in the acausal
+case. For dilated TCN, units at time $t$ take the additional input from $t + s$
+in the acausal case.
+
+\subsubsection{Inference}
+
+Adam optimizer~\cite{DBLP:journals/corr/KingmaB14} is used.
+
+\subsubsection{Criticism}
+
+``Action segmentation'' metrics use frame-wise mAP, while ``action detection''
+metrics use segment-wise mAP for given IoU overlap fractions.
+
+It is pointed out that the way confidence evaluated heavily affects the score
+for a given type of metric. E.g.\ on MERL shopping, the mAP scores
+from~\cite{merl-shopping-singh} increase from 50.9 to 69.8 by using maximum
+instead of average prediction score over a given interval.
+
+A new evaluation metric is proposed, which computes true positives, false
+positives and false negatives over segments at a given IoU threshold, and defines
+$F1 = 2\frac{prec * recall}{prec + recall}$.
+
+\subsubsection{Results}
+
+On GTEA, ED-TCN achieves an average F1 score of 64.0 over IoU thresholds of
+0.1, 0.25 and 0.5 and dilated TCN achieves an average F1 score of 60.6. A
+baseline method, with better descriptors, achieves 64.6.
+
+On 50 salads, different activation units are compared, with normalized ReLUs
+out-performing all with a F1@25 score of 58.4, compared with 40.4 using
+standard ReLUs. Activation function choice is not found to affect dilated TCN
+performance.
+
+ED-TCN performed best with two layers and filter size of 15 (44 frame receptive
+field). Dilated TCN performed best with four blocks and five layers per block
+(128 frame receptive field), and similar performance with 96 frame receptive
+field.
+
+\subsubsection{Questions}
+
+Dilated convolutions with larger filter sizes? Dilated convolutions over 3D
+data?
 
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
