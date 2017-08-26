@@ -223,23 +223,6 @@ can be found in the ``Related Work'' section of
 The input to the 7-layered convolutional DNN (based on
 AlexNet\cite{NIPS2012_4824}) is the full image.
 
-\subsection{Dropout: A Simple Way to Prevent Neural Networks from
-            Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
-\label{dropout}
-
-\textbf{Dropout} is a technique used to overcome the problem of overfitting in
-deep neural nets with large numbers of parameters. The idea is to train using
-many ``thinned'' networks, chosen by randomly removing subsets of units and
-their connections. The predictions from the thinned networks are approximately
-averaged at test time by using a single, unthinned, network with reduced
-weights.
-
-\begin{itemize}
-        \item Existing regularization methods: stopping training as soon as
-                validation error stops improving, L1 and L2 regularization, and
-                weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
-\end{itemize}
-
 \subsection{End-to-end people detection in crowded
             scenes\cite{DBLP:journals/corr/StewartA15}}
 
@@ -390,6 +373,25 @@ multiplier on GoogLeNet of $10^{-6}$ reduced AP by 0.03.
 It is found that AP (on the validation set) increases from 0.82 to 0.85 when
 using separate weights connecting each of the LSTM outputs to predicted
 candidates.
+
+\section{Regularization}
+
+\subsection{Dropout: A Simple Way to Prevent Neural Networks from
+            Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
+\label{dropout}
+
+\textbf{Dropout} is a technique used to overcome the problem of overfitting in
+deep neural nets with large numbers of parameters. The idea is to train using
+many ``thinned'' networks, chosen by randomly removing subsets of units and
+their connections. The predictions from the thinned networks are approximately
+averaged at test time by using a single, unthinned, network with reduced
+weights.
+
+\begin{itemize}
+        \item Existing regularization methods: stopping training as soon as
+                validation error stops improving, L1 and L2 regularization, and
+                weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
+\end{itemize}
 
 \section{CNN Architecture}
 
