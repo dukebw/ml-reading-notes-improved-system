@@ -41,7 +41,7 @@
 
 \maketitle
 
-\section{Definitions}
+\part{Definitions}
 
 
 % TODO(brendan):
@@ -184,14 +184,14 @@ Equation~\ref{dilated-conv-op}.
 \end{equation}
 
 
-\section{Datasets}
+\part{Datasets}
 
-\subsection{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
+\section{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
 \label{ucf101}
 
 101 classes, 13k clips and 27 hours of video data in total.
 
-\subsection{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
+\section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
 
 THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
@@ -204,7 +204,9 @@ videos, with 3358 action instances, exist that are not entirely background.
 The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
 background untrimmed videos.
 
-\section{Paper Summaries}
+\part{Paper Summaries}
+
+\section{Human Pose}
 
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
             Networks\cite{DBLP:journals/corr/ToshevS13}}
@@ -389,6 +391,8 @@ It is found that AP (on the validation set) increases from 0.82 to 0.85 when
 using separate weights connecting each of the LSTM outputs to predicted
 candidates.
 
+\section{CNN Architecture}
+
 \subsection{Deep Residual Learning for Image
             Recognition\cite{DBLP:journals/corr/HeZRS15}}
 
@@ -401,6 +405,8 @@ referred to as motivating ``very deep'' models.
 
 % TODO(brendan): Read [1], [9] for vanishing gradient, R-CNN series for
 % localization.
+
+\section{GANs}
 
 \subsection{Generative Adversarial Networks\cite{NIPS2014_5423}}
 \label{gan}
@@ -609,6 +615,8 @@ A cGAN is trained on semantic segmentation labelling of
 Cityscapes\cite{DBLP:journals/corr/CordtsORREBFRS16} and achieves 0.22 class
 IoU with cGAN loss alone, compared with 0.35 class IoU with L1 loss and 0.80
 class IoU using the wide ResNets of~\cite{DBLP:journals/corr/WuSH16e}.
+
+\section{Human Activity Recognition}
 
 \subsection{Quo Vadis, Action Recognition? A New Model and the Kinetics
             Dataset\cite{carreira2017quo}}
@@ -835,6 +843,8 @@ Beyond Short Snippets: Deep Networks for Video
 Classification\cite{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
 explores other temporal feature pooling models that work on Conv2D-extracted
 features.
+
+\section{Temporal Action Localization}
 
 \subsection{CDC\@: Convolutional-De-Convolutional Networks for Precise Temporal
             Action Localization in Untrimmed
