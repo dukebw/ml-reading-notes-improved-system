@@ -9,19 +9,20 @@
 
 \documentclass[a4paper, 12pt]{article}
 
-\usepackage{cite}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{bm}
-\usepackage{fullpage}
-\usepackage{url}
-\usepackage{graphicx}
-\usepackage{inputenc}
-\usepackage{titling}
-\usepackage{hyperref}
-\usepackage{txfonts}
 \usepackage{bbold}
+\usepackage{bm}
+\usepackage{cite}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{inputenc}
 \usepackage{mathtools}
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{txfonts}
+\usepackage{url}
 
 \newcommand\phantomlabel[1]{\phantomsection\label{#1}}
 
@@ -186,10 +187,11 @@ Equation~\ref{dilated-conv-op}.
 
 \part{Datasets}
 
-\section{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
-\label{ucf101}
+\section{CIFAR-10~\cite{cifar10-website}}
+\label{cifar10}
 
-101 classes, 13k clips and 27 hours of video data in total.
+CIFAR-10~\cite{cifar10-website} consists of \num{60000} colour images of $32
+\times 32$ resolution, has 10 classes and \num{6000} images per class.
 
 \section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
@@ -203,6 +205,28 @@ videos, with 3358 action instances, exist that are not entirely background.
 
 The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
 background untrimmed videos.
+
+\section{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
+\label{ucf101}
+
+101 classes, 13k clips and 27 hours of video data in total.
+
+\section{WMT~2014~\cite{wmt14-translation-website}}
+\label{wmt2014}
+
+WMT~2014 is a machine translation task with five language pairs:
+French-English, Hindi-English, German-English, Czech-English and
+Russian-English. A number of parallel and monolingual corpora are included as
+training data.
+
+The majority of the training data is taken
+from~\href{http://www.statmt.org/europarl/}{Europarl}~v7, from which about
+50~million words per language are used in WMT~2014. Additional training data is
+taken from the~\href{http://www.casmacat.eu/corpus/news-commentary.html}{News
+Commentary Parallel Corpus}, at about three million words per language.
+
+Test data from previous years is provided, with on the order of~\num{3000}
+sentences per test set.
 
 \part{Paper Summaries}
 
@@ -976,10 +1000,10 @@ The classification network is trained first, then used to initialize the
 localization network.
 
 During evaluation, segments with proposal scores $\geq 0.7$ are kept.
-Post-processing is done to remove segments predicted as background, scale up
-confidence scores by the class distribution in the training set. Non-maximum
-suppression is done to remove redundant detections, with overlap threshold
-$\theta - 0.1$, where $\theta$ is the IoU overlap threshold.
+Post-processing is done to remove segments predicted as background, as well as
+to scale up confidence scores by the class distribution in the training set.
+Non-maximum suppression is done to remove redundant detections, with overlap
+threshold $\theta - 0.1$, where $\theta$ is the IoU overlap threshold.
 
 \subsubsection{Criticism}
 
@@ -1125,6 +1149,41 @@ field.
 
 Dilated convolutions with larger filter sizes? Dilated convolutions over 3D
 data?
+
+\section{Reinforcement Learning}
+
+\subsection{Neural Optimizer Search with Reinforcement
+            Learning~\cite{neural-optimizer-search-46114}}
+
+\subsubsection{Data}
+
+An optimizer is learned on CIFAR-10~\ref{cifar10}.
+
+The optimizer is transferred to WMT~2014~\ref{wmt14}.
+
+\subsubsection{Model}
+
+\subsubsection{Inference}
+
+\subsubsection{Criticism}
+
+\subsubsection{Results}
+
+\subsubsection{Questions}
+
+Can a learned optimizer improve upon existing standard optimizers such as Adam
+and SGD with momentum?
+
+Will optimizers learned on one task transfer well to other tasks?
+
+What is the computational cost of doing a neural optimizer search, and how
+could said cost be alleviated?
+
+How can the neural architecture search be efficiently extended to check for
+optimizers that perform well over the entire training cycle, but perform
+relatively poorly during the first $N$ epochs?
+
+\subsubsection{Similar Work}
 
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
