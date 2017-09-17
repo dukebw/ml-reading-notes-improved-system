@@ -184,6 +184,76 @@ Equation~\ref{dilated-conv-op}.
 \end{equation}
 
 
+\section{Book Summaries}
+
+\subsection{Machine Learning: A Probabilistic Perspective}
+% TODO(brendan): citation
+
+\subsubsection{Probability}
+
+Bayes rule is:
+
+\begin{equation}
+        p(Y = y | X = x) = \frac{p(Y = y, X = x)}{p(X = x)}
+                = \frac{p(X = x) p(Y = y | X = x)}
+                       {\sum_{x'} p(X = x') p(Y = y | X = x')}
+\end{equation}
+
+
+\subsubsection{Generative Models for Discrete Data}
+
+The \textbf{maximum a posteriori (MAP)} estimate is defined as
+$\hat{y} = \textrm{argmax}_{c} p(y = c | \mathbf{x}, D)$.
+
+A \textbf{prior} is a probability distribution assigned to each hypothesis $h
+\in \mathcal{H}$ in the hypothesis space, based only on knowledge external to
+the training data. E.g.\ in the space of related numbers under 100, a strong
+prior may be assigned to ``odd numbers'' or ``even numbers'', while a weak
+prior would be assigned to unintuitive concepts such as ``all powers of 2
+except 32''.
+
+The \textbf{likelihood} of a hypothesis given a set of training data, is the
+probability of randomly sampling exactly that set of training data, given the
+hypothesis, i.e. $p{(\mathcal{D} | h)} = {(1 / |h|)}^N$.
+
+The \textbf{posterior} is:
+
+\begin{equation}
+        p(h | \mathcal{D})
+                = \frac{p(h) p(\mathcal{D} | h)}
+                       {\sum_{h' \in \mathcal{H}} p(\mathcal{D} | h')}
+\end{equation}
+
+where $p(\mathcal{D} | h)$ is ${(1 / |h|)}^N$ if the training data match the
+hypothesis $h$, otherwise zero.
+
+The MAP is
+$\textrm{argmax}_h p(h) p(\mathcal{D} | h) = \textrm{argmax}_h \left[ \log{p(h)} + \log{p(\mathcal{D} | h)} \right]$.
+In the limit of infinite training data, the term exponential in $N$ in
+$\log{p(\mathcal{D} | h)}$ will dominate. Therefore the
+\textbf{maximum likelihood estimator (MLE)}
+$\textrm{argmax}_h \log{p(\mathcal{D} | h)}$ is converged to by the MAP in the
+limit of infinite data, justifying the MLE's use as an objective function.
+
+\subsection{Deep Learning~\cite{Goodfellow-et-al-2016-Book}}
+
+\subsubsection{Machine Learning Basics}
+
+Maximum Likelihood Estimation (MLE) is maximization of the log-likelihood
+$\log p_{model}(y | \mathbf{x}; \mathbf{\theta})$, where $y$ is a ground truth
+example, $\mathbf{x}$ is an input feature vector, and $\mathbf{\theta}$ are
+model parameters.
+
+Principal Component Analysis (PCA) involves projecting input feature vectors
+$\mathbf{x}$ into a reduced-dimensionality space via multiplication by
+$D \in \mathbb{R}^{n \times l}$. The PCA projection minimizes the $L_2$
+reconstruction error $||\mathbf{x} - r(\mathbf{x})||_2$.
+
+Stocastic Gradient Descent (SGD) is gradient descent over minibatches. For an
+objective function $L = f(y; x, \theta)$, at each step $t$ we have
+$\theta_t = \frac{1}{m'} \sum_{i = 0}^{m'} \theta_{t - 1} - \epsilon \nabla f$.
+
+
 \section{Datasets}
 
 \subsection{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
