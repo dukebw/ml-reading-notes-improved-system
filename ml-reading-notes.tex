@@ -263,6 +263,12 @@ $\theta_t = \frac{1}{m'} \sum_{i = 0}^{m'} \theta_{t - 1} - \epsilon \nabla f$.
 CIFAR-10~\cite{cifar10-website} consists of \num{60000} colour images of $32
 \times 32$ resolution, has 10 classes and \num{6000} images per class.
 
+\section{HMDB-51~\cite{Kuehne11}}
+\label{hmdb51}
+
+HMDB-51 contains 7000 clips extracted from movies and YouTube then manually
+annotated with 51 class labels.
+
 \section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
 
@@ -733,8 +739,7 @@ validation and test, containing 25 and 75 clips per class each, respectively.
 
 \hyperref[ucf101]{UCF-101}.
 
-HMDB-51\cite{Kuehne11}, which contains 7000 clips extracted from movies and
-YouTube then manually annotated with 51 class labels.
+\hyperref[hmdb51]{HMDB-51}.
 
 Transfer learning is done on UCF-101 and HMDB-51, these two smaller datasets,
 from the larger Kinetics dataset.
@@ -1220,6 +1225,101 @@ field.
 Dilated convolutions with larger filter sizes? Dilated convolutions over 3D
 data?
 
+\subsection{Deep Temporal Linear Encoding
+            Networks\cite{DBLP:journals/corr/DibaSG16}}
+
+A method called Temporal Linear Encoding (TLE) is proposed to encode entire
+videos into vectors in a single feature space.
+
+\subsubsection{Data}
+
+\hyperref[ucf101]{UCF-101} and \hyperref[hmdb51]{HMDB-51}.
+
+\subsubsection{Model}
+
+The deep temporal linear encoding layer takes in a set $\{S_i\}$ of feature
+maps extracted from clips in the video, and does,
+
+\begin{enumerate}
+        \item Aggregation of the features $\{S_i\}$.
+        \item Encoding of the aggregated features.
+\end{enumerate}
+
+Aggregation operators include element-wise average, maximum and multiplication
+of segments, with element-wise multiplication yielding the best results.
+
+Encoding methods include,
+
+\begin{enumerate}
+        \item Bilinear combination given by $y = W[X \otimes X']$, where $X \in
+                \mathbb{R}^{(hw) \times c}$ and in this case $X = X'$.
+                Presumably, $W$ is element-wise multiplication of the of the
+                resulting $[X \otimes X'] \in \mathbb{R}^{(cc')}$. The square
+                brackets mean concatenation into a vector.
+
+        \item Fully connected pooling
+\end{enumerate}
+
+AlexNet, VGG-16 and BN-Inception are used as two-stream ConvNet base models,
+pre-trained on ImageNet.
+
+C3D models are also used as a base feature extractor.
+
+\subsubsection{Inference}
+
+The Tensor Sketch algorithm of~\cite{Pham:2013:FSP:2487575.2487591} is used to
+approximate the outer product for the bilinear encoding method by projecting
+the two input tensors directly to a lower-dimensional space, without explicitly
+computing the outer product.
+
+Fully-connected layers are dropped from the pre-trained ConvNet models and the
+feature maps from the last convolutional layers are fed into the bilinear
+model. E.g. BN-Inception produces features maps of dimension $14 \times 14
+\times 1024$, leading to bilinear outputs of dimension $1024 \times 1024$, and
+corresponding compact bilinear representation of size $8196$.
+
+The ConvNet models are then fine-tuned, first fine-tuning the last layer, then
+the entire ConvNet.
+
+Features output from the bilinear model have a signed square root and
+L2-normalization applied before being input to a softmax layer.
+
+A similar procedure to above is applied for the fully-connected pooling models.
+
+They first split each video into three equal segments. Then, for two-stream,
+one RGB frame and corresponding stack of optical flow frames is extracted for
+each segment, and the frames extracted from all three segments are input to the
+TLE model. Similarly, for C3D, one clip of 16 frames is extracted from each
+segment and the three sets of extracted features are input to the TLE model.
+
+For the two-stream model, the above three-segment extraction-prediction
+sequence is completed five times and the resulting predictions are averaged.
+For the C3D model, the above is repeated three times.
+
+\subsubsection{Criticism}
+
+Presumably cross-entropy loss on the output of the softmax function.
+
+\subsubsection{Results}
+
+Element-wise multiplication (94.8/70.4) beat average (92.6/68.1) and maximum
+(91.3/67.4) aggregation functions on UCF101/HMDB51.
+
+With two-stream ConvNets, TLE\@: bilinear achieved 95.6/71.1 on UCF101/HMDB51,
+compared with $94.0/68.5$ in~\cite{DBLP:journals/corr/WangXW0LTG16}. With C3D,
+TLE\@: bilinear scores $86.3/60.3$.
+
+An experiment was run to include a fourth segment extracted from a VGG-16
+network pre-trained on Places365, a so-called ``context'' feature map, in
+addition to a three-segment spatial ConvNet TLE\@. This setup scored
+$83.8/63.6$, as compared to $81.5/60.9$ using only spatial ConvNets\@.
+
+\subsubsection{Questions}
+
+Would knowledge transfrom from Places365 still work for the two-stream
+ConvNets?
+
+
 \section{Reinforcement Learning}
 
 \subsection{Neural Optimizer Search with Reinforcement
@@ -1324,6 +1424,9 @@ optimizers that perform well over the entire training cycle, but perform
 relatively poorly during the first $N$ epochs?
 
 \subsubsection{Similar Work}
+
+Trust Region Policy Optimization~\cite{DBLP:journals/corr/SchulmanLMJA15}
+(background).
 
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
