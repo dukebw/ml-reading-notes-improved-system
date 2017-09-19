@@ -42,6 +42,7 @@
 
 \maketitle
 
+
 \part{Definitions}
 
 
@@ -187,8 +188,10 @@ Equation~\ref{dilated-conv-op}.
 
 \part{Book Summaries}
 
+
 \section{Machine Learning: A Probabilistic Perspective}
 % TODO(brendan): citation
+
 
 \subsection{Probability}
 
@@ -236,7 +239,9 @@ $\log{p(\mathcal{D} | h)}$ will dominate. Therefore the
 $\textrm{argmax}_h \log{p(\mathcal{D} | h)}$ is converged to by the MAP in the
 limit of infinite data, justifying the MLE's use as an objective function.
 
+
 \section{Deep Learning~\cite{Goodfellow-et-al-2016-Book}}
+
 
 \subsection{Machine Learning Basics}
 
@@ -257,17 +262,20 @@ $\theta_t = \frac{1}{m'} \sum_{i = 0}^{m'} \theta_{t - 1} - \epsilon \nabla f$.
 
 \part{Datasets}
 
+
 \section{CIFAR-10~\cite{cifar10-website}}
 \label{cifar10}
 
 CIFAR-10~\cite{cifar10-website} consists of \num{60000} colour images of $32
 \times 32$ resolution, has 10 classes and \num{6000} images per class.
 
+
 \section{HMDB-51~\cite{Kuehne11}}
 \label{hmdb51}
 
 HMDB-51 contains 7000 clips extracted from movies and YouTube then manually
 annotated with 51 class labels.
+
 
 \section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
@@ -282,10 +290,12 @@ videos, with 3358 action instances, exist that are not entirely background.
 The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
 background untrimmed videos.
 
+
 \section{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
 \label{ucf101}
 
 101 classes, 13k clips and 27 hours of video data in total.
+
 
 \section{WMT~2014~\cite{wmt14-translation-website}}
 \label{wmt2014}
@@ -304,9 +314,12 @@ Commentary Parallel Corpus}, at about three million words per language.
 Test data from previous years is provided, with on the order of~\num{3000}
 sentences per test set.
 
+
 \part{Paper Summaries}
 
+
 \section{Human Pose}
+
 
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
             Networks\cite{DBLP:journals/corr/ToshevS13}}
@@ -322,6 +335,7 @@ can be found in the ``Related Work'' section of
 
 The input to the 7-layered convolutional DNN (based on
 AlexNet\cite{NIPS2012_4824}) is the full image.
+
 
 \subsection{End-to-end people detection in crowded
             scenes\cite{DBLP:journals/corr/StewartA15}}
@@ -474,7 +488,9 @@ It is found that AP (on the validation set) increases from 0.82 to 0.85 when
 using separate weights connecting each of the LSTM outputs to predicted
 candidates.
 
+
 \section{Regularization}
+
 
 \subsection{Dropout: A Simple Way to Prevent Neural Networks from
             Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
@@ -493,7 +509,9 @@ weights.
                 weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
 \end{itemize}
 
+
 \section{CNN Architecture}
+
 
 \subsection{Deep Residual Learning for Image
             Recognition\cite{DBLP:journals/corr/HeZRS15}}
@@ -508,7 +526,9 @@ referred to as motivating ``very deep'' models.
 % TODO(brendan): Read [1], [9] for vanishing gradient, R-CNN series for
 % localization.
 
+
 \section{GANs}
+
 
 \subsection{Generative Adversarial Networks\cite{NIPS2014_5423}}
 \label{gan}
@@ -523,6 +543,7 @@ Motivation points to~\cite{deepSpeechReviewSPM2012} and~\cite{NIPS2012_4824} as
 successful uses of deep discriminative networks for classification based on
 \hyperref[backprop]{back propagation}, \hyperref[dropout]{dropout} and
 piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
+
 
 \subsection{Image-to-Image Translation with Conditional Adversarial
             Networks\cite{DBLP:journals/corr/IsolaZZE16}}
@@ -718,7 +739,9 @@ Cityscapes\cite{DBLP:journals/corr/CordtsORREBFRS16} and achieves 0.22 class
 IoU with cGAN loss alone, compared with 0.35 class IoU with L1 loss and 0.80
 class IoU using the wide ResNets of~\cite{DBLP:journals/corr/WuSH16e}.
 
+
 \section{Human Activity Recognition}
+
 
 \subsection{Quo Vadis, Action Recognition? A New Model and the Kinetics
             Dataset\cite{carreira2017quo}}
@@ -858,6 +881,7 @@ Convolutional Two-Stream Network Fusion for Video Action
 Recognition~\cite{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
 networks by fusing the streams' respective features earlier.
 
+
 \subsection{Learning Spatiotemporal Features with 3D Convolutional
             Networks\cite{DBLP:journals/corr/TranBFTP14}}
 
@@ -945,7 +969,9 @@ Classification\cite{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
 explores other temporal feature pooling models that work on Conv2D-extracted
 features.
 
+
 \section{Temporal Action Localization}
+
 
 \subsection{CDC\@: Convolutional-De-Convolutional Networks for Precise Temporal
             Action Localization in Untrimmed
@@ -1040,6 +1066,7 @@ convolutions with spatial stride fixed, until the last layer? I.e.\ test
 whether the CDC filter is special when compared to simply adding more
 parameters to the temporal up-convolutional filters.
 
+
 \subsection{Temporal Action Localization in Untrimmed Videos via Multi-stage
             CNNs~\cite{DBLP:journals/corr/ShouWC16}}
 
@@ -1129,6 +1156,7 @@ submission of~\cite{LearSubmissionThumos2014}.
 
 Does uniform sampling mean random uniform sampling, or sampling at fixed,
 uniform intervals?
+
 
 \subsection{Temporal Convolutional Networks for Action Segmentation and
             Detection\cite{DBLP:journals/corr/LeaFVRH16}}
@@ -1224,6 +1252,7 @@ field.
 
 Dilated convolutions with larger filter sizes? Dilated convolutions over 3D
 data?
+
 
 \subsection{Deep Temporal Linear Encoding
             Networks\cite{DBLP:journals/corr/DibaSG16}}
@@ -1321,6 +1350,7 @@ ConvNets?
 
 
 \section{Reinforcement Learning}
+
 
 \subsection{Neural Optimizer Search with Reinforcement
             Learning~\cite{neural-optimizer-search-46114}}
