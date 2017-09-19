@@ -277,6 +277,18 @@ HMDB-51 contains 7000 clips extracted from movies and YouTube then manually
 annotated with 51 class labels.
 
 
+\section{Kinetics~\cite{kay2017kinetics}}
+\label{kinetics}
+
+The Kinetics Human Action Video Dataset\cite{kay2017kinetics}, which has 400
+human action classes each with more than 400 examples. The classes are focused
+on human actions, such as pouring or kissing, as opposed to activities (such as
+tennis or baseball). The clips are 10s long. There are roughly \num{300000}
+labelled clips in total in the dataset.
+
+The Kinetics test set is 100 clips for each class.
+
+
 \section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
 
@@ -748,12 +760,7 @@ class IoU using the wide ResNets of~\cite{DBLP:journals/corr/WuSH16e}.
 
 \subsubsection{Data}
 
-The Kinetics Human Action Video Dataset\cite{kay2017kinetics}, which has 400
-human action classes each with more than 400 examples. The classes are focused
-on human actions, such as pouring or kissing, as opposed to activities (such as
-tennis or baseball). The clips are 10s long.
-
-The Kinetics test set is 100 clips for each class.
+\hyperref[kinetics]{Kinetics}.
 
 A miniKinetics version of the dataset was used in the paper, and for
 experimentation, with 213 classes and 120k clips split into three subsets: one
@@ -968,6 +975,43 @@ Beyond Short Snippets: Deep Networks for Video
 Classification\cite{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
 explores other temporal feature pooling models that work on Conv2D-extracted
 features.
+
+
+\subsection{Revisiting the Effectiveness of Off-the-shelf Temporal Modeling
+            approaches for Large-scale Video
+            Classification\cite{2017arXiv170803805B}}
+
+\subsubsection{Data}
+
+\hyperref[kinetics]{Kinetics}.
+
+\subsubsection{Model}
+
+RGB, optical flow and audio streams are used. RGB and optical flow streams both
+use Inception-ResNet-v2, where the RGB stream is pre-trained on ImageNet then
+fine-tuned on Kinetics. The optical flow stream is initialized with the
+fine-tuned weights from the RGB stream.
+
+A VGG-16 ConvNet is used to model the audio data, which is preprocessed
+following~\cite{DBLP:journals/corr/HersheyCEGJMPPS16}. Audio data is first
+split into non-overlapping 960ms frames. Each frame is split into 25ms windows,
+offset at every 10ms, for 96 windows in total. A Fourier transform is run on
+each window, and frequencies are binned using Mel-scale into 64 bins. A
+log-transform is applied to each bin. Therefore, the VGG-16 ConvNet receives
+$96 \times 64$ inputs.
+
+\subsubsection{Inference}
+
+At test time, three segments are sampled from each trimmed video,
+following~\cite{DBLP:journals/corr/WangXW0LTG16}.
+
+\subsubsection{Criticism}
+
+\subsubsection{Results}
+
+\subsubsection{Questions}
+
+\subsubsection{Similar Work}
 
 
 \section{Temporal Action Localization}
