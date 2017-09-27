@@ -1,0 +1,50 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{pgfplots}
+
+\title{PyTorch Internals}
+\date{\today}
+\author{Brendan Duke}
+\institute{University of Guelph}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{nn.modules}
+        \center{}
+        \scalebox{.2}{\input{data/nn_modules.pdf_tex}}
+\end{frame}
+
+\begin{frame}{nn.modules.conv UML}
+        \center{}
+        \scalebox{.075}{\input{data/conv_classes.pdf_tex}}
+\end{frame}
+
+\begin{frame}[fragile]{Questions to answer}
+        \begin{itemize}[<+- | alert@+>]
+                \item How and where is the backprop algorithm implemented in
+                        PyTorch?
+
+                \item What is the full stack of software that runs when
+                        training a two-layer ConvNet on CIFAR-10?
+        \end{itemize}
+
+        Blah~\cite{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14}.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+        \bibliography{pytorch-internals}
+        \bibliographystyle{apalike}
+\end{frame}
+
+\end{document}

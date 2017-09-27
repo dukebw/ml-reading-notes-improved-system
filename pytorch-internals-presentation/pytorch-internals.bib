@@ -1,0 +1,258 @@
+@article{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14,
+  author    = {Olga Russakovsky and
+               Jia Deng and
+               Hao Su and
+               Jonathan Krause and
+               Sanjeev Satheesh and
+               Sean Ma and
+               Zhiheng Huang and
+               Andrej Karpathy and
+               Aditya Khosla and
+               Michael S. Bernstein and
+               Alexander C. Berg and
+               Fei{-}Fei Li},
+  title     = {ImageNet Large Scale Visual Recognition Challenge},
+  journal   = {CoRR},
+  volume    = {abs/1409.0575},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1409.0575},
+  timestamp = {Wed, 07 Jun 2017 14:41:16 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RussakovskyDSKSMHKKBBF14},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        The ImageNet Large Scale Visual Recognition Challenge is a benchmark in
+        object category classification and detection on hundreds of
+        object categories and millions of images. The challenge has
+        been run annually from 2010 to present, attracting
+        participation from more than fifty institutions.  This paper
+        describes the creation of this benchmark dataset and the
+        advances in object recognition that have been possible as a
+        result. We discuss the challenges of collecting large-scale
+        ground truth annotation, highlight key breakthroughs in
+        categorical object recognition, provide a detailed analysis of
+        the current state of the field of large-scale image
+        classification and object detection, and compare the
+        state-of-the-art computer vision accuracy with human accuracy.
+        We conclude with lessons learned in the five years of the
+        challenge, and propose future directions and improvements.
+  }
+}
+
+@article{kay2017kinetics,
+  title={The Kinetics Human Action Video Dataset},
+  author={Kay, Will and Carreira, Joao and Simonyan, Karen and Zhang, Brian and
+          Hillier, Chloe and Vijayanarasimhan, Sudheendra and Viola, Fabio and
+          Green, Tim and Back, Trevor and Natsev, Paul and others},
+  journal={arXiv preprint arXiv:1705.06950},
+  year={2017},
+  abstract = {
+        We describe the DeepMind Kinetics human action video dataset. The
+        dataset contains 400 human action classes, with at least 400 video
+        clips for each action. Each clip lasts around 10s and is taken from a
+        different YouTube video. The actions are human focussed and cover a
+        broad range of classes including human-object interactions such as
+        playing instruments, as well as human-human interactions such as
+        shaking hands. We describe the statistics of the dataset, how it was
+        collected, and give some baseline performance figures for neural
+        network architectures trained and tested for human action
+        classification on this dataset. We also carry out a preliminary
+        analysis of whether imbalance in the dataset leads to bias in the
+        classifiers.
+  }
+}
+
+@article{carreira2017quo,
+  title={Quo Vadis, Action Recognition? A New Model and the Kinetics Dataset},
+  author={Carreira, Joao and Zisserman, Andrew},
+  journal={arXiv preprint arXiv:1705.07750},
+  year={2017},
+  abstract = {
+        The paucity of videos in current action classification datasets
+        (UCF-101 and HMDB-51) has made it difficult to identify good
+        video architectures, as most methods obtain similar performance
+        on existing small-scale benchmarks. This paper re-evaluates
+        state-of-the-art architectures in light of the new Kinetics
+        Human Action Video dataset. Kinetics has two orders of
+        magnitude more data, with 400 human action classes and over 400
+        clips per class, and is collected from realistic, challenging
+        YouTube videos. We provide an analysis on how current
+        architectures fare on the task of action classification on this
+        dataset and how much performance improves on the smaller
+        benchmark datasets after pre-training on Kinetics. 
+
+        We also introduce a new Two-Stream Inflated 3D ConvNet (I3D) that is
+        based on 2D ConvNet inflation: filters and pooling kernels of very deep
+        image classification ConvNets are expanded into 3D, making it possible
+        to learn seamless spatio-temporal feature extractors from video while
+        leveraging successful ImageNet architecture designs and even their
+        parameters. We show that, after pre-training on Kinetics, I3D models
+        considerably improve upon the state-of-the-art in action
+        classification, reaching 80.7% on HMDB-51 and 98.0% on UCF-101.
+  }
+}
+
+@article{DBLP:journals/corr/SimonyanZ14a,
+        author    = {Karen Simonyan and Andrew Zisserman},
+        title     = {Very Deep Convolutional Networks for Large-Scale Image Recognition},
+        journal   = {CoRR},
+        volume    = {abs/1409.1556},
+        year      = {2014},
+        url       = {http://arxiv.org/abs/1409.1556},
+        timestamp = {Wed, 01 Oct 2014 15:00:05 +0200},
+        biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/SimonyanZ14a},
+        bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/corr/KangLXOYLW17,
+  author    = {Kai Kang and
+               Hongsheng Li and
+               Tong Xiao and
+               Wanli Ouyang and
+               Junjie Yan and
+               Xihui Liu and
+               Xiaogang Wang},
+  title     = {Object Detection in Videos with Tubelet Proposal Networks},
+  journal   = {CoRR},
+  volume    = {abs/1702.06355},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1702.06355},
+  timestamp = {Wed, 07 Jun 2017 14:42:58 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/KangLXOYLW17},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        Object detection in videos has drawn increasing attention recently with
+        the introduction of the large-scale ImageNet VID dataset.
+        Different from object detection in static images, temporal
+        information in videos is vital for object detection. To fully
+        utilize temporal information, state-of-the-art methods are
+        based on spatiotemporal tubelets, which are essentially
+        sequences of associated bounding boxes across time. However,
+        the existing methods have major limitations in generating tubelets in
+        terms of quality and efficiency. Motion-based methods are able
+        to obtain dense tubelets efficiently, but the lengths are
+        generally only several frames, which is not optimal for
+        incorporating long-term temporal information. Appearance-based
+        methods, usually involving generic object tracking, could
+        generate long tubelets, but are usually computationally
+        expensive. In this work, we propose a framework for object
+        detection in videos, which consists of a novel tubelet proposal
+        network to efficiently generate spatiotemporal proposals, and a
+        Long Short-term Memory (LSTM) network that incorporates
+        temporal information from tubelet proposals for achieving high
+        object detection accuracy in videos. Experiments on the
+        large-scale ImageNet VID dataset demonstrate the effectiveness
+        of the proposed framework for object detection in videos.
+  }
+}
+
+@article{DBLP:journals/corr/RenHG015,
+  author    = {Shaoqing Ren and
+               Kaiming He and
+               Ross B. Girshick and
+               Jian Sun},
+  title     = {Faster {R-CNN:} Towards Real-Time Object Detection with Region Proposal
+               Networks},
+  journal   = {CoRR},
+  volume    = {abs/1506.01497},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1506.01497},
+  timestamp = {Wed, 07 Jun 2017 14:42:40 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/RenHG015},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        State-of-the-art object detection networks depend on region proposal
+        algorithms to hypothesize object locations. Advances like
+        SPPnet and Fast R-CNN have reduced the running time of these
+        detection networks, exposing region proposal computation as a
+        bottleneck. In this work, we introduce a Region Proposal
+        Network (RPN) that shares full-image convolutional features
+        with the detection network, thus enabling nearly cost-free
+        region proposals. An RPN is a fully convolutional network that
+        simultaneously predicts object bounds and objectness scores at
+        each position. The RPN is trained end-to-end to generate
+        high-quality region proposals, which are used by Fast R-CNN for
+        detection. We further merge RPN and Fast R-CNN into a single
+        network by sharing their convolutional features---using the
+        recently popular terminology of neural networks with
+        'attention' mechanisms, the RPN component tells the unified
+        network where to look. For the very deep VGG-16 model, our
+        detection system has a frame rate of 5fps (including all steps)
+        on a GPU, while achieving state-of-the-art object detection
+        accuracy on PASCAL VOC 2007, 2012, and MS COCO datasets with
+        only 300 proposals per image. In ILSVRC and COCO 2015
+        competitions, Faster R-CNN and RPN are the foundations of the
+        1st-place winning entries in several tracks. Code has been made
+        publicly available.
+  }
+}
+
+@article{DBLP:journals/corr/KrishnaHRLN17,
+  author    = {Ranjay Krishna and
+               Kenji Hata and
+               Frederic Ren and
+               Fei{-}Fei Li and
+               Juan Carlos Niebles},
+  title     = {Dense-Captioning Events in Videos},
+  journal   = {CoRR},
+  volume    = {abs/1705.00754},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1705.00754},
+  timestamp = {Wed, 07 Jun 2017 14:41:19 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/KrishnaHRLN17},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        Most natural videos contain numerous events. For example, in a video of
+        a "man playing a piano", the video might also contain "another
+        man dancing" or "a crowd clapping". We introduce the task of
+        dense-captioning events, which involves both detecting and
+        describing events in a video. We propose a new model that is
+        able to identify all events in a single pass of the video while
+        simultaneously describing the detected events with natural
+        language. Our model introduces a variant of an existing
+        proposal module that is designed to capture both short as well
+        as long events that span minutes. To capture the dependencies
+        between the events in a video, our model introduces a new
+        captioning module that uses contextual information from past
+        and future events to jointly describe all events. We also
+        introduce ActivityNet Captions, a large-scale benchmark for
+        dense-captioning events. ActivityNet Captions contains 20k
+        videos amounting to 849 video hours with 100k total
+        descriptions, each with it's unique start and end time.
+        Finally, we report performances of our model for
+        dense-captioning events, video retrieval and localization.
+  }
+}
+
+@article{DBLP:journals/corr/JohnsonKL15,
+  author    = {Justin Johnson and
+               Andrej Karpathy and
+               Fei{-}Fei Li},
+  title     = {DenseCap: Fully Convolutional Localization Networks for Dense Captioning},
+  journal   = {CoRR},
+  volume    = {abs/1511.07571},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1511.07571},
+  timestamp = {Wed, 07 Jun 2017 14:43:15 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/JohnsonKL15},
+  bibsource = {dblp computer science bibliography, http://dblp.org},
+  abstract = {
+        We introduce the dense captioning task, which requires a computer
+        vision system to both localize and describe salient regions in
+        images in natural language. The dense captioning task
+        generalizes object detection when the descriptions consist of a
+        single word, and Image Captioning when one predicted region
+        covers the full image. To address the localization and
+        description task jointly we propose a Fully Convolutional
+        Localization Network (FCLN) architecture that processes an
+        image with a single, efficient forward pass, requires no
+        external regions proposals, and can be trained end-to-end with
+        a single round of optimization. The architecture is composed of
+        a Convolutional Network, a novel dense localization layer, and
+        Recurrent Neural Network language model that generates the
+        label sequences. We evaluate our network on the Visual Genome
+        dataset, which comprises 94,000 images and 4,100,000
+        region-grounded captions. We observe both speed and accuracy
+        improvements over baselines based on current state of the art
+        approaches in both generation and retrieval settings.
+  }
+}
