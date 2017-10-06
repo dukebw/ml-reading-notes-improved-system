@@ -1,0 +1,430 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+\usepackage{booktabs}
+
+\usepackage{pgfplots}
+
+% Presentation flow plan:
+%
+% Goals: 
+%
+%       0. Explain about my participation in the Kinetics challenge and the
+%       stream fusion architecture idea that I came up with based on fusing
+%       depth and motion (DeMoN) with RGB and pose networks.
+%
+%       The motivation of the current research is to extend the idea of stream
+%       fusion to an automatic search over fusion operators.
+%
+%       The idea of presenting my work in this early stage is to request
+%       feedback, ideas and direction from the group.
+%
+%
+%       0. To what type of problems can fusion operator search be applied?
+%
+%       VQA: give MUTAN as motivation for improving performance by improving
+%       the multi-modal fusion operator.
+%
+%       Action recognition in video: the "Revisiting the effectiveness of
+%       off-the-shelf temporal modeling approaches for large-scale video
+%       classification" Kinetics submission.
+%
+%       Take advantage of Dhanesh's multi-modal literature review:
+%       SIGPROC-Rev1.pdf.
+%
+%
+%       1-?. Present and explain the research on which my proposed research
+%       depends.
+%
+%       1. Related, previous work on same topic from this group:
+%
+%       ModOut: https://hal.archives-ouvertes.fr/hal-01444614
+%
+%       Structure Optimization for Deep Multimodal Fusion Networks Using
+%       Graph-Induced Kernels: https://arxiv.org/abs/1707.00750.
+%
+%
+%       2a. Architecture search techniques:
+%
+%       Neural optimizer search with reinforcement learning:
+%       http://proceedings.mlr.press/v70/bello17a.html.
+%
+%       Neural architecture search with reinforcement learning:
+%       https://www.openreview.net/pdf?id=r1Ue8Hcxg.
+%
+%       Learning to learn by gradient descent by gradient descent:
+%       https://arxiv.org/abs/1606.04474.
+%
+%
+%       2b. Possible ways to apply architecture search to multi-modal fusion
+%       problem.
+%
+%       Ask for ideas, based on what was just presented.
+%
+%       Ideas:
+%               - Use dynamic programming to add layers, finding first the best
+%               policy for a single fusion layer, then explore out to >= 2
+%               layers.
+%
+%               In this case, the current state would be the state of the
+%               fusion architecture that has been added on to the original
+%               network, and the action space would be where to add the next
+%               layer or fusion operation.
+%
+%               - Action space: join any of N activation map layers from each
+%               stream with any other activation map using a fusion operator.
+%
+%               E.g., combine RGB and optical flow at multiple levels for
+%               multiple parallel streams, and fuse those.
+
+\title{Stream Fusion Operator Search}
+\date{\today}
+\author{Brendan Duke}
+\institute{University of Guelph}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+
+\section{Introduction}
+
+\begin{frame}{Stream fusion}
+        \center{}
+        \scalebox{.65}{\input{data/demon_resnet.tex}}
+\end{frame}
+
+\begin{frame}[fragile]{Questions to answer}
+        \begin{itemize}[<+- | alert@+>]
+                \item What current work exists on the topic of fusion
+                        operators? What types of fusion operators are currently
+                        in use?
+
+                \item What type of model search techniques exist for neural
+                        network architecture search?
+
+                \item How might model search techniques be used as methods of
+                        learning fusion operators?
+        \end{itemize}
+\end{frame}
+
+
+\section{Current Fusion Operator Work}
+
+{%
+\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
+\begin{frame}{VQA with Tucker decomposition}
+        \center{}
+        \vspace{-0.8cm}
+        \hspace*{-0.8cm}
+        \includegraphics[scale=0.31]{data/mutan_vqa_intro}
+\end{frame}
+}
+
+{%
+% Since Tucker decomposition is a way to approximate a tensor with a lower-rank
+% tensor, this image of a clown approximated with SVD is used to illustrate the
+% amount of information that can be retained while reducing dimensionality.
+% The image, originally 200x320, has been approximated with a rank 20 matrix
+% and therefore gone from 200x320 = 64000 numbers to (200 + 320 + 1)x20 = 10420
+% numbers.
+\setbeamertemplate{frame footer}{\cite{Murphy:2012:MLP:2380985}}
+\begin{frame}{Low rank tensor approximations}
+        \center{}
+        \includegraphics[scale=0.35]{data/low_rank_clown}
+\end{frame}
+}
+
+{%
+% Tucker decomposition is also called higher-order Principal Components
+% Analysis. This image is to visualize the PCA projection of D = 2 data to
+% an L = 1 space. The points have been projected onto the eigenvector of
+% highest eigenvalue, which is also the line of highest covariance between the
+% D dimensions.
+\setbeamertemplate{frame footer}{\cite{Murphy:2012:MLP:2380985}}
+\begin{frame}{PCA}
+        \center{}
+        \includegraphics[scale=0.4]{data/pca}
+\end{frame}
+}
+
+{%
+% Fibers needed for explanation of mode-i tensor product used in Tucker
+% decomposition, which is the fusion operator in the MUTAN model.
+\setbeamertemplate{frame footer}{\cite{Kolda:2009:TDA:1655228.1655230}}
+\begin{frame}{Tensor mode-$i$ fibers}
+        \center{}
+        \includegraphics[scale=0.275]{data/tensor_fibers}
+\end{frame}
+}
+
+{%
+% This slide is to illustrate dimensionality reduction in the tensor product.
+% In this case, mode-3 tensor multiplication between a 3D tensor and a vector
+% reduces a K dimension down to 1 dimension.
+%
+% In general, an n-mode tensor product of a tensor X with a matrix will reduce
+% the nth dimension of the tensor to the number of rows of the matrix, which is
+% what is happening in the Tucker decomposition.
+\begin{frame}{Tensor product}
+        \center{}
+        \includegraphics[scale=0.075]{data/tensor_product}
+\end{frame}
+}
+
+{%
+% This is the Tucker decomposition used as the multi-modal fusion operator in
+% MUTAN. Here the matrices A, B and C are analogous to the principal components
+% eigenvectors in PCA.
+\setbeamertemplate{frame footer}{\cite{Kolda:2009:TDA:1655228.1655230}}
+\begin{frame}{Tucker decomposition}
+        \center{}
+        \includegraphics[scale=0.28]{data/tucker_decomp}
+        \begin{equation*}
+                \mathcal{X} \approx \mathcal{G} \times_1 \mathbf{A} \times_2 \mathbf{B} \times_3 \mathbf{C}
+        \end{equation*}
+\end{frame}
+}
+
+{%
+% Here, the outer-product, or "bilinear" relationship, between the sentence
+% embedding q and the image embedding v is approximated using the Tucker
+% decomposition.
+\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
+\begin{frame}{MUTAN}
+        \center{}
+        \hspace*{-1.0cm}
+        \includegraphics[scale=0.31]{data/mutan}
+        \begin{equation*}
+                y = \left(\left(\mathcal{T}_c \times_1 \left(\mathbf{q}^T\mathbf{W}_q\right)\right)
+                        \times_2 \left(\mathbf{v}^T\mathbf{W}_v\right)\right)
+                    \times_3 \mathbf{W}_o
+        \end{equation*}
+\end{frame}
+}
+
+{%
+% Contrast of the Tucker decomposition with Multimodal Compact Bilinear (MCB)
+% and Multimodal Low-rank Bilinear (MLB).
+%
+% On the val split of the VQA dataset, the full MUTAN method achieved
+% performance of 58.16 overall as compared with the next best result, 57.94
+% from MLB, and compared with 56.92 from a baseline that just concatenates v
+% and q.
+\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
+\begin{frame}{MCB vs. MLB vs. MUTAN}
+        \center{}
+        \hspace*{-0.9cm}
+        \includegraphics[scale=0.31]{data/mcb_mlb_mutan}
+\end{frame}
+}
+
+{%
+% Winner of Kinetics challenge.
+% Uses L2-normalization followed by concatenation as their fusion operator.
+\setbeamertemplate{frame footer}{\cite{2017arXiv170803805B}}
+\begin{frame}{Multi-group shifting attention network}
+        \center{}
+        \vspace{-0.8cm}
+        \hspace*{-0.9cm}
+        \includegraphics[scale=0.34]{data/multi_group_shifting_attn}
+\end{frame}
+}
+
+% TODO(brendan): More use-cases from Dhanesh's literature review?
+
+% TODO(brendan): Related work from group (ModOut).
+
+
+\section{Neural Architecture Search}
+
+{%
+% Two problems with REINFORCE as written: variance and convergence.
+% Variance can be improved by:
+%
+%       1. Causality: in the sum, only sum from t' = t to T. Then r(tau) become
+%          the "reward-to-go" or q-function. This reduces the magnitude of the
+%          term and hence the variance.
+%
+%       2. Baseline (or REINFORCE comparison): subtract average reward to
+%          center the rewards. This does not change the expected value of the
+%          policy gradient.
+%
+%          Optimal variance reduction is b = E[g(tau)^2*r(tau)]/E[g(tau)^2].
+%
+%       Number of samples can be improved with importance sampling, Trust
+%       Region Policy Optimization...
+\setbeamertemplate{frame footer}{\cite{deep-rl-berkeley}}
+\begin{frame}{REINFORCE overview}
+        \vspace{-0.8cm}
+        \hspace*{-1.0cm}
+        \includegraphics[scale=0.43]{data/reinforce_overview}
+\end{frame}
+}
+
+{%
+\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
+\begin{frame}{Neural optimizer search overview}
+        \center{}
+        \includegraphics[scale=0.275]{data/neural_arch_update}
+\end{frame}
+}
+
+{%
+% These are common optimizers expressed in the neural optimizer search DSL, to
+% illustrate how the search works. The update rules are expressed as a sequence
+% of binary operators operating on unary operations. v-hat is a moving average
+% of the squared gradients, and m-hat is a moving average of the gradients.
+\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
+\begin{frame}{Common optimizers expressed in DSL}
+        \center{}
+        \hspace*{-1.0cm}
+        \includegraphics[scale=0.32]{data/common_opts}
+\end{frame}
+}
+
+{%
+% A visualization of the controller outputs.
+% In this case, the controller reward plateau'ed after about 15000 sampled
+% optimizers.
+\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
+\begin{frame}{Controller RNN overview}
+        \center{}
+        \hspace*{-1.0cm}
+        \includegraphics[scale=0.32]{data/neural_opt_controller}
+\end{frame}
+}
+
+{%
+% 10^-3w is (small, constant) white-noise.
+% g*e^{sign(g)*sign(m_hat)} decreases the magnitude of the gradient when its
+% sign disagrees with the sign of the momentum (moving average of gradient).
+% Hence this is an intuitive update rule invented by the controller.
+\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
+\begin{frame}{Generated neural optimizer results}
+        \center{}
+        \begin{tabular}{l r}
+                \emph{Optimizer} & \emph{Best Test} \\
+                \midrule{}
+                SGD & 91.9 \\
+                Momentum & 92.3 \\
+                ADAM & 90.7 \\
+                RMSProp & 90.3 \\
+                \midrule{}
+                $[e^{\textrm{sign}(g)*\textrm{sign}(\hat{m})} + \textrm{clip}(g, 10^{-4})]*g$ & 93.1 \\
+                $\textrm{drop}(\hat{m}, 0.3)*e^{10^{-3}w}$ & 93.2 \\
+                $g*e^{\textrm{sign}(g)*\textrm{sign}(\hat{m})}$ & 92.8
+        \end{tabular}
+\end{frame}
+}
+
+{%
+% A diagram of the action procedure of the RNN controller for creating
+% convnets.
+% Anchor points take skip connections based on sigmoids of tanh's of weighted
+% sums of the previous layer's hidden state and the current (input) layer's
+% hidden state.
+\setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+\begin{frame}{Neural architecture search: convolutional net}
+        \center{}
+        \vspace{-1.5cm}
+        \hspace*{-1.25cm}
+        \includegraphics[scale=0.3]{data/neural_arch_convnet}
+\end{frame}
+}
+
+{%
+% RNNs are generalized into a tree structure.
+% The RNN controller predicts, for each index of the tree, a binary op and
+% unary op (activation), along with tree indices corresponding to the input and
+% output cell states (akin to cell state in LSTMs).
+% This illustration uses base 2, while the true architectures searched over
+% used base 8.
+% Search space for RNNs: 6*10^16. 15000 architectures evaluated.
+\setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+\begin{frame}{Neural architecture search: RNN}
+        \center{}
+        \vspace{-1.25cm}
+        \hspace*{-1.25cm}
+        \includegraphics[scale=0.29]{data/neural_arch_rnn}
+\end{frame}
+}
+
+{%
+\setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+\begin{frame}{Generated convolutional net}
+        \center{}
+        \vspace{-0.25cm}
+        \includegraphics[scale=0.33]{data/neural_arch_convnet_output}
+\end{frame}
+}
+
+{%
+% The top left is an LSTM. The top right and bottom are generated RNNs,
+% difference being that on the bottom the controller was allowed to use max and
+% sin.
+\setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+\begin{frame}{Generated RNN}
+        \center{}
+        \vspace{-0.25cm}
+        \includegraphics[scale=0.32]{data/neural_arch_rnn_output}
+\end{frame}
+}
+
+
+\section{Neural Fusion Operator Search}
+
+\begin{frame}[standout]
+        How can the neural architecture search techniques we just learned be
+        applied to improve the multi-modal fusion operators we discussed
+        earlier?
+\end{frame}
+
+{%
+% Two extensions:
+%
+% 1. Is it possible to incorporate the state_i from the reinforcement learning
+%    state-action space, where state_i in this case is the current architecture
+%    of the network? This would reduce the action space to adding or removing
+%    layers.
+%
+% 2. Add an additional anchor point to predict skip connections to different
+%    layers of the optical flow, RGB and audio convnets.
+\begin{frame}{Neural search multi-modal extension}
+        \center{}
+        \includegraphics[scale=0.075]{data/multi_modal_neural}
+\end{frame}
+}
+
+
+\section{Conclusions}
+
+\begin{frame}[fragile]{Conclusions}
+        \begin{itemize}[<+- | alert@+>]
+                \item Fusion in VQA by approximating outer-product between
+                        embeddings of different modes.
+
+                \item Policy gradient method for neural architecture/optimizer
+                        search.
+
+                \item Extension to fusion operator still in early stages.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+        Questions?
+\end{frame}
+
+\appendix
+
+\begin{frame}[allowframebreaks]{References}
+        \bibliography{fusion-operator}
+        \bibliographystyle{apalike}
+\end{frame}
+
+\end{document}
