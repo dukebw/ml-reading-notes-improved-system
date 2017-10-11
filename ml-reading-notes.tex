@@ -1502,6 +1502,42 @@ relatively poorly during the first $N$ epochs?
 Trust Region Policy Optimization~\cite{DBLP:journals/corr/SchulmanLMJA15}
 (background).
 
+
+\section{Natural Language Processing}
+
+
+\subsection{Skip-Thought Vectors~\cite{DBLP:journals/corr/KirosZSZTUF15}}
+
+Skip-thought vectors is a method of encoding a feature vector from a sentence,
+in such a way that the feature vector can be re-used as a generic, continuous
+sentence representation in a variety of tasks.
+
+The skip-thought vector model is an encoder-decoder system. Sentences are input
+to the encoder-decoder as a sequence of word representations from word2vec. In
+the paper, RNNs with a reset (resetting the hidden state in the proposed state
+computation) and update gate (updating the hidden state with the proposed state
+if one, otherwise carrying over the previous hidden state) were used as both
+encoder and decoder.
+
+To generate the encoded representation for a given sentence, the encoder first
+generates a hidden state for each word in the sentence, with the final hidden
+state representing the entire sentence. At each timestep, the encoder takes as
+input the word2vec representation of the current word, as well as its own
+previous hidden state.
+
+The decoder then takes that encoded state as an additional input (in addition
+to its own hidden state and the word2vec representation of the previous
+timestep's word) as it decodes, word-by-word, the next sentence.
+
+The decoder is trained to predict both the previous and next sentence from a
+given sentence representation, with a log-loss on the correct word at each
+time-step.
+
+In this way, the encoder is trained to produce a feature representation of the
+preceding sentence that will be useful for the decoder to correctly predict the
+subsequent word in the current sentence.
+
+
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
 
