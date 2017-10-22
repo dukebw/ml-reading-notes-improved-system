@@ -1538,6 +1538,40 @@ preceding sentence that will be useful for the decoder to correctly predict the
 subsequent word in the current sentence.
 
 
+\section{RNNs}
+
+\subsection{Recurrent Batch
+            Normalization~\cite{DBLP:journals/corr/CooijmansBLC16}}
+
+Batch normalization (BN) is extended to the hidden-to-hidden connections in
+RNNs (in particular, to LSTMs). Previously suggested vanishing gradient issues
+when using BN in hidden-to-hidden connections are overcome by initializing the
+BN $\gamma$ parameter to 0.1. The reason given for the vanishing gradients is
+tanh saturation for unit variance features.
+
+In the equation
+$(\mathbf{f}_t, \mathbf{g}_t, \mathbf{i}_t, \mathbf{o}_t) =
+\mathbf{W}_h \mathbf{h}_{t - 1} + \mathbf{W}_x \mathbf{x}_t + \mathbf{b}$,
+BN layers are added after the matrix products
+$\mathbf{W}_h \mathbf{h}_{t - 1}$ and $\mathbf{W}_x \mathbf{x}_t$ separately.
+$\beta_h$ and $\beta_x$ are set to zero as they are redundant with
+$\mathbf{b}$. Another BN layer is added in the hidden state output equation
+$\mathbf{h}_t = \sigma{(\mathbf{o}_t)} \odot \textrm{tanh}{(\mathbf{c}_t)}$,
+right before the tanh squashing function. No BN layer is added to the
+$\mathbf{c}_t$ update equation, supposedly so that the cell state can freely
+propagate forward.
+
+Separate BN statistics are kept for each timestep, supposedly to overcome
+transience in the statistics of the initial sequences. BN statistics averaged
+over entire sequences is found to degrade performance. At test time, the BN
+statistics of the last timestep $T_{\max}$ of the longest sequence seen at
+training time are extended to all timesteps $t > T_{\max}$.
+
+As a trick for dealing with training sequences with long runs of constant
+variance (namely black pixels in MNIST digits), hidden units are initialized
+with Gaussian noise.
+
+
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
 
