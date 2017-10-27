@@ -1503,6 +1503,66 @@ Trust Region Policy Optimization~\cite{DBLP:journals/corr/SchulmanLMJA15}
 (background).
 
 
+\subsection{Asynchronous Methods for Deep Reinforcement
+            Learning~\cite{DBLP:journals/corr/MnihBMGLHSK16}}
+
+Four different asynchronous methods are explored for reinforcement learning
+using neural networks. The methods are tested on Atari 2600 games, a car
+simulator, Mujoco and a new 3-D maze game. In most games, asynchronous
+advantage actor-critic is found to converge much faster (in terms of wall-clock
+time) and to a higher score than the other asynchronous methods. In general,
+n-step return methods converge faster than one-step methods.
+
+Asynchronous advantage actor-critic (Algorithm~S3
+of~\cite{DBLP:journals/corr/MnihBMGLHSK16}) involves using the value function
+as a learned baseline in policy gradient. Hence the value-function baseline is
+the ``critic'', while the policy is the ``actor''.
+
+Entropy is added to the policy $\pi$ (\cite{williams1991function}) to avoid
+convergence to sub-optimal deterministic policies (for both A3C and value
+methods).
+
+For value methods, a different exploration policy is used per thread, by
+sampling $\epsilon$ from different distributions used in $\epsilon$-greedy
+exploration policies.
+
+RMSProp with statistics shared across thread is shown to be more robust
+compared to using thread-specific statistics.
+
+One-step Q-learning and SARSA both achieve super-linear performance
+improvements in the number of threads, hypothesized to be due to bias
+reduction.
+
+For Mujoco, low-dimensional inputs are mapped to a 200-dimensional vector,
+which is then used as input to an LSTM\@.
+
+For continuous action domains, the neural network outputs are the mean and
+scalar variance of a multi-dimensional Gaussian with spherical covariance
+(i.e.\ the covariance matrix $\Sigma = \lambda I$).
+
+\subsubsection{Future work}
+
+Experience replay, e.g.\ to improve sample efficiency for slow environments
+such as TORCS\@.
+
+Eligibility traces.
+
+Generalized advantage estimation.
+
+Reducing the over-estimation bias of Q-values.
+
+True online temporal difference models with non-linear function
+approximation~\cite{DBLP:journals/corr/SeijenMPMS15}.
+
+\subsubsection{Questions}
+
+Why is Algorithm~S2 unusual? What are eligibility traces (page 4)?
+
+A small network (a handful of convolutional layers followed by fully connected
+layers) is trained. What could be done to improve the ability to train a larger
+network?
+
+
 \section{Natural Language Processing}
 
 
