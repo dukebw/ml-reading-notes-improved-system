@@ -1598,6 +1598,62 @@ preceding sentence that will be useful for the decoder to correctly predict the
 subsequent word in the current sentence.
 
 
+\subsection{Effective Approaches to Attention-based Neural Machine
+            Translation~\cite{DBLP:journals/corr/LuongPM15}}
+
+Different attention-based models for neural machine translation are used on the
+WMT'15 English-German translation task in both directions, achieving 25.9 BLEU
+points in the English to German direction, which is an improvement of 1.0 BLEU
+points compared to the best system at the time of publication.
+
+Two different attention mechanisms are considered: global attention, where a
+context vector is formed from the weighted average of an attention mechanism
+over the entire source sentence $\mathbf{s}$, and local attention, where first
+a start position $p_t$ is predicted and then attention is only used in a
+neighbourhood around $p_t$.
+
+Different scoring mechanisms are used to compute attention, including the dot
+product of the current target hidden state $\mathbf{h}_t$ with each source
+hidden state $\overline{\mathbf{h}}_s$, i.e.\
+$\mathbf{h}_t^\intercal \overline{\mathbf{h}}_s$. The generalized dot product
+$\mathbf{h}_t^\intercal \mathbf{W}_\mathbf{a} \overline{\mathbf{h}}_s$ is also
+used.
+
+The align weights are then computed as the softmax of the score for each source
+word $s$, and the context vector is computed as a weighted sum over the source
+states $\overline{\mathbf{h}}_s$.
+
+Locally-predicted attention with general scoring is shown to slightly
+outperform global attention with dot product scoring in terms of BLEU score.
+
+\subsubsection{Questions}
+
+How is the loss function computed? Does it use cross-entropy with the closest
+monogram or tri-gram in the reference translations?
+
+The alignment weights output by the attention model (see Figure~7 alignment
+visualizations) seem to be nonsensical, i.e.\ not mapping between source and
+target word meanings. Is this normal for attention in machine translation
+models?
+
+
+\subsection{Reinforcement Learning for Bandit Neural Machine Translation with
+            Simulated Human Feedback~\cite{DBLP:journals/corr/NguyenDB17}}
+
+Advantage actor-critic is used to improve a pre-trained neural machine
+translation system using only ``bandit rewards'', i.e.\ scalar rewards
+indicating the quality of a given translation.
+
+The \emph{granularity}, \emph{variance} and \emph{skew} of true human rating
+distributions are simulated by fitting the distributions of these values using
+kernel smoothing, then applying perturbations according to kernel-smoothed fits
+to the output score from a BLEU system.
+
+A neural encoder-decoder is used as both the ``actor'' and ``critic''.
+
+% TODO(brendan): Currently on section 5.
+
+
 \section{RNNs}
 
 \subsection{Recurrent Batch
