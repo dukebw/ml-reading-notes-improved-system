@@ -1649,9 +1649,32 @@ distributions are simulated by fitting the distributions of these values using
 kernel smoothing, then applying perturbations according to kernel-smoothed fits
 to the output score from a BLEU system.
 
-A neural encoder-decoder is used as both the ``actor'' and ``critic''.
+A neural encoder-decoder with global attention is used as both the ``actor''
+and ``critic''.
 
-% TODO(brendan): Currently on section 5.
+The data used are parallel-translated TED talks from IWSLT 2014 and
+2015~\cite{cettolo2015iwslt}.
+
+An improvement by the NED-A2C method is shown in both per-sentence BLEU score
+(apparently on the training data) and corpus BLEU score on a held-out test set.
+Supervised training on the ``bandit set'' is shown to improve over A2C training
+on the bandit set, and the authors attribute this to maximizing the
+log-likelihood being a better approximation to corpus level BLEU than is
+per-sentence level BLEU\@.
+
+The method is shown to be more sensitive to variance in the bandit feedback
+than to skew or granularity, with variance greater than 20\% causing results to
+degrade.
+
+
+\subsubsection{Questions}
+
+What is the difference between corpus-level BLEU and sentence-level BLEU\@?
+
+The authors mention that directly learning the Q-function with the critic is
+unstable compared to advantage actor-critic. It would make sense as a sanity
+check to also compare against other baselines, such as averaged reward over the
+mini-batch (i.e.\ just using REINFORCE with a computed baseline).
 
 
 \section{RNNs}
