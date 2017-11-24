@@ -1422,6 +1422,57 @@ ConvNets?
 \section{Reinforcement Learning}
 
 
+\subsection{Designing Neural Network Architectures using Reinforcement
+            Learning~\cite{DBLP:journals/corr/BakerGNR16}}
+
+Q-Learning~\cite{Watkins1992} is used to build neural network architectures for
+image classification, and tested on MNIST, SVHN and CIFAR-10. A single such
+``MetaQNN'' model (the one that did best on the validation set) achieves 0.44\%
+error on the MNIST test set. The best model for CIFAR-10 achieves 6.92\% error
+on the test set.
+
+$\epsilon$-greedy exploration is used with a training schedule that starts with
+\num{1500} updates at $\epsilon = 1.0$ to allow for sufficient exploration,
+followed by either \num{100} or \num{150} updates at each step
+$\epsilon = 0.9, 0.8, \dots$.
+
+Only convolutional, fully connected, pooling and softmax layers are allowed.
+Various constraints to reduce the state space are used, such as only allowing
+fully-connected layers to transition to fully-connected or termination states.
+
+The following steps are taken in defining the learning algorithm:
+
+\begin{enumerate}
+        \item Reduce CNN layer definitions to state tuples.
+
+        \item Define a set of actions that the agent may taken from a given
+                state (i.e.\ layer definition).
+
+        \item The size of the action space is balanced with the amount of
+                exploration needed by the agent for the algorithm to converge.
+\end{enumerate}
+
+The action space is forced to terminate after a finite number of layers (12 for
+MNIST and 18 for CIFAR-10).
+
+\subsubsection{Extension Ideas}
+
+\begin{itemize}
+        \item In general, using Q-function approximation to allow increasing of
+                the state space.
+
+        \item Attaching a regularization term to the agent's cost function,
+                e.g.\ $\log{N}$ in the number of parameters.
+\end{itemize}
+
+\subsubsection{Questions}
+
+\begin{itemize}
+        \item Is convergence to the global minimum really guaranteed by
+                Q-learning?
+\end{itemize}
+
+
 \subsection{Neural Optimizer Search with Reinforcement
             Learning~\cite{neural-optimizer-search-46114}}
 
