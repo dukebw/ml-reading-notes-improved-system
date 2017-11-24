@@ -24,6 +24,20 @@
 \usepackage{txfonts}
 \usepackage{url}
 
+\newcommand{\expect}{\operatorname{E}\expectarg}
+\DeclarePairedDelimiterX{\expectarg}[1]{[}{]}{%
+  \ifnum\currentgrouptype=16 \else\begingroup\fi
+  \activatebar#1
+  \ifnum\currentgrouptype=16 \else\endgroup\fi
+}
+
+\newcommand{\innermid}{\nonscript\;\delimsize\vert\nonscript\;}
+\newcommand{\activatebar}{%
+  \begingroup\lccode`\~=`\|
+  \lowercase{\endgroup\let~}\innermid 
+  \mathcode`|=\string"8000
+}
+
 \newcommand\phantomlabel[1]{\phantomsection\label{#1}}
 
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -58,6 +72,18 @@
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
 biological brain\cite{Goodfellow-et-al-2016-Book}.
 
+\phantomlabel{fisher-info}
+The \textbf{Fisher information matrix} is the expected value of the observed
+information matrix, which is the gradient of the negative score function, or
+equivalently the Hessian of the negative log-likelihood. I.e.,
+
+\begin{align*}
+        F(\hat{\theta} | \theta^*) &= \expect{J(\hat{\theta} | D)} \\
+                                   &= -\nabla s(\hat{\theta}) \\
+                                   &= -\nabla^2 \log p(D \mid \hat{\theta})
+\end{align*}
+
+where $s(\hat{\theta})$ is the score function.
 
 \phantomlabel{kl}
 \textbf{KL divergence} is given in Equation~\ref{kleqn}\cite[Chapter~3]{Goodfellow-et-al-2016-Book}.
@@ -1561,6 +1587,45 @@ Why is Algorithm~S2 unusual? What are eligibility traces (page 4)?
 A small network (a handful of convolutional layers followed by fully connected
 layers) is trained. What could be done to improve the ability to train a larger
 network?
+
+
+\subsection{Scalable trust-region method for deep reinforcement learning using
+            Kronecker-factored
+            approximation~\cite{DBLP:journals/corr/abs-1708-05144}}
+
+A more sample-efficient algorithm for gradient descent is presented by using a
+Kronecker-factored approximation to the natural gradient, which is applied to
+OpenAI Gym discrete and continuous control tasks such as MuJoCo. The algorithm
+improves over TRPO in sample-efficiency and computation time since TRPO is an
+iterative method using conjugate gradient.
+
+The Kronecker-factor approximation part of Actor-Critic using
+Kronecker-Factored Trust Region (ACKTR) involves approximating the natural
+gradient by approximating the
+\hyperref[fisher-info]{Fisher information matrix} $F$. The method of
+approximating $F$ is the same as in~\cite{DBLP:journals/corr/MartensG15}.
+
+The trust region part of ACKTR refers to transforming the fixed $\eta$ in,
+
+\begin{equation*}
+        \theta \leftarrow \theta - \eta F^{-1} \nabla_\theta L
+\end{equation*}
+
+into,
+
+\begin{equation*}
+        \eta \leftarrow \min\left(
+                \eta_{\max} \sqrt{
+                        \frac{2\delta}{\Delta\theta^{\top}
+                                       \hat{F}
+                                       \Delta\theta}}\right)
+\end{equation*}
+
+\subsubsection{Questions}
+
+Supposedly $F$ is a local quadratic approximation to the KL divergence, which
+measures the dissimilarity of probability distributions $P$ and $Q$. If this is
+the case, what are $P$ and $Q$ when optimizing the policy of an RL agent?
 
 
 \section{Natural Language Processing}
