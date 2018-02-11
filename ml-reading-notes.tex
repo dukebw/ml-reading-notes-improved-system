@@ -19,6 +19,7 @@
 \usepackage{hyperref}
 \usepackage{inputenc}
 \usepackage{mathtools}
+\usepackage{natbib}
 \usepackage{titling}
 \usepackage{siunitx}
 \usepackage{txfonts}
@@ -70,7 +71,7 @@
 
 
 \textbf{Deep Neural Networks (DNNs)} are engineered systems inspired by the
-biological brain\cite{Goodfellow-et-al-2016-Book}.
+biological brain\citet{Goodfellow-et-al-2016-Book}.
 
 \phantomlabel{fisher-info}
 The \textbf{Fisher information matrix} is the expected value of the observed
@@ -86,7 +87,7 @@ equivalently the Hessian of the negative log-likelihood. I.e.,
 where $s(\hat{\theta})$ is the score function.
 
 \phantomlabel{kl}
-\textbf{KL divergence} is given in Equation~\ref{kleqn}\cite[Chapter~3]{Goodfellow-et-al-2016-Book}.
+\textbf{KL divergence} is given in Equation~\ref{kleqn}\citet[Chapter~3]{Goodfellow-et-al-2016-Book}.
 
 \begin{equation}
         \infdiv{P}{Q} = \varmathbb{E}_{x \sim P}\left[\log P(x) - \log Q(x)\right]
@@ -105,7 +106,7 @@ $H(P) = -\varmathbb{E}_{x \sim P} \left[\log P(x)\right]$.
 Memory) neural networks are a type of recurrent neural network whose
 characteristic feature is the presence of a gated self-loop that allows
 retention of its ``cell state'', which are the pre-non-linearity activations of
-the previous time step\cite[Chapter~10]{Goodfellow-et-al-2016-Book}.
+the previous time step\citet[Chapter~10]{Goodfellow-et-al-2016-Book}.
 
 Cell state is updated at each time step according to
 Equation~\ref{lstm_cell_state_update}.
@@ -132,16 +133,16 @@ well.
 \phantomlabel{multilayer_perceptron}
 \textbf{Multi-Layer Perceptrons (MLPs)} are mathematical functions mapping some
 set of input values to some set of output
-values\cite{Goodfellow-et-al-2016-Book}.
+values\citet{Goodfellow-et-al-2016-Book}.
 
 
 \textbf{Neighbourhood Components Analysis (NCA)} is a method of learning a
 Mahalanobis distance metric, and can also be used in linear dimensionality
-reduction\cite{NIPS2004_2566}.
+reduction\citet{NIPS2004_2566}.
 
 The \textbf{PCKh} metric, used by the MPII Human Pose Dataset, defines a joint
 estimate as matching the ground truth if the estimate lies within 50\% of the
-head segment length\cite{andriluka-2d-2014-853}. The head segment length is
+head segment length\citet{andriluka-2d-2014-853}. The head segment length is
 defined as the diagonal across the annotated head rectangle in the MPII data,
 multiplied by a factor of 0.6. Details can be found by examining the MATLAB
 \href{http://human-pose.mpi-inf.mpg.de/results/mpii_human_pose/evalMPII.zip}{evaluation script}
@@ -152,13 +153,13 @@ provided with the MPII dataset.
 \textbf{Non-maximum suppression} in object detection, in general, is a set of
 methods used to prune an initial set of object bounding boxes that may be
 uncorrelated with the actual object detections in an image, down to a subset
-that are\cite{DBLP:conf/accv/RotheGG14}. In edge detection, non-maximum
+that are\citet{DBLP:conf/accv/RotheGG14}. In edge detection, non-maximum
 suppression is used to suppress any pixels (i.e.\ not include them in the set of
 detected edges) that are not the maximum response in their neighbourhood.
 
 The \textbf{softmax function} is a continuous differentiable version of the
 argmax function, where the result is represented as a one-hot
-vector\cite[Chapter~6]{Goodfellow-et-al-2016-Book}. Softmax is a way of
+vector\citet[Chapter~6]{Goodfellow-et-al-2016-Book}. Softmax is a way of
 representing probability distributions over a discrete variable that can take
 on $n$ possible values.
 
@@ -171,10 +172,10 @@ Formally, softmax is given by Equation~\ref{softmax_eqn}.
 
 
 \phantomlabel{rectified_linear_units}
-\textbf{Rectified linear units (ReLUs)}\cite{icml2010_NairH10}
+\textbf{Rectified linear units (ReLUs)}\citet{icml2010_NairH10}
 
 
-\textbf{Leaky rectified linear units (LReLs)}\cite{maas_rectified_nonlinearities}
+\textbf{Leaky rectified linear units (LReLUs)}\citet{maas_rectified_nonlinearities}
 
 \begin{equation}
         h^{(i)} = \max\left(w^{(i)T}x, 0.01w^{(i)T}x\right) =
@@ -189,7 +190,7 @@ motivated in reducing the vanishing gradient problem.
 
 
 \phantomlabel{dilated_convolutions}
-\textbf{Dilated Convolutions}~\cite{DBLP:journals/corr/YuK15} can be defined as
+\textbf{Dilated Convolutions}~\citet{DBLP:journals/corr/YuK15} can be defined as
 follows.
 
 Let $F: \mathbb{Z}^2 \rightarrow \mathbb{R}$ be a discrete
@@ -266,7 +267,7 @@ $\textrm{argmax}_h \log{p(\mathcal{D} | h)}$ is converged to by the MAP in the
 limit of infinite data, justifying the MLE's use as an objective function.
 
 
-\section{Deep Learning~\cite{Goodfellow-et-al-2016-Book}}
+\section{Deep Learning~\citet{Goodfellow-et-al-2016-Book}}
 
 
 \subsection{Machine Learning Basics}
@@ -289,24 +290,24 @@ $\theta_t = \frac{1}{m'} \sum_{i = 0}^{m'} \theta_{t - 1} - \epsilon \nabla f$.
 \part{Datasets}
 
 
-\section{CIFAR-10~\cite{cifar10-website}}
+\section{CIFAR-10~\citet{cifar10-website}}
 \label{cifar10}
 
-CIFAR-10~\cite{cifar10-website} consists of \num{60000} colour images of $32
+CIFAR-10~\citet{cifar10-website} consists of \num{60000} colour images of $32
 \times 32$ resolution, has 10 classes and \num{6000} images per class.
 
 
-\section{HMDB-51~\cite{Kuehne11}}
+\section{HMDB-51~\citet{Kuehne11}}
 \label{hmdb51}
 
 HMDB-51 contains 7000 clips extracted from movies and YouTube then manually
 annotated with 51 class labels.
 
 
-\section{Kinetics~\cite{kay2017kinetics}}
+\section{Kinetics~\citet{kay2017kinetics}}
 \label{kinetics}
 
-The Kinetics Human Action Video Dataset\cite{kay2017kinetics}, which has 400
+The Kinetics Human Action Video Dataset\citet{kay2017kinetics}, which has 400
 human action classes each with more than 400 examples. The classes are focused
 on human actions, such as pouring or kissing, as opposed to activities (such as
 tennis or baseball). The clips are 10s long. There are roughly \num{300000}
@@ -315,10 +316,10 @@ labelled clips in total in the dataset.
 The Kinetics test set is 100 clips for each class.
 
 
-\section{THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16}}
+\section{THUMOS~2014~\citet{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
 
-THUMOS~2014~\cite{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
+THUMOS~2014~\citet{DBLP:journals/corr/IdreesZJGLSS16} consists of 101 action
 classes. THUMOS action classes are from UCF-101~\ref{ucf101}. All videos are
 from YouTube, and are labelled with action class and temporal span of the
 action. THUMOS~2014 contains 20 action classes, 2755 trimmed training videos
@@ -329,13 +330,13 @@ The THUMOS~2015 dataset extends THUMOS~2014 with a total of 5613 positive and
 background untrimmed videos.
 
 
-\section{UCF-101\cite{DBLP:journals/corr/abs-1212-0402}}
+\section{UCF-101\citet{DBLP:journals/corr/abs-1212-0402}}
 \label{ucf101}
 
 101 classes, 13k clips and 27 hours of video data in total.
 
 
-\section{WMT~2014~\cite{wmt14-translation-website}}
+\section{WMT~2014~\citet{wmt14-translation-website}}
 \label{wmt2014}
 
 WMT~2014 is a machine translation task with five language pairs:
@@ -360,23 +361,23 @@ sentences per test set.
 
 
 \subsection{DeepPose: Human Pose Estimation via Deep Neural
-            Networks\cite{DBLP:journals/corr/ToshevS13}}
+            Networks\citet{DBLP:journals/corr/ToshevS13}}
 
 This paper uses DNNs as a method for human pose estimation, based on the
-success of~\cite{NIPS2013_5207} and~\cite{DBLP:journals/corr/GirshickDDM13} for
+success of~\citet{NIPS2013_5207} and~\citet{DBLP:journals/corr/GirshickDDM13} for
 object detection using DNNs.
 
 This is in contrast to the existing work in human pose estimation at the time,
 which focused on explicitly designed pose models. Papers about these methods
 can be found in the ``Related Work'' section of
-\cite{DBLP:journals/corr/ToshevS13}.
+\citet{DBLP:journals/corr/ToshevS13}.
 
 The input to the 7-layered convolutional DNN (based on
-AlexNet\cite{NIPS2012_4824}) is the full image.
+AlexNet\citet{NIPS2012_4824}) is the full image.
 
 
 \subsection{End-to-end people detection in crowded
-            scenes\cite{DBLP:journals/corr/StewartA15}}
+            scenes\citet{DBLP:journals/corr/StewartA15}}
 
 This paper is focused on jointly creating a set of bounding-box predictions for
 people in crowded scenes using GoogLeNet and a
@@ -388,26 +389,26 @@ components of the system are trained end-to-end using back propagation.
 \subsubsection{Motivation}
 
 The end-to-end people detection method is contrasted with the object detection
-methods of R-CNN in~\cite{DBLP:journals/corr/GirshickDDM13} and OverFeat in
-\cite{DBLP:journals/corr/SermanetEZMFL13}.
-\cite{DBLP:journals/corr/GirshickDDM13} and
-\cite{DBLP:journals/corr/SermanetEZMFL13} rely on non-maximum suppression,
+methods of R-CNN in~\citet{DBLP:journals/corr/GirshickDDM13} and OverFeat in
+\citet{DBLP:journals/corr/SermanetEZMFL13}.
+\citet{DBLP:journals/corr/GirshickDDM13} and
+\citet{DBLP:journals/corr/SermanetEZMFL13} rely on non-maximum suppression,
 which does not use access to image information to infer bounding box positions
 since non-maximum suppression acts only on bounding boxes. Also, in end-to-end
 people detection, the decoding stage is learned using LSTMs, instead of using
-specialized methods as in~\cite{VisualPhrases} and~\cite{TaAnSc_14:occluded}.
+specialized methods as in~\citet{VisualPhrases} and~\citet{TaAnSc_14:occluded}.
 
-Early related work can be found in~\cite{Felzenszwalb:2010:ODD:1850486.1850574}
-and~\cite{Leibe:2005:PDC:1068507.1069006}. Best performing object detectors at
-the time were~\cite{DBLP:journals/corr/GirshickDDM13},
-\cite{DBLP:journals/corr/SermanetEZMFL13}, \cite{Uijlings13},
-\cite{DBLP:journals/corr/ZhangBS15} and~\cite{DBLP:journals/corr/SzegedyREA14}.
+Early related work can be found in~\citet{Felzenszwalb:2010:ODD:1850486.1850574}
+and~\citet{Leibe:2005:PDC:1068507.1069006}. Best performing object detectors at
+the time were~\citet{DBLP:journals/corr/GirshickDDM13},
+\citet{DBLP:journals/corr/SermanetEZMFL13}, \citet{Uijlings13},
+\citet{DBLP:journals/corr/ZhangBS15} and~\citet{DBLP:journals/corr/SzegedyREA14}.
 
 Sequence modeling is done using LSTMs as in
-\cite{DBLP:journals/corr/SutskeverVL14} (used for machine translation) and
-\cite{DBLP:journals/corr/KarpathyF14} (used for image captioning). The loss
+\citet{DBLP:journals/corr/SutskeverVL14} (used for machine translation) and
+\citet{DBLP:journals/corr/KarpathyF14} (used for image captioning). The loss
 function is similar to the loss function proposed in
-\cite{Graves06connectionisttemporal} in that the loss function encourages the
+\citet{Graves06connectionisttemporal} in that the loss function encourages the
 model to make predictions in descending order of confidence.
 
 \subsubsection{Data}
@@ -419,7 +420,7 @@ validation sets contain 82906, 4922 and 3318 labels, respectively.
 
 \subsubsection{Model}
 
-A pre-trained GoogLeNet\cite{going-deeper-szegedy43022} is used to produce
+A pre-trained GoogLeNet\citet{going-deeper-szegedy43022} is used to produce
 encoded features as input to the LSTM\@. The GoogLeNet features are further
 fine-tuned by the training process.  Using GoogLeNet, a feature vector of
 length 1024 is produced for each region over a $(15, 20)$ grid of regions that
@@ -511,7 +512,7 @@ or selecting the first $k$ highest ranked ($L_\textrm{firstk}$). COUNT
 for $f(i)$ with Hungarian was 0.76 compared with 0.74 for $L_\textrm{firstk}$.
 As a baseline, Overfeat-GoogLeNet (bounding-box regression on each cell,
 followed by non-maximum suppression, as in
-\cite{DBLP:journals/corr/SermanetEZMFL13}) achieved 0.67, 0.71 and 1.05 AP, EER
+\citet{DBLP:journals/corr/SermanetEZMFL13}) achieved 0.67, 0.71 and 1.05 AP, EER
 and COUNT, respectively.
 
 Training without finetuning GoogLeNet reduces AP by 0.29.
@@ -531,7 +532,7 @@ candidates.
 
 
 \subsection{Dropout: A Simple Way to Prevent Neural Networks from
-            Overfitting\cite{Srivastava:2014:DSW:2627435.2670313}}
+            Overfitting\citet{Srivastava:2014:DSW:2627435.2670313}}
 \label{dropout}
 
 \textbf{Dropout} is a technique used to overcome the problem of overfitting in
@@ -544,7 +545,7 @@ weights.
 \begin{itemize}
         \item Existing regularization methods: stopping training as soon as
                 validation error stops improving, L1 and L2 regularization, and
-                weight sharing\cite{Nowlan:1992:SNN:148167.148169}.
+                weight sharing\citet{Nowlan:1992:SNN:148167.148169}.
 \end{itemize}
 
 
@@ -552,13 +553,13 @@ weights.
 
 
 \subsection{Deep Residual Learning for Image
-            Recognition\cite{DBLP:journals/corr/HeZRS15}}
+            Recognition\citet{DBLP:journals/corr/HeZRS15}}
 
 A technique, training of residual functions, is presented for deep neural
 network architecture design, which allows training of deeper networks with
 improved accuracy compared to not training residual functions.
 
-\cite{going-deeper-szegedy43022} and~\cite{DBLP:journals/corr/SimonyanZ14a} are
+\citet{going-deeper-szegedy43022} and~\citet{DBLP:journals/corr/SimonyanZ14a} are
 referred to as motivating ``very deep'' models.
 
 % TODO(brendan): Read [1], [9] for vanishing gradient, R-CNN series for
@@ -568,7 +569,7 @@ referred to as motivating ``very deep'' models.
 \section{GANs}
 
 
-\subsection{Generative Adversarial Networks\cite{NIPS2014_5423}}
+\subsection{Generative Adversarial Networks\citet{NIPS2014_5423}}
 \label{gan}
 
 A method of generating probability distributions is presented that can be
@@ -577,14 +578,14 @@ the given method, a discriminator network $D$ is optimized to distinguish from
 ground truth the samples from the generated distribution $G$. $G$ is optimized
 to cause $D$ to become $\frac{1}{2}$ everywhere.
 
-Motivation points to~\cite{deepSpeechReviewSPM2012} and~\cite{NIPS2012_4824} as
+Motivation points to~\citet{deepSpeechReviewSPM2012} and~\citet{NIPS2012_4824} as
 successful uses of deep discriminative networks for classification based on
 \hyperref[backprop]{back propagation}, \hyperref[dropout]{dropout} and
 piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
 
 
 \subsection{Image-to-Image Translation with Conditional Adversarial
-            Networks\cite{DBLP:journals/corr/IsolaZZE16}}
+            Networks\citet{DBLP:journals/corr/IsolaZZE16}}
 
 A loss function is presented for image-to-image translation that can be applied
 to different tasks, such as colourizing images and reconstructing photos from
@@ -594,64 +595,64 @@ label maps or edges.
 
 \subsubsection{Motivation}
 
-\cite{DBLP:journals/corr/LarsenSW15}, \cite{DBLP:journals/corr/PathakKDDE16}
-and~\cite{DBLP:journals/corr/ZhangIE16} are noted as evidence that applying
+\citet{DBLP:journals/corr/LarsenSW15}, \citet{DBLP:journals/corr/PathakKDDE16}
+and~\citet{DBLP:journals/corr/ZhangIE16} are noted as evidence that applying
 Euclidean distance loss alone on generated images produces blurry results.
 
-\cite{DBLP:journals/corr/PathakKDDE16} also noted that it was helpful to mix
+\citet{DBLP:journals/corr/PathakKDDE16} also noted that it was helpful to mix
 the GAN objective with a pixel-wise loss such as an L2 loss.
 
-\cite{NIPS2014_5423}, \cite{DBLP:journals/corr/DentonCSF15},
-\cite{DBLP:journals/corr/RadfordMC15},
-\cite{DBLP:journals/corr/SalimansGZCRC16}, and
-\cite{DBLP:journals/corr/ZhaoML16} are mentioned as prior work in
+\citet{NIPS2014_5423}, \citet{DBLP:journals/corr/DentonCSF15},
+\citet{DBLP:journals/corr/RadfordMC15},
+\citet{DBLP:journals/corr/SalimansGZCRC16}, and
+\citet{DBLP:journals/corr/ZhaoML16} are mentioned as prior work in
 \hyperref[gan]{GANs}, and specifically conditional GANs are explored, as
-suggested by~\cite{NIPS2014_5423}.
+suggested by~\citet{NIPS2014_5423}.
 
 As opposed to image modelling losses where pixels are conditionally independent
-from each other (e.g.~\cite{DBLP:journals/corr/ShelhamerLD16},
-\cite{DBLP:journals/corr/XieT15}, \cite{IizukaSIGGRAPH2016},
-\cite{DBLP:journals/corr/LarssonMS16} and \cite{DBLP:journals/corr/ZhangIE16}),
+from each other (e.g.~\citet{DBLP:journals/corr/ShelhamerLD16},
+\citet{DBLP:journals/corr/XieT15}, \citet{IizukaSIGGRAPH2016},
+\citet{DBLP:journals/corr/LarssonMS16} and \citet{DBLP:journals/corr/ZhangIE16}),
 a ``structured loss'' is used. Other examples of structured losses are in
-\cite{DBLP:journals/corr/ChenPKMY14} (conditional random fields),
-\cite{DBLP:journals/corr/DosovitskiyB16} (feature matching),
-\cite{DBLP:journals/corr/LiW16} (non-parametric losses),
-\cite{DBLP:journals/corr/XieHT15} (pseudo-priors) and
-\cite{DBLP:journals/corr/JohnsonAL16} (losses based on matching covariance
+\citet{DBLP:journals/corr/ChenPKMY14} (conditional random fields),
+\citet{DBLP:journals/corr/DosovitskiyB16} (feature matching),
+\citet{DBLP:journals/corr/LiW16} (non-parametric losses),
+\citet{DBLP:journals/corr/XieHT15} (pseudo-priors) and
+\citet{DBLP:journals/corr/JohnsonAL16} (losses based on matching covariance
 statistics).
 
-Previous work on conditional GANs exists in~\cite{DBLP:journals/corr/MirzaO14}
+Previous work on conditional GANs exists in~\citet{DBLP:journals/corr/MirzaO14}
 (generating MNIST digits from discrete labels) and
-\cite{DBLP:journals/corr/ReedAYLSL16} (image generation from text). Work on
+\citet{DBLP:journals/corr/ReedAYLSL16} (image generation from text). Work on
 image generation with conditional GANs has focused on image
-inpainting\cite{DBLP:journals/corr/PathakKDDE16}, image prediction from a
-normal map\cite{DBLP:journals/corr/WangG16}, generating images from user
-input\cite{DBLP:journals/corr/WangG16}, predicting future
-frames\cite{DBLP:journals/corr/MathieuCL15}, predicting future states based on
-time-lapses of objects\cite{DBLP:journals/corr/ZhouB16b}, generating photos of
-clothing from input images of clothed people\cite{DBLP:journals/corr/YooKPPK16}
-and style transfer\cite{DBLP:journals/corr/LiW16b}.
+inpainting\citet{DBLP:journals/corr/PathakKDDE16}, image prediction from a
+normal map\citet{DBLP:journals/corr/WangG16}, generating images from user
+input\citet{DBLP:journals/corr/WangG16}, predicting future
+frames\citet{DBLP:journals/corr/MathieuCL15}, predicting future states based on
+time-lapses of objects\citet{DBLP:journals/corr/ZhouB16b}, generating photos of
+clothing from input images of clothed people\citet{DBLP:journals/corr/YooKPPK16}
+and style transfer\citet{DBLP:journals/corr/LiW16b}.
 
 The generator and discriminator architectures are motivated by
-\cite{DBLP:journals/corr/RadfordMC15}.
+\citet{DBLP:journals/corr/RadfordMC15}.
 
-Instance normalization is introduced in~\cite{DBLP:journals/corr/UlyanovVL16}.
+Instance normalization is introduced in~\citet{DBLP:journals/corr/UlyanovVL16}.
 
 \subsubsection{Data}
 
-The cityscapes\cite{DBLP:journals/corr/CordtsORREBFRS16} (semantic labels
+The cityscapes\citet{DBLP:journals/corr/CordtsORREBFRS16} (semantic labels
 $\leftrightarrow$ photo), CMP Facades (architectural labels $\rightarrow$
 photo), Google maps (map $\leftrightarrow$ aerial photo),
-ImageNet\cite{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14} (BW $\rightarrow$
-colour), \cite{zhu2016generative} and~\cite{fine-grained} (edges $\rightarrow$
-photo using the HED edge detector\cite{DBLP:journals/corr/XieT15}),
-\cite{Eitz:2012:HSO:2185520.2185540} (sketch $\rightarrow$ photo) and
-\cite{Laffont14} (day $\rightarrow$ night).
+ImageNet\citet{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14} (BW $\rightarrow$
+colour), \citet{zhu2016generative} and~\citet{fine-grained} (edges $\rightarrow$
+photo using the HED edge detector\citet{DBLP:journals/corr/XieT15}),
+\citet{Eitz:2012:HSO:2185520.2185540} (sketch $\rightarrow$ photo) and
+\citet{Laffont14} (day $\rightarrow$ night).
 
 \subsubsection{Model}
 
-A U-Net\cite{DBLP:journals/corr/RonnebergerFB15} architecture is used for the
-generator. A PatchGAN architecture\cite{DBLP:journals/corr/LiW16b} is used for
+A U-Net\citet{DBLP:journals/corr/RonnebergerFB15} architecture is used for the
+generator. A PatchGAN architecture\citet{DBLP:journals/corr/LiW16b} is used for
 the discriminator.
 
 Generator architecture: encoder: $C64-C128-C256-C512-C512-C512-C512-C512$,
@@ -680,7 +681,7 @@ and test time.
 \hyperref[batchnorm]{Batch normalization} is applied using the statistics of
 the test batch, instead of the aggregated training data statistics. Doing so
 with a batch size of one is instance
-normalization\cite{DBLP:journals/corr/UlyanovVL16}. Batch sizes of one and four
+normalization\citet{DBLP:journals/corr/UlyanovVL16}. Batch sizes of one and four
 were used.
 
 Mini-batch SGD is used along with the Adam optimizer. One gradient descent step
@@ -689,7 +690,7 @@ on G is used, followed by a gradient descent step on D.
 Random jitter was applied by resizing the $(256, 256)$ input to $(286, 286)$
 and random cropping back down to $(256, 256)$.
 
-Refer to Appendix 5.1.2 of~\cite{DBLP:journals/corr/IsolaZZE16} for specific
+Refer to Appendix 5.1.2 of~\citet{DBLP:journals/corr/IsolaZZE16} for specific
 training details for each dataset.
 
 \subsubsection{Criticism}
@@ -747,7 +748,7 @@ respectively, with L1 + cGAN loss improving over L1 alone.
 
 On colourization, the cGAN achieved $22.5\% \pm 1.6\%$ of responses as
 ``real'', as compared with $27.8\% \pm 2.7\%$ in
-\cite{DBLP:journals/corr/ZhangIE16}.
+\citet{DBLP:journals/corr/ZhangIE16}.
 
 FCN-8 was trained for semantic classification on a real dataset, after which
 its accuracy on the $(70, 70)$ PatchGAN on cityscapes hit 0.63 per-pixel, 0.21 per
@@ -773,16 +774,16 @@ A generator is trained on $(256, 256)$ images, and evaluated on $(512, 512)$
 map $\leftrightarrow$ aerial images.
 
 A cGAN is trained on semantic segmentation labelling of
-Cityscapes\cite{DBLP:journals/corr/CordtsORREBFRS16} and achieves 0.22 class
+Cityscapes\citet{DBLP:journals/corr/CordtsORREBFRS16} and achieves 0.22 class
 IoU with cGAN loss alone, compared with 0.35 class IoU with L1 loss and 0.80
-class IoU using the wide ResNets of~\cite{DBLP:journals/corr/WuSH16e}.
+class IoU using the wide ResNets of~\citet{DBLP:journals/corr/WuSH16e}.
 
 
 \section{Human Activity Recognition}
 
 
 \subsection{Quo Vadis, Action Recognition? A New Model and the Kinetics
-            Dataset\cite{carreira2017quo}}
+            Dataset\citet{carreira2017quo}}
 
 \subsubsection{Data}
 
@@ -839,7 +840,7 @@ The averaging process is learnable.
 
 \textbf{C3D}. A network with eight convolutional layers, five pooling layers
 and two fully connected layers at the top is used. Inputs are 16-frame,
-$(112, 112)$ clips, as in~\cite{DBLP:journals/corr/TranBFTP14}. Batch
+$(112, 112)$ clips, as in~\citet{DBLP:journals/corr/TranBFTP14}. Batch
 normalization is used after each (convolutional and fully connected) layer. In
 the first layer, a temporal stride of two (compared with one) is used, in order
 to fit 15 videos per batch per K40 GPU\@.
@@ -869,7 +870,7 @@ Training with \textbf{Two-Stream Inflated 3D ConvNets (I3D)} is done with
 Test inference is done by taking $(224, 224)$ center crops.
 
 Optical flow is computed using the TV-$L^1$ algorithm
-from~\cite{Zach07aduality}, which runs at 30 fps on $(320, 240)$ videos (on
+from~\citet{Zach07aduality}, which runs at 30 fps on $(320, 240)$ videos (on
 decade-old GPU technology).
 
 \subsubsection{Criticism}
@@ -911,18 +912,18 @@ state of the art of 94.6\% and 70.3\% respectively on UCF-101 and HMDB-51.
 \subsubsection{Similar Work}
 
 Convolutional Two-Stream Network Fusion for Video Action
-Recognition~\cite{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
+Recognition~\citet{DBLP:journals/corr/FeichtenhoferPZ16} builds on two-stream
 networks by fusing the streams' respective features earlier.
 
 
 \subsection{Learning Spatiotemporal Features with 3D Convolutional
-            Networks\cite{DBLP:journals/corr/TranBFTP14}}
+            Networks\citet{DBLP:journals/corr/TranBFTP14}}
 
 \subsubsection{Data}
 
 UCF-101~\ref{ucf101}.
 
-Sports-1M~\cite{KarpathyCVPR14} (1.1 million sports videos, with 487 classes).
+Sports-1M~\citet{KarpathyCVPR14} (1.1 million sports videos, with 487 classes).
 
 I380K (internal dataset, finetuned from).
 
@@ -972,7 +973,7 @@ Cross-entropy on activity label?
 90.4\% on UCF-101, compared with 89.1\% state-of-the-art at the time.
 
 84.4\% vs. $> 90\%$ on Sports-1M, although the technique
-from\cite{DBLP:journals/corr/NgHVVMT15} could be applied on top of C3D
+from\citet{DBLP:journals/corr/NgHVVMT15} could be applied on top of C3D
 features.
 
 On UCF-101, homogeneous temporal depth of kernels in the model were able to
@@ -989,23 +990,23 @@ beat increasing or decreasing temporal depth.
 
 \subsubsection{Similar Work}
 
-Improved Dense Trajectories\cite{Wang2013}.
+Improved Dense Trajectories\citet{Wang2013}.
 
 Learning Hierarchical Invariant Spatio-temporal Features for Action Recognition
-with Independent Subspace Analysis\cite{Le:2011:LHI:2191740.2192108}.
+with Independent Subspace Analysis\citet{Le:2011:LHI:2191740.2192108}.
 Unsupervised video feature learning using stacking.
 
-Two-stream networks\cite{DBLP:journals/corr/SimonyanZ14}.
+Two-stream networks\citet{DBLP:journals/corr/SimonyanZ14}.
 
 Beyond Short Snippets: Deep Networks for Video
-Classification\cite{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
+Classification\citet{DBLP:journals/corr/NgHVVMT15}. Connects Conv2D to LSTM, and
 explores other temporal feature pooling models that work on Conv2D-extracted
 features.
 
 
 \subsection{Revisiting the Effectiveness of Off-the-shelf Temporal Modeling
             approaches for Large-scale Video
-            Classification\cite{2017arXiv170803805B}}
+            Classification\citet{2017arXiv170803805B}}
 
 \subsubsection{Data}
 
@@ -1019,7 +1020,7 @@ fine-tuned on Kinetics. The optical flow stream is initialized with the
 fine-tuned weights from the RGB stream.
 
 A VGG-16 ConvNet is used to model the audio data, which is preprocessed
-following~\cite{DBLP:journals/corr/HersheyCEGJMPPS16}. Audio data is first
+following~\citet{DBLP:journals/corr/HersheyCEGJMPPS16}. Audio data is first
 split into non-overlapping 960ms frames. Each frame is split into 25ms windows,
 offset at every 10ms, for 96 windows in total. A Fourier transform is run on
 each window, and frequencies are binned using Mel-scale into 64 bins. A
@@ -1029,7 +1030,7 @@ $96 \times 64$ inputs.
 \subsubsection{Inference}
 
 At test time, three segments are sampled from each trimmed video,
-following~\cite{DBLP:journals/corr/WangXW0LTG16}.
+following~\citet{DBLP:journals/corr/WangXW0LTG16}.
 
 \subsubsection{Criticism}
 
@@ -1045,13 +1046,13 @@ following~\cite{DBLP:journals/corr/WangXW0LTG16}.
 
 \subsection{CDC\@: Convolutional-De-Convolutional Networks for Precise Temporal
             Action Localization in Untrimmed
-            Videos~\cite{DBLP:journals/corr/ShouCZMC17}}
+            Videos~\citet{DBLP:journals/corr/ShouCZMC17}}
 
 \subsubsection{Data}
 
 THUMOS~2014~\ref{thumos} was trained and evaluated on.
 
-ActivityNet challenge 2016~\cite{Heilbron_2015_CVPR} has 203 activity
+ActivityNet challenge 2016~\citet{Heilbron_2015_CVPR} has 203 activity
 categories, with 137 untrimmed videos per class on average. ActivityNet 2016
 has an average of 1.41 activity instances per video, and 849 hours of video in
 total. Activitynet 2016 encompasses untrimmed video classification, trimmed
@@ -1060,7 +1061,7 @@ video classification and activity detection.
 \subsubsection{Model}
 
 The C3D architecture
-from~\cite{DBLP:journals/corr/TranBFTP15, DBLP:journals/corr/TranBFTP14} up to
+from~\citet{DBLP:journals/corr/TranBFTP15, DBLP:journals/corr/TranBFTP14} up to
 and including layer \verb|pool5| is built upon. \verb|pool5| is changed to only
 pool in spatial dimensions.
 
@@ -1083,14 +1084,14 @@ Non-overlapping segments of 32 frames are extracted and fed to the CDC network.
 During training, only segments with at least one frame with a non-background
 label are used.
 
-C3D is pre-trained on Sports-1M~\cite{KarpathyCVPR14}, and after this the CDC
+C3D is pre-trained on Sports-1M~\citet{KarpathyCVPR14}, and after this the CDC
 network converges within four epochs.
 
 Both CDC and C3D layers are trained jointly, with a learning rate of
 $10^{-5}$ used for all layers except \verb|CDC8|, for which a learning rate
 of $10^{-4}$ is used.
 
-At test time, segment proposals from~\cite{DBLP:journals/corr/ShouWC16} are
+At test time, segment proposals from~\citet{DBLP:journals/corr/ShouWC16} are
 fed to the CDC network, with the proposals expanded by $1/8$ of the original
 proposal length on either end.
 
@@ -1101,7 +1102,7 @@ the average class scores over this refined segment.
 
 To make segment proposals for the temporal localization task, non-maximum
 suppression is used as
-in~\cite{DBLP:journals/corr/YeungRJAML15, DBLP:journals/corr/ShouWC16}.
+in~\citet{DBLP:journals/corr/YeungRJAML15, DBLP:journals/corr/ShouWC16}.
 
 \subsubsection{Criticism}
 
@@ -1118,11 +1119,11 @@ different IoU thresholds.
 Results on THUMOS~2014 are given below.
 
 Per-frame: 44.4 mAP compared with 41.3 mAP from
-MultiLSTM~\cite{DBLP:journals/corr/YeungRJAML15}, and 41.7 mAP using
+MultiLSTM~\citet{DBLP:journals/corr/YeungRJAML15}, and 41.7 mAP using
 conv-deconv instead of CDC\@.
 
 Temporal localization at 0.5 IoU\@: 23.3 mAP, as compared with 19.0 mAP
-in~\cite{DBLP:journals/corr/ShouWC16}.
+in~\citet{DBLP:journals/corr/ShouWC16}.
 
 On ActivityNet (at 0.75 IoU): 26.0 when based on the segment proposals
 of Wang and Tao in their ActivityNet 2016 challenge submission, as compared to
@@ -1138,13 +1139,13 @@ parameters to the temporal up-convolutional filters.
 
 
 \subsection{Temporal Action Localization in Untrimmed Videos via Multi-stage
-            CNNs~\cite{DBLP:journals/corr/ShouWC16}}
+            CNNs~\citet{DBLP:journals/corr/ShouWC16}}
 
 \subsubsection{Data}
 
 THUMOS~2014~\ref{thumos} was trained and evaluated on.
 
-MEXaction2~\cite{MEXaction2} is a dataset with two action classes: horseback
+MEXaction2~\citet{MEXaction2} is a dataset with two action classes: horseback
 riding, and ``bull charging cape''. The dataset is made up of YouTube, UCF101
 and INA videos, of which only INA videos are untrimmed. The untrimmed videos
 are 77 hours in total. The training set is 1336 instances, validation set is
@@ -1153,7 +1154,7 @@ are 77 hours in total. The training set is 1336 instances, validation set is
 \subsubsection{Model}
 
 The model consists of three separate 3D convolutional networks based
-on C3D~\cite{DBLP:journals/corr/TranBFTP14}: proposal, classification and
+on C3D~\citet{DBLP:journals/corr/TranBFTP14}: proposal, classification and
 localization networks. C3D is pre-trained on Sports-1M.
 
 The proposal network has a binary ``action or not?'' output, the classification
@@ -1220,7 +1221,7 @@ At IoU threshold 0.5:
 dataset.
 
 19.0 mAP on THUMOS~2014, compared with 15.0 mAP from the THUMOS~2014 challenge
-submission of~\cite{LearSubmissionThumos2014}.
+submission of~\citet{LearSubmissionThumos2014}.
 
 \subsubsection{Questions}
 
@@ -1229,11 +1230,11 @@ uniform intervals?
 
 
 \subsection{Temporal Convolutional Networks for Action Segmentation and
-            Detection\cite{DBLP:journals/corr/LeaFVRH16}}
+            Detection\citet{DBLP:journals/corr/LeaFVRH16}}
 
 \subsubsection{Data}
 
-50 salads~\cite{Stein:2013:CEA:2493432.2493482} is a dataset of 50 sequences of
+50 salads~\citet{Stein:2013:CEA:2493432.2493482} is a dataset of 50 sequences of
 food preparation video, with about 30 action annotations, such as ``cutting a
 tomato'', per sequence. RGB and depth maps at $640 \times 480$ and 30Hz, 3-axis
 accelerometer data from a device attached to various cooking utensils, as well
@@ -1245,14 +1246,14 @@ each action in a recipe.
 
 25 different people in total are in the 50 salads videos.
 
-The MERL shopping dataset~\cite{merl-shopping-singh} is a human action dataset
+The MERL shopping dataset~\citet{merl-shopping-singh} is a human action dataset
 consisting of 96 two-minute surveillance-style videos, with a single shopper
 per video.  The shoppers perform one of five actions, plus a background class:
 ``reach to shelf'', ``retract hand from shelf'', ``hand in shelf'', ``inspect
 product'', and ``inspect shelf'', each action normally being a few seconds
 long.
 
-Georgia Tech Egocentric Activities (GTEA)~\cite{Fathi:2011:LRO:2191740.2191834}
+Georgia Tech Egocentric Activities (GTEA)~\citet{Fathi:2011:LRO:2191740.2191834}
 contains 28 videos of household activities, such as making coffee, taken from a
 head-mounted camera.  Videos are on average a minute long, and on average
 contain 19 action instances per video.
@@ -1270,7 +1271,7 @@ The dilated TCN consists of a series of blocks, where each block consists of a
 sequence of layers. In each subsequent dilated convolutional layer within the
 same block, each unit at time $t$ takes weighted input from the two previous
 units at time $t$ and $t - s$, where $s$ is the same as the $l$-dilation
-parameter as defined in~\cite{DBLP:journals/corr/YuK15}.
+parameter as defined in~\citet{DBLP:journals/corr/YuK15}.
 
 The set of outputs from all of the blocks are summed, followed by a ReLU, then
 a fully-connected layer and another ReLU\@, which is input to a softmax
@@ -1286,7 +1287,7 @@ in the acausal case.
 
 \subsubsection{Inference}
 
-Adam optimizer~\cite{DBLP:journals/corr/KingmaB14} is used.
+Adam optimizer~\citet{DBLP:journals/corr/KingmaB14} is used.
 
 \subsubsection{Criticism}
 
@@ -1295,7 +1296,7 @@ metrics use segment-wise mAP for given IoU overlap fractions.
 
 It is pointed out that the way confidence evaluated heavily affects the score
 for a given type of metric. E.g.\ on MERL shopping, the mAP scores
-from~\cite{merl-shopping-singh} increase from 50.9 to 69.8 by using maximum
+from~\citet{merl-shopping-singh} increase from 50.9 to 69.8 by using maximum
 instead of average prediction score over a given interval.
 
 A new evaluation metric is proposed, which computes true positives, false
@@ -1325,7 +1326,7 @@ data?
 
 
 \subsection{Deep Temporal Linear Encoding
-            Networks\cite{DBLP:journals/corr/DibaSG16}}
+            Networks\citet{DBLP:journals/corr/DibaSG16}}
 
 A method called Temporal Linear Encoding (TLE) is proposed to encode entire
 videos into vectors in a single feature space.
@@ -1366,7 +1367,7 @@ C3D models are also used as a base feature extractor.
 
 \subsubsection{Inference}
 
-The Tensor Sketch algorithm of~\cite{Pham:2013:FSP:2487575.2487591} is used to
+The Tensor Sketch algorithm of~\citet{Pham:2013:FSP:2487575.2487591} is used to
 approximate the outer product for the bilinear encoding method by projecting
 the two input tensors directly to a lower-dimensional space, without explicitly
 computing the outer product.
@@ -1405,7 +1406,7 @@ Element-wise multiplication (94.8/70.4) beat average (92.6/68.1) and maximum
 (91.3/67.4) aggregation functions on UCF101/HMDB51.
 
 With two-stream ConvNets, TLE\@: bilinear achieved 95.6/71.1 on UCF101/HMDB51,
-compared with $94.0/68.5$ in~\cite{DBLP:journals/corr/WangXW0LTG16}. With C3D,
+compared with $94.0/68.5$ in~\citet{DBLP:journals/corr/WangXW0LTG16}. With C3D,
 TLE\@: bilinear scores $86.3/60.3$.
 
 An experiment was run to include a fourth segment extracted from a VGG-16
@@ -1423,9 +1424,9 @@ ConvNets?
 
 
 \subsection{Designing Neural Network Architectures using Reinforcement
-            Learning~\cite{DBLP:journals/corr/BakerGNR16}}
+            Learning~\citet{DBLP:journals/corr/BakerGNR16}}
 
-Q-Learning~\cite{Watkins1992} is used to build neural network architectures for
+Q-Learning~\citet{Watkins1992} is used to build neural network architectures for
 image classification, and tested on MNIST, SVHN and CIFAR-10. A single such
 ``MetaQNN'' model (the one that did best on the validation set) achieves 0.44\%
 error on the MNIST test set. The best model for CIFAR-10 achieves 6.92\% error
@@ -1474,7 +1475,7 @@ MNIST and 18 for CIFAR-10).
 
 
 \subsection{Neural Optimizer Search with Reinforcement
-            Learning~\cite{neural-optimizer-search-46114}}
+            Learning~\citet{neural-optimizer-search-46114}}
 
 \subsubsection{Data}
 
@@ -1511,7 +1512,7 @@ normalization after each layer, is used as the model to optimize over for the
 CIFAR-10 dataset. The learned update rule is then transferred to train a Wide
 ResNet model.
 
-The Google Neural Machine Translation (GNMT) model from~\cite{gnmt-45610} is
+The Google Neural Machine Translation (GNMT) model from~\citet{gnmt-45610} is
 used for the WMT~2014 experiments.
 
 \subsubsection{Inference}
@@ -1529,8 +1530,8 @@ Child networks have a batch size of 100.
 Update rule hyperparameters are: $\beta_1 = 0.9$, $\beta_2 = \beta_3 = 0.999$,
 and $\epsilon = 10^{-8}$.
 
-Trust Region Policy Optimization~\cite{DBLP:journals/corr/SchulmanLMJA15} is
-found to improve over REINFORCE~\cite{Williams1992} for training the controller
+Trust Region Policy Optimization~\citet{DBLP:journals/corr/SchulmanLMJA15} is
+found to improve over REINFORCE~\citet{Williams1992} for training the controller
 RNN\@. The baseline function used for TRPO is an exponential moving average of
 previous rewards.
 
@@ -1576,12 +1577,12 @@ relatively poorly during the first $N$ epochs?
 
 \subsubsection{Similar Work}
 
-Trust Region Policy Optimization~\cite{DBLP:journals/corr/SchulmanLMJA15}
+Trust Region Policy Optimization~\citet{DBLP:journals/corr/SchulmanLMJA15}
 (background).
 
 
 \subsection{Asynchronous Methods for Deep Reinforcement
-            Learning~\cite{DBLP:journals/corr/MnihBMGLHSK16}}
+            Learning~\citet{DBLP:journals/corr/MnihBMGLHSK16}}
 
 Four different asynchronous methods are explored for reinforcement learning
 using neural networks. The methods are tested on Atari 2600 games, a car
@@ -1591,11 +1592,11 @@ time) and to a higher score than the other asynchronous methods. In general,
 n-step return methods converge faster than one-step methods.
 
 Asynchronous advantage actor-critic (Algorithm~S3
-of~\cite{DBLP:journals/corr/MnihBMGLHSK16}) involves using the value function
+of~\citet{DBLP:journals/corr/MnihBMGLHSK16}) involves using the value function
 as a learned baseline in policy gradient. Hence the value-function baseline is
 the ``critic'', while the policy is the ``actor''.
 
-Entropy is added to the policy $\pi$ (\cite{williams1991function}) to avoid
+Entropy is added to the policy $\pi$ \citet{williams1991function} to avoid
 convergence to sub-optimal deterministic policies (for both A3C and value
 methods).
 
@@ -1629,7 +1630,7 @@ Generalized advantage estimation.
 Reducing the over-estimation bias of Q-values.
 
 True online temporal difference models with non-linear function
-approximation~\cite{DBLP:journals/corr/SeijenMPMS15}.
+approximation~\citet{DBLP:journals/corr/SeijenMPMS15}.
 
 \subsubsection{Questions}
 
@@ -1642,7 +1643,7 @@ network?
 
 \subsection{Scalable trust-region method for deep reinforcement learning using
             Kronecker-factored
-            approximation~\cite{DBLP:journals/corr/abs-1708-05144}}
+            approximation~\citet{DBLP:journals/corr/abs-1708-05144}}
 
 A more sample-efficient algorithm for gradient descent is presented by using a
 Kronecker-factored approximation to the natural gradient, which is applied to
@@ -1654,7 +1655,7 @@ The Kronecker-factor approximation part of Actor-Critic using
 Kronecker-Factored Trust Region (ACKTR) involves approximating the natural
 gradient by approximating the
 \hyperref[fisher-info]{Fisher information matrix} $F$. The method of
-approximating $F$ is the same as in~\cite{DBLP:journals/corr/MartensG15}.
+approximating $F$ is the same as in~\citet{DBLP:journals/corr/MartensG15}.
 
 The trust region part of ACKTR refers to transforming the fixed $\eta$ in,
 
@@ -1682,7 +1683,7 @@ the case, what are $P$ and $Q$ when optimizing the policy of an RL agent?
 \section{Natural Language Processing}
 
 
-\subsection{Skip-Thought Vectors~\cite{DBLP:journals/corr/KirosZSZTUF15}}
+\subsection{Skip-Thought Vectors~\citet{DBLP:journals/corr/KirosZSZTUF15}}
 
 Skip-thought vectors is a method of encoding a feature vector from a sentence,
 in such a way that the feature vector can be re-used as a generic, continuous
@@ -1715,7 +1716,7 @@ subsequent word in the current sentence.
 
 
 \subsection{Effective Approaches to Attention-based Neural Machine
-            Translation~\cite{DBLP:journals/corr/LuongPM15}}
+            Translation~\citet{DBLP:journals/corr/LuongPM15}}
 
 Different attention-based models for neural machine translation are used on the
 WMT'15 English-German translation task in both directions, achieving 25.9 BLEU
@@ -1754,7 +1755,7 @@ models?
 
 
 \subsection{Reinforcement Learning for Bandit Neural Machine Translation with
-            Simulated Human Feedback~\cite{DBLP:journals/corr/NguyenDB17}}
+            Simulated Human Feedback~\citet{DBLP:journals/corr/NguyenDB17}}
 
 Advantage actor-critic is used to improve a pre-trained neural machine
 translation system using only ``bandit rewards'', i.e.\ scalar rewards
@@ -1769,7 +1770,7 @@ A neural encoder-decoder with global attention is used as both the ``actor''
 and ``critic''.
 
 The data used are parallel-translated TED talks from IWSLT 2014 and
-2015~\cite{cettolo2015iwslt}.
+2015~\citet{cettolo2015iwslt}.
 
 An improvement by the NED-A2C method is shown in both per-sentence BLEU score
 (apparently on the training data) and corpus BLEU score on a held-out test set.
@@ -1796,7 +1797,7 @@ mini-batch (i.e.\ just using REINFORCE with a computed baseline).
 \section{RNNs}
 
 \subsection{Recurrent Batch
-            Normalization~\cite{DBLP:journals/corr/CooijmansBLC16}}
+            Normalization~\citet{DBLP:journals/corr/CooijmansBLC16}}
 
 Batch normalization (BN) is extended to the hidden-to-hidden connections in
 RNNs (in particular, to LSTMs). Previously suggested vanishing gradient issues
