@@ -1812,7 +1812,7 @@ BN layers are added after the matrix products
 $\mathbf{W}_h \mathbf{h}_{t - 1}$ and $\mathbf{W}_x \mathbf{x}_t$ separately.
 $\beta_h$ and $\beta_x$ are set to zero as they are redundant with
 $\mathbf{b}$. Another BN layer is added in the hidden state output equation
-$\mathbf{h}_t = \sigma{(\mathbf{o}_t)} \odot \textrm{tanh}{(\mathbf{c}_t)}$,
+$\mathbf{h}_t = \sigma{(\mathbf{o}_t)} \odot \tanh{(\mathbf{c}_t)}$,
 right before the tanh squashing function. No BN layer is added to the
 $\mathbf{c}_t$ update equation, supposedly so that the cell state can freely
 propagate forward.
@@ -1826,6 +1826,52 @@ training time are extended to all timesteps $t > T_{\max}$.
 As a trick for dealing with training sequences with long runs of constant
 variance (namely black pixels in MNIST digits), hidden units are initialized
 with Gaussian noise.
+
+
+\section{Visual Question-Answering (VQA)}
+
+\subsection{Tips and Tricks for Visual Question-Answering: Learnings from the
+            2017 Challenge}
+
+A~\num{3000} GPU-hour hyperparameter search over different VQA method
+configurations.
+
+
+\subsubsection{Data}
+
+VQA~2.0~\citet{goyal2017making}. Visual Genome provides small
+($\approx 0.8\%$?) improvement.
+
+
+\subsubsection{Model}
+
+Gated tanh gives a large performance increase ($\approx 5\%$ over tanh,
+$\approx 3\%$ over ReLU) over other activations.
+
+Faster-RCNN features trained on Visual Genome give a large performance boost
+($\approx 4\%$).  See bottom-up attention paper~\citet{anderson2017bottom}.
+
+Uni-directional GRU used, pre-trained with GloVe embeddings (small performance
+boost over training embeddings from scratch).
+
+Individual sigmoids provide a significant boost compared with using softmax.
+
+Ensembles provide a large performance boost.
+
+
+\subsubsection{Inference}
+
+ResNet features subsampled to~$7 \times 7$ provides a~$\approx 2\%$ boost
+over~$14 \times 14$ features.
+
+
+\subsubsection{Criticism}
+
+Criticizing using soft scores (part of VQA~2.0 annotations) gives a small
+performance boost over using hard binary scores.
+
+Individual sigmoids trained with cross-entropy on multiple annotations (i.e.,
+treat VQA as a multi-label problem).
 
 
 \bibliographystyle{apalike}
