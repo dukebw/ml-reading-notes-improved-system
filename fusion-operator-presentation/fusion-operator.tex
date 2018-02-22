@@ -1,29 +1,68 @@
 \documentclass{beamer}
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer}
+\usepackage{array}
 \usepackage{booktabs}
-
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{empheq}
+\usepackage{ifthen}
+\usepackage{keyval}
+\usepackage{mathtools}
+\usepackage{multirow}
 \usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{upgreek}
+
+\usetikzlibrary{arrows.meta, backgrounds, calc, fit, positioning}
+
+\DeclareMathOperator*{\binop}{\oplus}
+
+\newcommand{\binopb}{\ensuremath{\sideset{}{_b}\binop}}
+\newcommand{\mutanfeat}[1]{\ensuremath{\tilde{\mathbf{#1}}}}
+\renewcommand{\T}{\ensuremath{\mathcal{T}}}
+\newcommand{\tuckbranch}{\ensuremath{\T_r^{\q{}\v{}}}}
+\newcommand{\q}{\ensuremath{\mathbf{q}}}
+\renewcommand{\v}{\ensuremath{\mathbf{v}}}
+\newcommand{\qtWq}{\q^\intercal{} W_\q{}}
+\newcommand{\vtWv}{\v^\intercal{} W_\v{}}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
 
 % Presentation flow plan:
 %
-% Goals: 
+% Goals:
 %
-%       0. Explain about my participation in the Kinetics challenge and the
-%       stream fusion architecture idea that I came up with based on fusing
-%       depth and motion (DeMoN) with RGB and pose networks.
-%
-%       The motivation of the current research is to extend the idea of stream
-%       fusion to an automatic search over fusion operators.
-%
-%       The idea of presenting my work in this early stage is to request
-%       feedback, ideas and direction from the group.
+%       0. The idea of presenting my work in this middle stage is to request
+%       feedback, ideas and direction from the (extended) group. Focused on how
+%       to follow up search space definition with actual search implementation.
 %
 %
-%       0. To what type of problems can fusion operator search be applied?
+%       To what type of problems can fusion operator search be applied?
 %
-%       VQA: give MUTAN as motivation for improving performance by improving
-%       the multi-modal fusion operator.
+%       VQA:
+%
+%       Make the case that this is:
+%               1. An important problem.
+%               2. A difficult problem (cite tips and tricks paper with
+%                  balanced question statistic).
+%               3. A problem that current techniques struggle with (see above).
+%               4. A problem that automatic fusion operator model selection can
+%                  address.
+%
+%       Give MUTAN as motivation for improving performance by improving the
+%       multi-modal fusion operator.
+%
+%       Expand with my Generalized Hadamard prod paper...
+%
+%       Other examples of open problems to which fusion operator search can be
+%       applied:
 %
 %       Action recognition in video: the "Revisiting the effectiveness of
 %       off-the-shelf temporal modeling approaches for large-scale video
@@ -34,7 +73,7 @@
 %
 %
 %       1-?. Present and explain the research on which my proposed research
-%       depends.
+%       depends?
 %
 %       1. Related, previous work on same topic from this group:
 %
@@ -55,6 +94,8 @@
 %       Learning to learn by gradient descent by gradient descent:
 %       https://arxiv.org/abs/1606.04474.
 %
+%       Meta-learning symposium: http://metalearning-symposium.ml/
+%
 %
 %       2b. Possible ways to apply architecture search to multi-modal fusion
 %       problem.
@@ -65,6 +106,7 @@
 %               - Use dynamic programming to add layers, finding first the best
 %               policy for a single fusion layer, then explore out to >= 2
 %               layers.
+%                       - Morphisms
 %
 %               In this case, the current state would be the state of the
 %               fusion architecture that has been added on to the original
@@ -76,8 +118,9 @@
 %
 %               E.g., combine RGB and optical flow at multiple levels for
 %               multiple parallel streams, and fuse those.
+%
 
-\title{Stream Fusion Operator Search}
+\title{Automatic Fusion Operator Model Selection for Multimodal Tasks}
 \date{\today}
 \author{Brendan Duke}
 \institute{University of Guelph}
@@ -94,64 +137,62 @@
 
 \section{Introduction}
 
-\begin{frame}{Stream fusion}
-        \center{}
-        \scalebox{.65}{\input{data/demon_resnet.tex}}
-\end{frame}
-
 \begin{frame}[fragile]{Questions to answer}
         \begin{itemize}[<+- | alert@+>]
-                \item What current work exists on the topic of fusion
-                        operators? What types of fusion operators are currently
-                        in use?
+                \item What is Visual Question-Answering (VQA) and why do we care?
+                        Why is VQA a difficult problem?
 
-                \item What type of model search techniques exist for neural
-                        network architecture search?
+                \item What are fusion operators, and how can they address the
+                        VQA problem?
 
                 \item How might model search techniques be used as methods of
-                        learning fusion operators?
+                        learning fusion operators for VQA\@?
         \end{itemize}
 \end{frame}
 
 
-\section{Current Fusion Operator Work}
+\section{VQA}
 
 {%
-\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
-\begin{frame}{VQA with Tucker decomposition}
+% VQA v2 is a hard problem:
+% 1. Added ~200K each balancing examples to train and test, 100K to val.
+% 2. Balanced examples mined from similar features (in space of VGG-16
+%    pre-trained on ImageNet), but have different answer to same question.
+\setbeamertemplate{frame footer}{\cite{goyal2017making}}
+\begin{frame}{VQA v2}
         \center{}
-        \vspace{-0.8cm}
-        \hspace*{-0.8cm}
-        \includegraphics[scale=0.31]{data/mutan_vqa_intro}
+        % \vspace{-0.8cm}
+        \hspace*{-2mm}
+        \includegraphics[scale=0.31]{data/vqa2-balanced-imgs}
 \end{frame}
 }
 
 {%
-% Since Tucker decomposition is a way to approximate a tensor with a lower-rank
-% tensor, this image of a clown approximated with SVD is used to illustrate the
-% amount of information that can be retained while reducing dimensionality.
-% The image, originally 200x320, has been approximated with a rank 20 matrix
-% and therefore gone from 200x320 = 64000 numbers to (200 + 320 + 1)x20 = 10420
-% numbers.
-\setbeamertemplate{frame footer}{\cite{Murphy:2012:MLP:2380985}}
-\begin{frame}{Low rank tensor approximations}
-        \center{}
-        \includegraphics[scale=0.35]{data/low_rank_clown}
+\setbeamertemplate{frame footer}{\cite{teney2017tips}}
+\begin{frame}{VQA v2 balanced pair accuracy}
+\center{}
+\small
+\begin{tabular}{l*{4}{>{$}c<{$}}>{\bfseries}p{8mm}}
+        \toprule
+        & \multicolumn{4}{c}{VQA v2 validation} & \multirow{3}{8mm}{Acc.\ over pairs}\\
+        \cmidrule{2-5}
+        & \multicolumn{4}{c}{VQA Score} & \\
+        \cmidrule{2-5}
+        & All & Yes/no & Num. & Other & \\
+        \midrule
+        \textbf{Reference Model} & 63.15 \pm{} 0.08 & 80.07 & 42.87 & 55.81 & 34.66 \\
+        \midrule
+        (1) $w_o^\mathrm{text}$ init. & 63.01 \pm{} 0.12 & 80.11 & 42.80 & 55.51 & 34.40 \\
+        (2) $w_o^\mathrm{img}$ init. & 62.67 \pm{} 0.07 & 79.75 & 42.64 & 55.14 & 34.22 \\
+        (3) bottom-up attn & 58.90 \pm{} 0.10 & 77.16 & 37.18 & 50.92 & 29.39 \\
+        \multicolumn{6}{c}{$\ldots$} \\
+        \bottomrule
+\end{tabular}
 \end{frame}
 }
 
-{%
-% Tucker decomposition is also called higher-order Principal Components
-% Analysis. This image is to visualize the PCA projection of D = 2 data to
-% an L = 1 space. The points have been projected onto the eigenvector of
-% highest eigenvalue, which is also the line of highest covariance between the
-% D dimensions.
-\setbeamertemplate{frame footer}{\cite{Murphy:2012:MLP:2380985}}
-\begin{frame}{PCA}
-        \center{}
-        \includegraphics[scale=0.4]{data/pca}
-\end{frame}
-}
+
+\section{Fusion Operators}
 
 {%
 % Fibers needed for explanation of mode-i tensor product used in Tucker
@@ -160,20 +201,6 @@
 \begin{frame}{Tensor mode-$i$ fibers}
         \center{}
         \includegraphics[scale=0.275]{data/tensor_fibers}
-\end{frame}
-}
-
-{%
-% This slide is to illustrate dimensionality reduction in the tensor product.
-% In this case, mode-3 tensor multiplication between a 3D tensor and a vector
-% reduces a K dimension down to 1 dimension.
-%
-% In general, an n-mode tensor product of a tensor X with a matrix will reduce
-% the nth dimension of the tensor to the number of rows of the matrix, which is
-% what is happening in the Tucker decomposition.
-\begin{frame}{Tensor product}
-        \center{}
-        \includegraphics[scale=0.075]{data/tensor_product}
 \end{frame}
 }
 
@@ -191,20 +218,30 @@
 \end{frame}
 }
 
+\tcbset{highlight math style={boxsep=5mm,colback=red!30!white}}
+
 {%
-% Here, the outer-product, or "bilinear" relationship, between the sentence
-% embedding q and the image embedding v is approximated using the Tucker
-% decomposition.
-\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
+% Geometric representation of first two n-mode products
+% q^t Wq is combined with Tc via inner product broadcast (matmul)
+% ditto for v^t Wv
+\begin{frame}{Tensor product}
+        \center{}
+        \input{data/n-mode-prod.tikz}
+
+\begin{empheq}[box=\tcbhighmath]{equation*}
+        \T \approx \T_c \times_1 \qtWq \times_2 \vtWv \times_3 W_o
+\end{empheq}
+\end{frame}
+}
+
+{%
+% The full MUTAN pipeline for VQA, which we build upon
+% (Tc is the rectangle)
+\setbeamertemplate{frame footer}{\cite{ben2017mutan}}
 \begin{frame}{MUTAN}
         \center{}
         \hspace*{-1.0cm}
         \includegraphics[scale=0.31]{data/mutan}
-        \begin{equation*}
-                y = \left(\left(\mathcal{T}_c \times_1 \left(\mathbf{q}^T\mathbf{W}_q\right)\right)
-                        \times_2 \left(\mathbf{v}^T\mathbf{W}_v\right)\right)
-                    \times_3 \mathbf{W}_o
-        \end{equation*}
 \end{frame}
 }
 
@@ -216,7 +253,7 @@
 % performance of 58.16 overall as compared with the next best result, 57.94
 % from MLB, and compared with 56.92 from a baseline that just concatenates v
 % and q.
-\setbeamertemplate{frame footer}{\cite{DBLP:journals/corr/Ben-younesCCT17}}
+\setbeamertemplate{frame footer}{\cite{ben2017mutan}}
 \begin{frame}{MCB vs. MLB vs. MUTAN}
         \center{}
         \hspace*{-0.9cm}
@@ -225,14 +262,47 @@
 }
 
 {%
-% Winner of Kinetics challenge.
-% Uses L2-normalization followed by concatenation as their fusion operator.
-\setbeamertemplate{frame footer}{\cite{2017arXiv170803805B}}
-\begin{frame}{Multi-group shifting attention network}
-        \center{}
-        \vspace{-0.8cm}
-        \hspace*{-0.9cm}
-        \includegraphics[scale=0.34]{data/multi_group_shifting_attn}
+% Our generalized fusion operator:
+% 1. Nonlinearity ensembling
+% 2. Mini-network
+% 3. Tree fusion with arbitrary binary ops
+\begin{frame}{Generalized fusion operator}
+\center{}
+\hspace*{-6.0cm}
+\scalebox{0.75}{%
+\input{data/mutan-ours.tikz}
+}
+\end{frame}
+}
+
+{%
+\begin{frame}{Feature gating (instance of general fusion op)}
+\centering
+\hspace*{-1.0cm}
+\scalebox{0.7}{%
+\input{data/feature-gating.tikz}
+}
+\end{frame}
+}
+
+{%
+% Close to the jump from MCB -> MUTAN. Same codebase.
+\begin{frame}{Generalized fusion op results}
+\centering
+\begin{minipage}{\linewidth}
+\begin{tabular}{lc}
+& \textbf{VQA~2.0 test-dev} \\
+\textbf{Model} & All \\
+\midrule
+MCB~\cite{DBLP:conf/emnlp/FukuiPYRDR16}\footnote{as reported in \cite{goyal2017making}} & 61.96 \\
+MUTAN~\cite{ben2017mutan}\footnote{as trained and evaluated by us} & 63.27 \\
+ResNet features~$7 \times 7$~\cite{teney2017tips} & 62.07 \\
+Bottom-up attention~\cite{teney2017tips} & 65.32 \\
+\midrule
+Ours & 64.26 \\
+\midrule
+\end{tabular}
+\end{minipage}
 \end{frame}
 }
 
@@ -244,82 +314,10 @@
 \section{Neural Architecture Search}
 
 {%
-% Two problems with REINFORCE as written: variance and convergence.
-% Variance can be improved by:
-%
-%       1. Causality: in the sum, only sum from t' = t to T. Then r(tau) become
-%          the "reward-to-go" or q-function. This reduces the magnitude of the
-%          term and hence the variance.
-%
-%       2. Baseline (or REINFORCE comparison): subtract average reward to
-%          center the rewards. This does not change the expected value of the
-%          policy gradient.
-%
-%          Optimal variance reduction is b = E[g(tau)^2*r(tau)]/E[g(tau)^2].
-%
-%       Number of samples can be improved with importance sampling, Trust
-%       Region Policy Optimization...
-\setbeamertemplate{frame footer}{\cite{deep-rl-berkeley}}
-\begin{frame}{REINFORCE overview}
-        \vspace{-0.8cm}
-        \hspace*{-1.0cm}
-        \includegraphics[scale=0.43]{data/reinforce_overview}
-\end{frame}
-}
-
-{%
-\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
-\begin{frame}{Neural optimizer search overview}
+\setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+\begin{frame}{Neural architecture search overview}
         \center{}
-        \includegraphics[scale=0.275]{data/neural_arch_update}
-\end{frame}
-}
-
-{%
-% These are common optimizers expressed in the neural optimizer search DSL, to
-% illustrate how the search works. The update rules are expressed as a sequence
-% of binary operators operating on unary operations. v-hat is a moving average
-% of the squared gradients, and m-hat is a moving average of the gradients.
-\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
-\begin{frame}{Common optimizers expressed in DSL}
-        \center{}
-        \hspace*{-1.0cm}
-        \includegraphics[scale=0.32]{data/common_opts}
-\end{frame}
-}
-
-{%
-% A visualization of the controller outputs.
-% In this case, the controller reward plateau'ed after about 15000 sampled
-% optimizers.
-\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
-\begin{frame}{Controller RNN overview}
-        \center{}
-        \hspace*{-1.0cm}
-        \includegraphics[scale=0.32]{data/neural_opt_controller}
-\end{frame}
-}
-
-{%
-% 10^-3w is (small, constant) white-noise.
-% g*e^{sign(g)*sign(m_hat)} decreases the magnitude of the gradient when its
-% sign disagrees with the sign of the momentum (moving average of gradient).
-% Hence this is an intuitive update rule invented by the controller.
-\setbeamertemplate{frame footer}{\cite{neural-optimizer-search-46114}}
-\begin{frame}{Generated neural optimizer results}
-        \center{}
-        \begin{tabular}{l r}
-                \emph{Optimizer} & \emph{Best Test} \\
-                \midrule{}
-                SGD & 91.9 \\
-                Momentum & 92.3 \\
-                ADAM & 90.7 \\
-                RMSProp & 90.3 \\
-                \midrule{}
-                $[e^{\textrm{sign}(g)*\textrm{sign}(\hat{m})} + \textrm{clip}(g, 10^{-4})]*g$ & 93.1 \\
-                $\textrm{drop}(\hat{m}, 0.3)*e^{10^{-3}w}$ & 93.2 \\
-                $g*e^{\textrm{sign}(g)*\textrm{sign}(\hat{m})}$ & 92.8
-        \end{tabular}
+        \includegraphics[scale=0.275]{data/zoph-arch-search-overview}
 \end{frame}
 }
 
@@ -379,40 +377,73 @@
 
 \section{Neural Fusion Operator Search}
 
-\begin{frame}[standout]
-        How can the neural architecture search techniques we just learned be
-        applied to improve the multi-modal fusion operators we discussed
-        earlier?
-\end{frame}
-
 {%
-% Two extensions:
-%
-% 1. Is it possible to incorporate the state_i from the reinforcement learning
-%    state-action space, where state_i in this case is the current architecture
-%    of the network? This would reduce the action space to adding or removing
-%    layers.
-%
-% 2. Add an additional anchor point to predict skip connections to different
-%    layers of the optical flow, RGB and audio convnets.
-\begin{frame}{Neural search multi-modal extension}
-        \center{}
-        \includegraphics[scale=0.075]{data/multi_modal_neural}
+\begin{frame}{Tabular Q-learning for fusion operator search}
+\centering
+\hspace*{-12mm}
+\includegraphics[width=1.2\textwidth]{data/val_accuracy_per_batch.pdf}
 \end{frame}
 }
 
+\begin{frame}[standout]
+        How about the massive computational cost?
+\end{frame}
+
+{%
+% Performance follows a log-log scale as dataset size increases (in the linear
+% region)
+% The power law is the same across model architectures, for the same dataset
+\setbeamertemplate{frame footer}{\cite{dlscalingpredictable2017hestness}}
+\begin{frame}{Reduced dataset size for predicting performance}
+\centering
+\hspace*{-6mm}
+\includegraphics[width=1.1\textwidth]{data/dl-scaling-predictable}
+\end{frame}
+}
+
+\newcommand{\tildef}{\tilde{f}_i}
+\newcommand{\tildew}{\tilde{w}_i}
+\newcommand{\tildefw}{{\tildef}^{\tildew}}
+\newcommand{\fw}{{f_i}^{w_i}}
+{%
+\setbeamertemplate{frame footer}{\cite{simpleefficient2017elsken}}
+\begin{frame}[fragile]{Network morphisms + RL}
+\centering
+\begin{itemize}[<+- | alert@+>]
+\item (Type I) \\
+        $\tildefw(x) = C(A{f_i}^{w_i}(x) + b) + d$,
+
+\vspace*{5mm}
+
+\item (Type II) \\
+$\tildefw(x) = (A \quad\tilde{A}){(h^{w_h}(x) \quad{\tilde{h}}^{w_{\tilde{h}}}(x))}^\intercal + b$,
+
+\vspace*{5mm}
+
+\item (Type III) \\
+        $\tildefw(x) = \lambda \fw + (1 - \lambda) h^{w_h}(x)$.
+\end{itemize}
+\end{frame}
+}
 
 \section{Conclusions}
 
 \begin{frame}[fragile]{Conclusions}
         \begin{itemize}[<+- | alert@+>]
-                \item Fusion in VQA by approximating outer-product between
-                        embeddings of different modes.
+                \item Extended strong baseline for fusion in VQA by introducing
+                        nonlinear components into the fusion operator.
 
-                \item Policy gradient method for neural architecture/optimizer
-                        search.
+                \item Policy gradient method for neural architecture search.
 
-                \item Extension to fusion operator still in early stages.
+                \item Extend to fusion operator search and overcome data
+                        inefficiency:
+                        \begin{itemize}
+                                \item sample-efficient metalearning methods,
+
+                                \item dataset size reduction, and,
+
+                                \item ``morphisms''.
+                        \end{itemize}
         \end{itemize}
 \end{frame}
 

@@ -1,0 +1,133 @@
+% NOTE(brendan): Source:
+% https://tex.stackexchange.com/questions/29877/need-help-creating-a-3d-cube-from-a-2d-set-of-nodes-in-tikz
+
+\makeatletter
+
+% Standard Values for Parameters
+\newcommand{\tikzcuboid@shiftx}{0}
+\newcommand{\tikzcuboid@shifty}{0}
+\newcommand{\tikzcuboid@dimx}{3}
+\newcommand{\tikzcuboid@dimy}{3}
+\newcommand{\tikzcuboid@dimz}{3}
+\newcommand{\tikzcuboid@scale}{1}
+\newcommand{\tikzcuboid@densityx}{1}
+\newcommand{\tikzcuboid@densityy}{1}
+\newcommand{\tikzcuboid@densityz}{1}
+\newcommand{\tikzcuboid@rotation}{0}
+\newcommand{\tikzcuboid@anglex}{0}
+\newcommand{\tikzcuboid@angley}{90}
+\newcommand{\tikzcuboid@anglez}{225}
+\newcommand{\tikzcuboid@scalex}{1}
+\newcommand{\tikzcuboid@scaley}{1}
+\newcommand{\tikzcuboid@scalez}{sqrt(0.5)}
+\newcommand{\tikzcuboid@linefront}{black}
+\newcommand{\tikzcuboid@linetop}{black}
+\newcommand{\tikzcuboid@lineright}{black}
+\newcommand{\tikzcuboid@fillfront}{white}
+\newcommand{\tikzcuboid@filltop}{white}
+\newcommand{\tikzcuboid@fillright}{white}
+\newcommand{\tikzcuboid@shaded}{N}
+\newcommand{\tikzcuboid@shadecolor}{black}
+\newcommand{\tikzcuboid@shadeperc}{25}
+\newcommand{\tikzcuboid@emphedge}{N}
+\newcommand{\tikzcuboid@emphstyle}{thick}
+\newcommand{\foreachsteppingx}{%
+\ifthenelse{\equal{\dimx}{1}}
+    {\foreach \x in {\steppingx,...,\dimx}}
+    {\foreach \x in {\steppingx,\secondx,...,\dimx}}
+}
+\newcommand{\foreachsteppingy}{%
+\ifthenelse{\equal{\dimy}{1}}
+    {\foreach \y in {\steppingy,...,\dimy}}
+    {\foreach \y in {\steppingy,\secondy,...,\dimy}}
+}
+\newcommand{\foreachsteppingz}{%
+\ifthenelse{\equal{\dimz}{1}}
+    {\foreach \z in {\steppingz,...,\dimz}}
+    {\foreach \z in {\steppingz,\secondz,...,\dimz}}
+}
+
+% Definition of Keys
+\define@key{tikzcuboid}{shiftx}[\tikzcuboid@shiftx]{\renewcommand{\tikzcuboid@shiftx}{#1}}
+\define@key{tikzcuboid}{shifty}[\tikzcuboid@shifty]{\renewcommand{\tikzcuboid@shifty}{#1}}
+\define@key{tikzcuboid}{dimx}[\tikzcuboid@dimx]{\renewcommand{\tikzcuboid@dimx}{#1}}
+\define@key{tikzcuboid}{dimy}[\tikzcuboid@dimy]{\renewcommand{\tikzcuboid@dimy}{#1}}
+\define@key{tikzcuboid}{dimz}[\tikzcuboid@dimz]{\renewcommand{\tikzcuboid@dimz}{#1}}
+\define@key{tikzcuboid}{scale}[\tikzcuboid@scale]{\renewcommand{\tikzcuboid@scale}{#1}}
+\define@key{tikzcuboid}{densityx}[\tikzcuboid@densityx]{\renewcommand{\tikzcuboid@densityx}{#1}}
+\define@key{tikzcuboid}{densityy}[\tikzcuboid@densityy]{\renewcommand{\tikzcuboid@densityy}{#1}}
+\define@key{tikzcuboid}{densityz}[\tikzcuboid@densityz]{\renewcommand{\tikzcuboid@densityz}{#1}}
+\define@key{tikzcuboid}{rotation}[\tikzcuboid@rotation]{\renewcommand{\tikzcuboid@rotation}{#1}}
+\define@key{tikzcuboid}{anglex}[\tikzcuboid@anglex]{\renewcommand{\tikzcuboid@anglex}{#1}}
+\define@key{tikzcuboid}{angley}[\tikzcuboid@angley]{\renewcommand{\tikzcuboid@angley}{#1}}
+\define@key{tikzcuboid}{anglez}[\tikzcuboid@anglez]{\renewcommand{\tikzcuboid@anglez}{#1}}
+\define@key{tikzcuboid}{scalex}[\tikzcuboid@scalex]{\renewcommand{\tikzcuboid@scalex}{#1}}
+\define@key{tikzcuboid}{scaley}[\tikzcuboid@scaley]{\renewcommand{\tikzcuboid@scaley}{#1}}
+\define@key{tikzcuboid}{scalez}[\tikzcuboid@scalez]{\renewcommand{\tikzcuboid@scalez}{#1}}
+\define@key{tikzcuboid}{linefront}[\tikzcuboid@linefront]{\renewcommand{\tikzcuboid@linefront}{#1}}
+\define@key{tikzcuboid}{linetop}[\tikzcuboid@linetop]{\renewcommand{\tikzcuboid@linetop}{#1}}
+\define@key{tikzcuboid}{lineright}[\tikzcuboid@lineright]{\renewcommand{\tikzcuboid@lineright}{#1}}
+\define@key{tikzcuboid}{fillfront}[\tikzcuboid@fillfront]{\renewcommand{\tikzcuboid@fillfront}{#1}}
+\define@key{tikzcuboid}{filltop}[\tikzcuboid@filltop]{\renewcommand{\tikzcuboid@filltop}{#1}}
+\define@key{tikzcuboid}{fillright}[\tikzcuboid@fillright]{\renewcommand{\tikzcuboid@fillright}{#1}}
+\define@key{tikzcuboid}{shaded}[\tikzcuboid@shaded]{\renewcommand{\tikzcuboid@shaded}{#1}}
+\define@key{tikzcuboid}{shadecolor}[\tikzcuboid@shadecolor]{\renewcommand{\tikzcuboid@shadecolor}{#1}}
+\define@key{tikzcuboid}{shadeperc}[\tikzcuboid@shadeperc]{\renewcommand{\tikzcuboid@shadeperc}{#1}}
+\define@key{tikzcuboid}{emphedge}[\tikzcuboid@emphedge]{\renewcommand{\tikzcuboid@emphedge}{#1}}
+\define@key{tikzcuboid}{emphstyle}[\tikzcuboid@emphstyle]{\renewcommand{\tikzcuboid@emphstyle}{#1}}
+% Commands
+\newcommand{\tikzcuboid}[1]{
+    \setkeys{tikzcuboid}{#1} % Process Keys passed to command
+    \pgfmathsetmacro{\vectorxx}{\tikzcuboid@scalex*cos(\tikzcuboid@anglex)}
+    \pgfmathsetmacro{\vectorxy}{\tikzcuboid@scalex*sin(\tikzcuboid@anglex)}
+    \pgfmathsetmacro{\vectoryx}{\tikzcuboid@scaley*cos(\tikzcuboid@angley)}
+    \pgfmathsetmacro{\vectoryy}{\tikzcuboid@scaley*sin(\tikzcuboid@angley)}
+    \pgfmathsetmacro{\vectorzx}{\tikzcuboid@scalez*cos(\tikzcuboid@anglez)}
+    \pgfmathsetmacro{\vectorzy}{\tikzcuboid@scalez*sin(\tikzcuboid@anglez)}
+    \begin{scope}[xshift=\tikzcuboid@shiftx, yshift=\tikzcuboid@shifty, scale=\tikzcuboid@scale, rotate=\tikzcuboid@rotation, x={(\vectorxx,\vectorxy)}, y={(\vectoryx,\vectoryy)}, z={(\vectorzx,\vectorzy)}]
+    \pgfmathsetmacro{\steppingx}{1/\tikzcuboid@densityx}
+    \pgfmathsetmacro{\steppingy}{1/\tikzcuboid@densityy}
+    \pgfmathsetmacro{\steppingz}{1/\tikzcuboid@densityz}
+    \newcommand{\dimx}{\tikzcuboid@dimx}
+    \newcommand{\dimy}{\tikzcuboid@dimy}
+    \newcommand{\dimz}{\tikzcuboid@dimz}
+    \pgfmathsetmacro{\secondx}{2*\steppingx}
+    \pgfmathsetmacro{\secondy}{2*\steppingy}
+    \pgfmathsetmacro{\secondz}{2*\steppingz}
+    \foreachsteppingx
+    {
+        \foreachsteppingy
+        {   \pgfmathsetmacro{\lowx}{(\x-\steppingx)}
+            \pgfmathsetmacro{\lowy}{(\y-\steppingy)}
+            \filldraw[fill=\tikzcuboid@fillfront,draw=\tikzcuboid@linefront] (\lowx,\lowy,\dimz) -- (\lowx,\y,\dimz) -- (\x,\y,\dimz) -- (\x,\lowy,\dimz) -- cycle;
+
+        }
+    }
+    \foreachsteppingx
+    {
+        \foreachsteppingz
+        {   \pgfmathsetmacro{\lowx}{(\x-\steppingx)}
+            \pgfmathsetmacro{\lowz}{(\z-\steppingz)}
+            \filldraw[fill=\tikzcuboid@filltop,draw=\tikzcuboid@linetop] (\lowx,\dimy,\lowz) -- (\lowx,\dimy,\z) -- (\x,\dimy,\z) -- (\x,\dimy,\lowz) -- cycle;
+        }
+    }
+    \foreachsteppingy
+    {
+        \foreachsteppingz
+        {   \pgfmathsetmacro{\lowy}{(\y-\steppingy)}
+            \pgfmathsetmacro{\lowz}{(\z-\steppingz)}
+            \filldraw[fill=\tikzcuboid@fillright,draw=\tikzcuboid@lineright] (\dimx,\lowy,\lowz) -- (\dimx,\lowy,\z) -- (\dimx,\y,\z) -- (\dimx,\y,\lowz) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{\tikzcuboid@emphedge}{Y}}%
+        {\draw[\tikzcuboid@emphstyle](0,\dimy,0) -- (\dimx,\dimy,0) -- (\dimx,\dimy,\dimz) -- (0,\dimy,\dimz) -- cycle;%
+        \draw[\tikzcuboid@emphstyle] (0,0,\dimz) -- (0,\dimy,\dimz) -- (\dimx,\dimy,\dimz) -- (\dimx,0,\dimz) -- cycle;%
+        \draw[\tikzcuboid@emphstyle](\dimx,0,0) -- (\dimx,\dimy,0) -- (\dimx,\dimy,\dimz) -- (\dimx,0,\dimz) -- cycle;%
+        }%
+        {}
+    \end{scope}
+}
+
+\newcommand{\qvectikzdim}{5}
+\newcommand{\vvectikzdim}{4}
+\newcommand{\cuboidscale}{0.35}
