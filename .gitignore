@@ -1,1 +1,2 @@
 *.pdf
+!fusion-operator-presentation/data/*.pdf
