@@ -1,12 +1,3 @@
-% TODO(brendan): Question to answer: what is the effect of attaching multiple
-% losses on multiple heads of a network, in terms of their respective influence
-% on the update of weights in lower layers of the network during
-% backpropagation?
-% Are the relative magnitudes of the losses from the different heads important
-% in terms of their influence on weight updates? Will a loss with a magnitude
-% 10^3 times larger dominate a 10^3 times smaller loss in influencing weight
-% updates?
-
 \documentclass[a4paper, 12pt]{article}
 
 \usepackage{amsmath}
@@ -1826,6 +1817,36 @@ training time are extended to all timesteps $t > T_{\max}$.
 As a trick for dealing with training sequences with long runs of constant
 variance (namely black pixels in MNIST digits), hidden units are initialized
 with Gaussian noise.
+
+
+\section{Semi-Supervised Learning (SSL)}
+
+\subsection{Why does unsupervised pre-training help deep
+            learning?~\citet{Erhan:2010:WUP:1756006.1756025}}
+
+This journal article investigates the reason why unsupervised pre-training is
+effective at both improving generalization, and reducing training error in deep
+networks. Unsupervised pre-training as regularization is compared, as a possible
+explanation, with optimization and pre-conditioning.
+
+The authors suggest that unsupervised pre-training acts as a prior on the model
+parameters, from which some of the basins of attraction of the training error
+descent procedures cannot be reached.
+
+It is noted that unsupervised pre-training improves generalization even when
+training data is in large abundance.
+
+The initialization, and initial steps, of the training procedure are proposed
+as being important. Even in the presence of abundant data, purely supervised
+learning may result in overfitting to the initial training data observations.
+
+\subsubsection{Data}
+
+\subsubsection{Model}
+
+\subsubsection{Inference}
+
+\subsubsection{Criticism}
 
 
 \section{Visual Question-Answering (VQA)}
