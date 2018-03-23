@@ -1840,13 +1840,40 @@ The initialization, and initial steps, of the training procedure are proposed
 as being important. Even in the presence of abundant data, purely supervised
 learning may result in overfitting to the initial training data observations.
 
+
 \subsubsection{Data}
+
+The data used are MNIST, and ``Infinite MNIST'', which is a version of MNIST on
+which random projective transformations of the examples are done in order to,
+in some sense, create infinite unique examples.
+
 
 \subsubsection{Model}
 
+The models used are Stacked Denoising Autoencoders (SDAEs) and Deep Belief
+Networks (DBNs) with one and three hidden layers.
+
+
 \subsubsection{Inference}
 
+
 \subsubsection{Criticism}
+
+
+\subsubsection{Experiments}
+
+A number of experiments were run, and the important results support the
+hypothesis that unsupervised pre-training limits the set of local optima that
+SGD can converge to, due to its initialization. On MNIST, this effect amounted
+to regularization, where the models that underwent unsupervised pretraining had
+worse training accuracy and better test accuracy (i.e., better generalization).
+On Infinite MNIST, where the generalization error is directly optimized, the
+``limiting the basins of attraction'' effect led to significantly improved
+optimization (i.e., lower training error by an order of magnitude).
+
+Another interesting finding was that the effect of varying the order in which
+data is presented had much higher variance with respect to the final accuracy,
+for both unsupervised pretrained and purely supervised models.
 
 
 \section{Visual Question-Answering (VQA)}
