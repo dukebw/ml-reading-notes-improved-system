@@ -1856,8 +1856,15 @@ Networks (DBNs) with one and three hidden layers.
 
 \subsubsection{Inference}
 
+Contrastive divergence, for DBNs. SGD for SDAEs?
+
 
 \subsubsection{Criticism}
+
+Cross-entropy on the label?
+
+A log-log plot of test negative log-likelihood (NLL) versus train NLL was used
+to visualize generalization.
 
 
 \subsubsection{Experiments}
@@ -1873,7 +1880,21 @@ optimization (i.e., lower training error by an order of magnitude).
 
 Another interesting finding was that the effect of varying the order in which
 data is presented had much higher variance with respect to the final accuracy,
-for both unsupervised pretrained and purely supervised models.
+for both unsupervised pretrained and purely supervised models. Although the
+paper claims that that unsupervised pre-training acts as a variance reduction
+technique, their own empirical results are not convincing compared to the other
+empirical results in the paper (e.g., optimization versus regularization
+hypotheses).
+
+
+\subsubsection{Future Work}
+
+Look into the regularization effect of joint unsupervised and supervised
+objectives, as in semi-supervised learning.
+
+Comparison with training of deep autoencoders in~\citet{HinSal06}, where it is
+shown to be difficult to get a good reconstruction using deep autoencoders,
+without pre-training.
 
 
 \section{Visual Question-Answering (VQA)}
