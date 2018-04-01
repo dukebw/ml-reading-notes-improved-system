@@ -2003,6 +2003,77 @@ Another interesting extension would be to incorporate transfer learning from
 large datasets (e.g., ApolloScape~\citet{huang-apolloscape-2018}).
 
 
+\subsection{Undeep VO\@: Monocular Visual Odometry through Unsupervised Deep
+            Learning~\citet{li-undeep-vo-2017}}
+
+This paper focuses on visual odometry without supervision: a variety of
+reprojection losses are used to jointly train a depth and pose estimation
+model.
+
+
+\subsubsection{Data}
+
+KITTI 2012 Odometry~\ref{kitti}.
+
+
+\subsubsection{Model}
+
+The pose estimator model is based on VGG-16, while the depth estimation CNN is
+an encoder-decoder (based on FlowNet?).
+
+
+\subsubsection{Inference}
+
+Two frames each are used as input from the left and right views, and depth and
+pose are predicted.
+
+The Adam optimizer was used to train for 20 to 30 epochs.
+
+Trajectories with relatively high rotation were supersampled.
+
+
+\subsubsection{Criticism}
+
+A variety of losses are used, belonging to two categories: spatial reprojection
+losses and temporal reprojection losses.
+
+There are three spatial reprojection losses: disparity (inverse depth)
+consistency, pose consistency, and photometric consistency losses.
+
+There are two temporal image losses: photometric consistency loss, and 3D
+geometric registration loss.
+
+
+\subsubsection{Comments}
+
+Considering the inter-related nature of pose and depth, it is a bit odd that
+the pose estimator is a completely separate network from the depth estimator,
+instead of sharing features between the two.
+
+Overall the system seems to have many knobs to tune.
+
+The unsupervised objective definitely makes the system a good candidate for
+transfer learning from larger video datasets.
+
+Three open problems for deep learning in geometry (from Alex Kendall's blog):
+
+\begin{enumerate}
+        \item \emph{The aperture problem}: different directions of motion can
+                appear identical when viewed through an aperture.
+
+        \item Relying on the \emph{photometric consistency assumption} for
+                reprojection losses. New representations should be learned or
+                designed that are invariant to changes in colour that would
+                result from different views (spatial or temporal) of the same
+                object.
+
+        \item An attention problem: we do not need to reconstruct everything,
+                but the photometric consistency loss functions are acting like
+                an autoencoder and making all parts of the image equally
+                important.
+\end{enumerate}
+
+
 \bibliographystyle{apalike}
 \bibliography{ml-reading-notes}
 
