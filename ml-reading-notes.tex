@@ -307,6 +307,15 @@ labelled clips in total in the dataset.
 The Kinetics test set is 100 clips for each class.
 
 
+\section{KITTI 2012~\citet{geiger-kitti-2012}}
+\label{kitti}
+
+The KITTI 2012 odometry benchmark consists of 22 stereo sequences, saved in
+lossless PNG format. The data include colour frames, LIDAR data, camera
+calibration and ground truth poses (except sequences 11 to 21, which are for
+evaluation).
+
+
 \section{THUMOS~2014~\citet{DBLP:journals/corr/IdreesZJGLSS16}}
 \label{thumos}
 
@@ -1941,6 +1950,57 @@ performance boost over using hard binary scores.
 
 Individual sigmoids trained with cross-entropy on multiple annotations (i.e.,
 treat VQA as a multi-label problem).
+
+
+\section{Visual Geometry}
+
+\subsection{DeepVO\@: Towards End-to-End Visual Odometry with Deep Recurrent
+            Convolutional Neural Networks~\citet{wang-deep-vo-2017}}
+
+This paper proposes a simple end-to-end supervised approach to visual odometry
+using neural networks. The inputs used are pairs of RGB frames, and the outputs
+are the current pose of the camera.
+
+
+\subsubsection{Data}
+
+The data used are from the KITTI 2012~\ref{kitti} Odometry task.
+
+
+\subsubsection{Model}
+
+The model is an RNN on top of frames produced by a CNN\@. The CNN takes pairs
+of frames as input, while the RNN takes a sequence of outputs from the CNN as
+input.
+
+
+\subsubsection{Inference}
+
+Inference is performed by taking a sequence of pairs of frames as input and
+outputting a sequence of poses.
+
+
+\subsubsection{Criticism}
+
+An~$L_2$ loss on the ground truth pose is used.
+
+
+\subsubsection{Comments}
+
+It seems that the neural network model suffers from path divergence over time.
+Is there any way to incorporate prior knowledge in order to allow the model to
+re-localize itself from divergent paths? This is the dead reckoning problem.
+
+Regressing the pose seems to be a weak signal, similar to the weak labelling of
+supervised classifiers. It would be interesting to take advantage of what we
+know about the geometry of the scene to provide an unsupervised signal to train
+good representations for the network. Reprojection
+loss~\url{https://alexgkendall.com/computer_vision/Reprojection_losses_geometry_computer_vision/}?
+An interesting avenue is to learn representations that do not have the same
+issues as the photometric reprojection loss.
+
+Another interesting extension would be to incorporate transfer learning from
+large datasets (e.g., ApolloScape~\citet{huang-apolloscape-2018}).
 
 
 \bibliographystyle{apalike}
