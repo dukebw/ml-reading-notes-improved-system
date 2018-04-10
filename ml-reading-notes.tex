@@ -566,6 +566,38 @@ referred to as motivating ``very deep'' models.
 % localization.
 
 
+\subsection{Spatial Transformer Networks~\citet{jaderberg-spatial-2015}}
+
+Spatial Transformer Networks introduce a CNN submodule that sub-differentiably
+parametrizes spatial transformations of a feature map.
+
+The submodule takes an input~$U \in \mathbb{R}^{H \times W \times C}$ and
+outputs~$\mathcal{T}_\theta(G)$, which is a warp of the output grid~$G$
+parametrized by~$\theta$, and outputs~$V$. E.g., $\mathcal{T}_\theta$ could be
+an affine transformation.
+
+The technique used in the paper to make the operation sub-differentiable is to
+use a kernel function of the source coordinates, i.e.,
+
+\begin{equation*}
+        V_i^{nm} = \sum_n^H \sum_m^W U^c_{nm} k(x_i^s - m\;;\; \Phi_x)
+                k(y_i^s - m\;;\; \Phi_y)
+\end{equation*}
+
+for all channels~$c$ and pixels~$i$. The kernel function could be, for example,
+a Dirac delta function, a bilinear
+function~$\max(0, 1 - |x_i^s - m|)\max(0, 1 - |y_i^s - n|)$, or a Gaussian
+kernel, etc.
+
+One disadvantage of this method is that it seems that either the true discrete
+characteristic of the grid warping operation is given up (in the case of
+Gaussian or bilinear kernels), or a biased estimator of the gradient
+(straight-through estimator, in the case of the Dirac delta function) is used.
+It would be more interesting to evaluate the source pixel-selection operation
+using an expectation over all selections in general, then to evaluate different
+gradient estimators for this selection.
+
+
 \section{GANs}
 
 
