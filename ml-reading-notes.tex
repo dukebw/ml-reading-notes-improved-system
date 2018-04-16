@@ -672,12 +672,13 @@ Instance normalization is introduced in~\citet{DBLP:journals/corr/UlyanovVL16}.
 
 \subsubsection{Data}
 
-The cityscapes\citet{DBLP:journals/corr/CordtsORREBFRS16} (semantic labels
-$\leftrightarrow$ photo), CMP Facades (architectural labels $\rightarrow$
-photo), Google maps (map $\leftrightarrow$ aerial photo),
+The cityscapes\citet{Cordts_2016_CVPR} (semantic labels $\leftrightarrow$
+photo), CMP Facades (architectural labels $\rightarrow$ photo), Google maps
+(map $\leftrightarrow$ aerial photo),
 ImageNet\citet{DBLP:journals/corr/RussakovskyDSKSMHKKBBF14} (BW $\rightarrow$
-colour), \citet{zhu2016generative} and~\citet{fine-grained} (edges $\rightarrow$
-photo using the HED edge detector\citet{DBLP:journals/corr/XieT15}),
+colour), \citet{zhu2016generative} and~\citet{fine-grained} (edges
+$\rightarrow$ photo using the HED edge
+detector\citet{DBLP:journals/corr/XieT15}),
 \citet{Eitz:2012:HSO:2185520.2185540} (sketch $\rightarrow$ photo) and
 \citet{Laffont14} (day $\rightarrow$ night).
 
@@ -2033,6 +2034,87 @@ issues as the photometric reprojection loss.
 
 Another interesting extension would be to incorporate transfer learning from
 large datasets (e.g., ApolloScape~\citet{huang-apolloscape-2018}).
+
+
+\subsection{Unsupervised Monocular Depth Estimation from Left-Right
+            Consistency~\citet{monodepth17}}
+
+This paper presents a system for monocular depth estimation, which is trained
+in a self-supervised scheme via left-right photometric consistency of rectified
+views from a stereo camera. The major contribution of this paper, compared with
+other papers that train monocular depth from stereo camera images, is the use
+of two extra regularization terms, namely smoothness and left-right consistency
+terms, in addition to the reconstruction term in the loss function.
+
+They seem to use a number of clever tricks, such as limiting the range of their
+disparity predictions based on a known strong prior about the maximum possible
+disparity in the dataset, and predicting disparity from a sigmoid whose range
+is this known limited range of disparities. Another interesting trick is a
+post-processing step, where they merge disparities predicted on a flipped image
+with the image itself in order to reduce some errors due to disocclusion.
+
+
+\subsubsection{Data}
+
+They test on KITTI depth, Make3D etc.\ and use
+CityScapes~\cite{Cordts_2016_CVPR} as pre-training data.
+
+
+\subsubsection{Model}
+
+They use both a VGG and a ResNet-50 as backbones to their depth predictor.
+
+
+\subsubsection{Inference}
+
+Only the left image is passed through one CNN backbone. The features from the
+CNN are used to separately predict left and right disparities. The left and
+right disparities are trained by doing a spatial transform of the left image
+using the left disparities, and similarly for the right image, then applying a
+reconstruction loss.
+
+They use Adam as the optimizer with a learning rate of~$10^{-4}$ and train
+for~\num{50} epochs, halving the learning rate for each~\num{10} epochs
+after~\num{30}.
+
+
+\subsubsection{Criticism}
+
+There are three loss terms: a reconstruction loss~$C_{ap}$, a smoothness
+term~$C_{ds}$, and a left-right consistency term~$C_{lr}$.
+
+The reconstruction loss interpolates between~$L_1$ loss and
+SSIM~\citet{wang-image-ssim-2004}.
+
+The smoothness term is:
+
+\begin{equation*}
+        C_{ds}^l = \frac{1}{N} \sum_{i, j}
+                |\partial_x d_{ij}^l|e^{-\norm{\partial_x I_{ij}^l}} +
+                |\partial_y d_{ij}^l|e^{-\norm{\partial_y I_{ij}^l}}
+\end{equation*}
+
+Where~$I$ is the image and~$d_{ij}$ is the disparity prediction. The
+exponential term takes into account the fact that disparity is expected to
+change rapidly at object boundaries.
+
+Finally, the left-right consistency term from which the article gets its name,
+just puts an~$L_1$ distance loss on the negative left disparity warped onto the
+right disparity,
+i.e.,~$C_{lr}^l = \sum_{i, j} |d_{ij}^l - d_{ij + d_{ij}^l}^r|$.
+
+
+\subsubsection{Comments}
+
+Future work: dealing with specular surfaces, explicitly dealing with
+occlusions. Temporal consistency in videos. Sparse input as an alternative
+training signal? Estimating full occupancy of a scene? (See the conclusion).
+
+A flaw in the paper seems to be that by predicting disparity directly, their
+system has baked in the camera calibration to the learned weights (and hence
+they report poor numerical performance when deploying their model trained on
+KITTI on other datasets, despite qualitatively detailed looking depth
+predictions). Why not just predict depth or inverse depth?
 
 
 \subsection{Undeep VO\@: Monocular Visual Odometry through Unsupervised Deep
