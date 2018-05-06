@@ -13,6 +13,7 @@
 \usepackage{multirow}
 \usepackage{pgfplots}
 \usepackage{tabularx}
+\usepackage[absolute,overlay]{textpos}
 \usepackage[most]{tcolorbox}
 \usepackage{tikz}
 \usepackage{upgreek}
@@ -383,9 +384,11 @@ Ours & 64.22 \\
 \begin{frame}{Fusion Op Search Controller}
 \centering
 \hspace*{-1.0cm}
-\scalebox{1.0}{%
+\begin{textblock*}{10cm}(1cm,-1cm)
+\scalebox{1.3}{%
 \input{data/fusion-op-controller.tikz}
 }
+\end{textblock*}
 \end{frame}
 }
 
