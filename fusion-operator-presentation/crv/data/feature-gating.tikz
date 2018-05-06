@@ -1,0 +1,108 @@
+\newcommand{\branchstub}[5]{%
+\begin{scope}[yshift=#2]
+\node (q#1) {$M_{#5}\mutanfeat{q}$};
+\node (v#1) [below=of q#1] {$N_{#5}\mutanfeat{v}$};
+
+\node[hadamard, xshift=2cm] (h#1) at ($(q#1)!0.5!(v#1)$) {$\odot$}
+         edge [pre] node [below] {$f_{\mathrm{selu}}$} (v#1) {}
+         edge [pre] node [above, xshift=#4] {$f_{\mathrm{#3}}$} (q#1) {};
+
+\node[nn] (nn#1) [right=of h#1] {$\Phi_#5$}
+        edge [pre] (h#1) {};
+\end{scope}}
+
+\newcommand{\vecelems}[1]{%
+        \node [matrix, vecsty]
+                (vector#1) [right=of nn#1, xshift=1cm]
+                {%
+                        \node[rectangle] (vec#1a) {$t_1$};\\
+                        \node[rectangle] (vec#1b) {$t_2$};\\[-2mm]
+                        \node[rectangle] (vec#1c) [xshift=1mm] {$\vdots$};\\
+                        \node[rectangle] (vec#1d) {$t_o$};\\
+                };
+
+        \draw [post, shorten >= 3pt, red!80, thick] (nn#1) -- (vector#1);
+        \fill[left color=red!80, middle color=red!65, right color=red!50] ($(nn#1)!0.5!(vector#1)$) -- (vector#1.north west) -- (vector#1.south west) -- cycle;
+}
+
+\begin{tikzpicture}
+        [gate/.style={circle,
+                      inner sep=0pt,
+                      minimum size=2mm,
+                      thick,
+                      draw=black,
+                      fill=white},
+         gateedge/.style={-{Circle[fill=white]},
+                          out=0,
+                          in=180,
+                          shorten >= 3pt,
+                          semithick},
+         hadamard/.style={circle,
+                          inner sep=0pt,
+                          minimum size=6mm,
+                          thick,
+                          draw=blue!75,
+                          fill=blue!20},
+         nn/.style={rectangle,
+                    draw=black!50,
+                    fill=black!20,
+                    thick,
+                    inner sep=0pt,
+                    minimum size=6mm},
+         pre/.style={<-, shorten <= 1pt, >=stealth, semithick},
+         post/.style={->, shorten >= 1pt, >=stealth, semithick},
+         sigmoid/.style={circle,
+                         inner sep=0pt,
+                         minimum size=4mm,
+                         thick,
+                         draw=black,
+                         fill=green!50,
+                         draw=green!80},
+         sumsty/.style={circle,
+                        inner sep=0pt,
+                        minimum size=6mm,
+                        thick,
+                        draw=orange!80,
+                        fill=orange!50},
+         vecsty/.style={fill=red!50, draw=red!80, very thick}]
+
+        \branchstub{1}{0cm}{tanh}{1mm}{1}
+        \branchstub{2}{-2.5cm}{identity}{2mm}{\sigma}
+
+        \branchstub{3}{-5cm}{sigmoid}{2mm}{2}
+
+        \vecelems{1}
+        \vecelems{3}
+
+        \node[sigmoid] (sigmoid2)
+                [right=of nn2, xshift=-5mm] {$\sigma$}
+                edge [pre] (nn2) {}
+                edge [gateedge] (vec1a) {}
+                edge [gateedge] (vec1b) {}
+                edge [gateedge] (vec1d) {}
+                edge [gateedge] (vec3a) {}
+                edge [gateedge] (vec3b) {}
+                edge [gateedge] (vec3d) {};
+
+        \node[sumsty] (sum) [right=of sigmoid2, xshift=2cm] {$\Sigma$}
+              edge [pre, out=90, in=0] (vector1) {}
+              edge [pre, out=270, in=0] (vector3) {};
+
+        \node (tcqv) [right=of sum] {$\T_c^{\q\v}$}
+                edge [pre] (sum) {};
+
+        \node[matrix] (legend) at (current bounding box.east) [xshift=3.5cm] {%
+                \node[label=right:Question vector features.] {$\q$};\\[2mm]
+                \node[label=right:Image vector features.] {$\v$};\\[2mm]
+                \node[hadamard, label=right:Element-wise multiplication.] {$\odot$};\\[2mm]
+                \node[nn, label=right:Neural network layers~${(\phi_l)}_r$.] {$\Phi_r$};\\[2mm]
+                \node[sigmoid, label=right:Logistic sigmoid nonlinearity.] {$\sigma$};\\[2mm]
+                \node[gate, label=right:Scalar multiplication.] {};\\[2mm]
+                \node[vecsty, label=right: Elements of~$\tuckbranch \in \mathbb{R}^{t_o}$.] {$t_i$};\\[2mm]
+                \node[sumsty, label=right: Element-wise sum.] {$\Sigma$};\\
+        };
+
+        \begin{scope}[on background layer]
+                \node (r1) [fill=black!10, rounded corners, fit=(legend)] {};
+        \end{scope}
+\end{tikzpicture}

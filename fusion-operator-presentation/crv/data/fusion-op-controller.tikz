@@ -1,0 +1,60 @@
+\begin{tikzpicture}
+        [oplussty/.style={circle,
+                          inner sep=0pt,
+                          minimum size=6mm,
+                          thick,
+                          draw=cyan!80,
+                          fill=cyan!50},
+         cellsty/.style={rectangle,
+                         inner sep=0pt,
+                         minimum size=6mm,
+                         thick,
+                         draw=gray!80,
+                         fill=gray!50},
+         pre/.style={<-, >=stealth, semithick},
+         post/.style={->, >=stealth, semithick}]
+
+        \coordinate (bin op cell coord) at (0mm, 0mm);
+        \newcommand{\cellshift}{1cm}
+
+        \node[cellsty] (bin op cell) at (bin op cell coord) {}
+                edge [pre, dashed, out=180, in=0] ($(bin op cell coord) + (-1cm, 0mm)$)
+                edge [pre, dashed, out=270, in=315] ($(bin op cell coord) + (-1cm, -1cm)$);
+
+        \node[oplussty] (bin op) at (bin op cell.north) [yshift=\cellshift] {$\oplus$}
+                edge [pre] (bin op cell);
+
+        \node[cellsty] (func1 cell) at (bin op cell.east) [xshift=\cellshift] {}
+                edge [pre] (bin op cell)
+                edge [pre, out=270, in=90, looseness=3] (bin op) {};
+
+        \node (func1) at (func1 cell.north) [yshift=\cellshift] {$\tanh$}
+                edge [pre] (func1 cell);
+
+        \node[cellsty] (func2 cell) at (func1 cell.east) [xshift=\cellshift] {}
+                edge [pre] (func1 cell)
+                edge [pre, out=270, in=90, looseness=3] (func1) {};
+
+        \node (func2) at (func2 cell.north) [yshift=\cellshift] {$\sigmoid$}
+                edge [pre] (func2 cell);
+
+        \node[cellsty] (node1 cell) at (func2 cell.east) [xshift=\cellshift] {}
+                edge [pre] (func2 cell)
+                edge [pre, out=270, in=90, looseness=3] (func2) {};
+
+        \node (node1) at (node1 cell.north) [yshift=\cellshift, align=center] {Node\\$N - 1$}
+                edge [pre] (node1 cell);
+
+        \node[cellsty] (node2 cell) at (node1 cell.east) [xshift=\cellshift] {}
+                edge [pre] (node1 cell)
+                edge [pre, out=270, in=90, looseness=3] (node1) {}
+                edge [post, dashed, out=0, in=180] ($(node2 cell) + (1cm, 0cm)$);
+
+        \node (node2) at (node2 cell.north) [yshift=\cellshift, align=center] {Node\\$N - 4$}
+                edge [pre] (node2 cell)
+                edge [post, dashed, out=90, in=90, looseness=2] ($(node2 cell) + (1cm, 1cm)$);
+
+        \node at ($(func2) + (0cm, -3cm)$) {\makebox[32ex]{\upbracefill}};
+        \node[inner sep=1pt] at ($(func2) + (0cm, -3cm)$)
+                [below, yshift=-3mm] {Node $N$};
+\end{tikzpicture}

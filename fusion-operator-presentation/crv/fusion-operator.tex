@@ -1,0 +1,473 @@
+\documentclass{beamer}
+\usetheme{metropolis}
+\usepackage{amsmath}
+\usepackage{appendixnumberbeamer}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{empheq}
+\usepackage{ifthen}
+\usepackage{keyval}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{upgreek}
+
+\usetikzlibrary{arrows.meta, backgrounds, calc, fit, positioning}
+
+\DeclareMathOperator*{\binop}{\oplus}
+\DeclareMathOperator{\sigmoid}{sigmoid}
+
+\newcommand{\binopb}{\ensuremath{\sideset{}{_b}\binop}}
+\newcommand{\mutanfeat}[1]{\ensuremath{\tilde{\mathbf{#1}}}}
+\renewcommand{\T}{\ensuremath{\mathcal{T}}}
+\newcommand{\tuckbranch}{\ensuremath{\T_r^{\q{}\v{}}}}
+\newcommand{\q}{\ensuremath{\mathbf{q}}}
+\renewcommand{\v}{\ensuremath{\mathbf{v}}}
+\newcommand{\qtWq}{\q^\intercal{} W_\q{}}
+\newcommand{\vtWv}{\v^\intercal{} W_\v{}}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
+
+% Presentation flow plan:
+%
+% Goals:
+%
+%       0. The idea of presenting my work in this middle stage is to request
+%       feedback, ideas and direction from the (extended) group. Focused on how
+%       to follow up search space definition with actual search implementation.
+%
+%
+%       To what type of problems can fusion operator search be applied?
+%
+%       VQA:
+%
+%       Make the case that this is:
+%               1. An important problem.
+%               2. A difficult problem (cite tips and tricks paper with
+%                  balanced question statistic).
+%               3. A problem that current techniques struggle with (see above).
+%               4. A problem that automatic fusion operator model selection can
+%                  address.
+%
+%       Give MUTAN as motivation for improving performance by improving the
+%       multi-modal fusion operator.
+%
+%       Expand with my Generalized Hadamard prod paper...
+%
+%       Other examples of open problems to which fusion operator search can be
+%       applied:
+%
+%       Action recognition in video: the "Revisiting the effectiveness of
+%       off-the-shelf temporal modeling approaches for large-scale video
+%       classification" Kinetics submission.
+%
+%       Take advantage of Dhanesh's multi-modal literature review:
+%       SIGPROC-Rev1.pdf.
+%
+%
+%       1-?. Present and explain the research on which my proposed research
+%       depends?
+%
+%       1. Related, previous work on same topic from this group:
+%
+%       ModOut: https://hal.archives-ouvertes.fr/hal-01444614
+%
+%       Structure Optimization for Deep Multimodal Fusion Networks Using
+%       Graph-Induced Kernels: https://arxiv.org/abs/1707.00750.
+%
+%
+%       2a. Architecture search techniques:
+%
+%       Neural optimizer search with reinforcement learning:
+%       http://proceedings.mlr.press/v70/bello17a.html.
+%
+%       Neural architecture search with reinforcement learning:
+%       https://www.openreview.net/pdf?id=r1Ue8Hcxg.
+%
+%       Learning to learn by gradient descent by gradient descent:
+%       https://arxiv.org/abs/1606.04474.
+%
+%       Meta-learning symposium: http://metalearning-symposium.ml/
+%
+%
+%       2b. Possible ways to apply architecture search to multi-modal fusion
+%       problem.
+%
+%       Ask for ideas, based on what was just presented.
+%
+%       Ideas:
+%               - Use dynamic programming to add layers, finding first the best
+%               policy for a single fusion layer, then explore out to >= 2
+%               layers.
+%                       - Morphisms
+%
+%               In this case, the current state would be the state of the
+%               fusion architecture that has been added on to the original
+%               network, and the action space would be where to add the next
+%               layer or fusion operation.
+%
+%               - Action space: join any of N activation map layers from each
+%               stream with any other activation map using a fusion operator.
+%
+%               E.g., combine RGB and optical flow at multiple levels for
+%               multiple parallel streams, and fuse those.
+%
+
+\title{Automatic Fusion Operator Model Selection for Multimodal Tasks}
+\date{\today}
+\author{Brendan Duke}
+\institute{University of Guelph}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+
+% \section{Introduction}
+
+% \begin{frame}[fragile]{Questions to answer}
+%         \begin{itemize}[<+- | alert@+>]
+%                 \item What is Visual Question-Answering (VQA) and why do we care?
+%                         Why is VQA a difficult problem?
+
+%                 \item What are fusion operators, and how can they address the
+%                         VQA problem?
+
+%                 \item How might model search techniques be used as methods of
+%                         learning fusion operators for VQA\@?
+%         \end{itemize}
+% \end{frame}
+
+
+\section{VQA}
+
+{%
+% VQA v2 is a hard problem:
+% 1. Added ~200K each balancing examples to train and test, 100K to val.
+% 2. Balanced examples mined from similar features (in space of VGG-16
+%    pre-trained on ImageNet), but have different answer to same question.
+\setbeamertemplate{frame footer}{\cite{goyal2017making}}
+\begin{frame}{VQA v2}
+        \center{}
+        % \vspace{-0.8cm}
+        \hspace*{-2mm}
+        \includegraphics[scale=0.31]{data/vqa2-balanced-imgs}
+\end{frame}
+}
+
+{%
+\setbeamertemplate{frame footer}{\cite{teney2017tips}}
+\begin{frame}{VQA v2 balanced pair accuracy}
+\center{}
+\small
+\begin{tabular}{l*{4}{>{$}c<{$}}>{\bfseries}p{8mm}}
+        \toprule
+        & \multicolumn{4}{c}{VQA v2 validation} & \multirow{3}{8mm}{Acc.\ over pairs}\\
+        \cmidrule{2-5}
+        & \multicolumn{4}{c}{VQA Score} & \\
+        \cmidrule{2-5}
+        & All & Yes/no & Num. & Other & \\
+        \midrule
+        \textbf{Reference Model} & 63.15 \pm{} 0.08 & 80.07 & 42.87 & 55.81 & 34.66 \\
+        \midrule
+        (1) $w_o^\mathrm{text}$ init. & 63.01 \pm{} 0.12 & 80.11 & 42.80 & 55.51 & 34.40 \\
+        (2) $w_o^\mathrm{img}$ init. & 62.67 \pm{} 0.07 & 79.75 & 42.64 & 55.14 & 34.22 \\
+        (3) bottom-up attn & 58.90 \pm{} 0.10 & 77.16 & 37.18 & 50.92 & 29.39 \\
+        \multicolumn{6}{c}{$\ldots$} \\
+        \bottomrule
+\end{tabular}
+\end{frame}
+}
+
+
+\section{Fusion Operators}
+
+% {%
+% % Fibers needed for explanation of mode-i tensor product used in Tucker
+% % decomposition, which is the fusion operator in the MUTAN model.
+% \setbeamertemplate{frame footer}{\cite{Kolda:2009:TDA:1655228.1655230}}
+% \begin{frame}{Tensor mode-$i$ fibers}
+%         \center{}
+%         \includegraphics[scale=0.275]{data/tensor_fibers}
+% \end{frame}
+% }
+
+% {%
+% % This is the Tucker decomposition used as the multi-modal fusion operator in
+% % MUTAN. Here the matrices A, B and C are analogous to the principal components
+% % eigenvectors in PCA.
+% \setbeamertemplate{frame footer}{\cite{Kolda:2009:TDA:1655228.1655230}}
+% \begin{frame}{Tucker decomposition}
+%         \center{}
+%         \includegraphics[scale=0.28]{data/tucker_decomp}
+%         \begin{equation*}
+%                 \mathcal{X} \approx \mathcal{G} \times_1 \mathbf{A} \times_2 \mathbf{B} \times_3 \mathbf{C}
+%         \end{equation*}
+% \end{frame}
+% }
+
+\tcbset{highlight math style={boxsep=5mm,colback=red!30!white}}
+
+{%
+% Geometric representation of first two n-mode products
+% q^t Wq is combined with Tc via inner product broadcast (matmul)
+% ditto for v^t Wv
+\begin{frame}{Tensor product}
+        \center{}
+        \input{data/n-mode-prod.tikz}
+
+\begin{empheq}[box=\tcbhighmath]{equation*}
+        \T \approx \T_c \times_1 \qtWq \times_2 \vtWv \times_3 W_o
+\end{empheq}
+\end{frame}
+}
+
+{%
+% The full MUTAN pipeline for VQA, which we build upon
+% (Tc is the rectangle)
+\setbeamertemplate{frame footer}{\cite{ben2017mutan}}
+\begin{frame}{MUTAN}
+        \center{}
+        \hspace*{-1.0cm}
+        \includegraphics[scale=0.31]{data/mutan}
+\end{frame}
+}
+
+%{%
+%% Contrast of the Tucker decomposition with Multimodal Compact Bilinear (MCB)
+%% and Multimodal Low-rank Bilinear (MLB).
+%%
+%% On the val split of the VQA dataset, the full MUTAN method achieved
+%% performance of 58.16 overall as compared with the next best result, 57.94
+%% from MLB, and compared with 56.92 from a baseline that just concatenates v
+%% and q.
+%\setbeamertemplate{frame footer}{\cite{ben2017mutan}}
+%\begin{frame}{MCB vs. MLB vs. MUTAN}
+%        \center{}
+%        \hspace*{-0.9cm}
+%        \includegraphics[scale=0.31]{data/mcb_mlb_mutan}
+%\end{frame}
+%}
+
+{%
+% Our generalized fusion operator:
+% 1. Nonlinearity ensembling
+% 2. Mini-network
+% 3. Tree fusion with arbitrary binary ops
+\begin{frame}{Generalized fusion operator}
+\center{}
+\hspace*{-6.0cm}
+\scalebox{0.75}{%
+\input{data/mutan-ours.tikz}
+}
+\end{frame}
+}
+
+{%
+\begin{frame}{Feature gating (instance of general fusion op)}
+\centering
+\hspace*{-1.0cm}
+\scalebox{0.7}{%
+\input{data/feature-gating.tikz}
+}
+\end{frame}
+}
+
+{%
+% Close to the jump from MCB -> MUTAN. Same codebase.
+\begin{frame}{Generalized fusion op results}
+\centering
+\begin{minipage}{\linewidth}
+\begin{tabular}{lc}
+& \textbf{VQA~2.0 test-dev} \\
+\textbf{Model} & All \\
+\midrule
+MCB~\cite{DBLP:conf/emnlp/FukuiPYRDR16}\footnote{as reported in \cite{goyal2017making}} & 61.96 \\
+MUTAN~\cite{ben2017mutan}\footnote{as trained and evaluated by us} & 63.13 \\
+ResNet features~$7 \times 7$~\cite{teney2017tips} & 62.07 \\
+Bottom-up attention~\cite{teney2017tips} & 65.32 \\
+\midrule
+Ours & 64.22 \\
+\midrule
+\end{tabular}
+\end{minipage}
+\end{frame}
+}
+
+% TODO(brendan): More use-cases from Dhanesh's literature review?
+
+% TODO(brendan): Related work from group (ModOut).
+
+
+% \section{Neural Architecture Search}
+
+% {%
+% \setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+% \begin{frame}{Neural architecture search overview}
+%         \center{}
+%         \includegraphics[scale=0.275]{data/zoph-arch-search-overview}
+% \end{frame}
+% }
+
+% {%
+% % A diagram of the action procedure of the RNN controller for creating
+% % convnets.
+% % Anchor points take skip connections based on sigmoids of tanh's of weighted
+% % sums of the previous layer's hidden state and the current (input) layer's
+% % hidden state.
+% \setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+% \begin{frame}{Neural architecture search: convolutional net}
+%         \center{}
+%         \vspace{-1.5cm}
+%         \hspace*{-1.25cm}
+%         \includegraphics[scale=0.3]{data/neural_arch_convnet}
+% \end{frame}
+% }
+
+% {%
+% % RNNs are generalized into a tree structure.
+% % The RNN controller predicts, for each index of the tree, a binary op and
+% % unary op (activation), along with tree indices corresponding to the input and
+% % output cell states (akin to cell state in LSTMs).
+% % This illustration uses base 2, while the true architectures searched over
+% % used base 8.
+% % Search space for RNNs: 6*10^16. 15000 architectures evaluated.
+% \setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+% \begin{frame}{Neural architecture search: RNN}
+%         \center{}
+%         \vspace{-1.25cm}
+%         \hspace*{-1.25cm}
+%         \includegraphics[scale=0.29]{data/neural_arch_rnn}
+% \end{frame}
+% }
+
+% {%
+% \setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+% \begin{frame}{Generated convolutional net}
+%         \center{}
+%         \vspace{-0.25cm}
+%         \includegraphics[scale=0.33]{data/neural_arch_convnet_output}
+% \end{frame}
+% }
+
+% {%
+% % The top left is an LSTM. The top right and bottom are generated RNNs,
+% % difference being that on the bottom the controller was allowed to use max and
+% % sin.
+% \setbeamertemplate{frame footer}{\cite{neural-architecture-search-45826}}
+% \begin{frame}{Generated RNN}
+%         \center{}
+%         \vspace{-0.25cm}
+%         \includegraphics[scale=0.32]{data/neural_arch_rnn_output}
+% \end{frame}
+% }
+
+
+\section{Neural Fusion Operator Search}
+
+{%
+\begin{frame}{Fusion Op Search Controller}
+\centering
+\hspace*{-1.0cm}
+\scalebox{1.0}{%
+\input{data/fusion-op-controller.tikz}
+}
+\end{frame}
+}
+
+% {%
+% \begin{frame}{Tabular Q-learning for fusion operator search}
+% \centering
+% \hspace*{-12mm}
+% \includegraphics[width=1.2\textwidth]{data/val_accuracy_per_batch.pdf}
+% \end{frame}
+% }
+
+% \begin{frame}[standout]
+%         How about the massive computational cost?
+% \end{frame}
+
+% {%
+% % Performance follows a log-log scale as dataset size increases (in the linear
+% % region)
+% % The power law is the same across model architectures, for the same dataset
+% \setbeamertemplate{frame footer}{\cite{dlscalingpredictable2017hestness}}
+% \begin{frame}{Reduced dataset size for predicting performance}
+% \centering
+% \hspace*{-6mm}
+% \includegraphics[width=1.1\textwidth]{data/dl-scaling-predictable}
+% \end{frame}
+% }
+
+% \newcommand{\tildef}{\tilde{f}_i}
+% \newcommand{\tildew}{\tilde{w}_i}
+% \newcommand{\tildefw}{{\tildef}^{\tildew}}
+% \newcommand{\fw}{{f_i}^{w_i}}
+% {%
+% \setbeamertemplate{frame footer}{\cite{simpleefficient2017elsken}}
+% \begin{frame}[fragile]{Network morphisms + RL}
+% \centering
+% \begin{itemize}[<+- | alert@+>]
+% \item (Type I) \\
+%         $\tildefw(x) = C(A{f_i}^{w_i}(x) + b) + d$,
+
+% \vspace*{5mm}
+
+% \item (Type II) \\
+% $\tildefw(x) = (A \quad\tilde{A}){(h^{w_h}(x) \quad{\tilde{h}}^{w_{\tilde{h}}}(x))}^\intercal + b$,
+
+% \vspace*{5mm}
+
+% \item (Type III) \\
+%         $\tildefw(x) = \lambda \fw + (1 - \lambda) h^{w_h}(x)$.
+% \end{itemize}
+% \end{frame}
+% }
+
+\section{Conclusions}
+
+\begin{frame}[fragile]{Conclusions}
+        \begin{itemize}[<+- | alert@+>]
+                \item Extended strong baseline for fusion in VQA by introducing
+                        nonlinear components into the fusion operator.
+
+                \item Policy gradient method for neural fusion operator search.
+
+                % \item Extend to fusion operator search and overcome data
+                %         inefficiency:
+                %         \begin{itemize}
+                %                 \item sample-efficient metalearning methods,
+
+                %                 \item dataset size reduction, and,
+
+                %                 \item ``morphisms''.
+                %         \end{itemize}
+        \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+        Questions?
+\end{frame}
+
+\appendix
+
+\begin{frame}[allowframebreaks]{References}
+        \bibliography{fusion-operator}
+        \bibliographystyle{apalike}
+\end{frame}
+
+\end{document}
