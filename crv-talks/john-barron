@@ -1,0 +1,29 @@
+Leaf (as in tree leaf) Occlusion
+
+- Fit a beta-spline S to model a leaf contour point set C
+
+- Discrete contour evolution to find points of high convexity
+
+- Subgraph matching
+
+Frechet distance metric
+
+        - Maximum distance between two overlaid curves
+
+Energy minimization
+
+        - ?
+
+Curvature and shape context descriptor energy terms
+
+        - Local/global/shape context descriptors
+
+        - StringCut features
+
+GNCCP optimization
+
+        - Used to minimize the energy function
+
+Data: Swedish leaf dataset, Flavia and Leafsnap dataset
+
+Related work: MDM (Multiscale Distance Matrix) Hu, TIP 2012

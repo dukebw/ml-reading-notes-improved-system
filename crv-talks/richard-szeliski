@@ -1,0 +1,166 @@
+Virtual Reconstruction for Image-Based Rendering
+
+
+- Computational photography
+
+        - iPhone 7/Pixel stereo camera
+
+- Virtual reality
+
+        - AR camera filters
+
+
+Image-based rendering
+
+        - Take many photos and a 3D model: image interpolation
+
+        - Lumigraph / light field (Stanford 1996)
+
+                - models: parallax, occlusion, translucency (e.g., mixing of
+                  gray colour of translucent bowl with background), refraction,
+                  highlights
+
+                - movement of colour in a 4D light field
+
+                - stereo camera phones
+
+                - approximations of light fields in devices?
+
+                - Unstructured lumigraph: rays not sampled on regular 2D grid.
+
+                        - Heigl, DAGM 99. Buehler, SIGGRAPH 2000.
+                        Hedman, SIGGRAPH Asia 2016.
+
+        - Virtual viewpoint video (SIGGRAPH 2004)
+
+                - Matrix bullet-time effect: 200-camera rig
+
+                - Eight cameras, do in-between interpolation
+
+                - Matting: some pixels are influenced by both foreground and
+                  background
+
+                        1. What are the colours and opacities such that when
+                        these things are combined they produce the correct
+
+                - Two-layer model with thin boundary strips
+
+                        - Composite multiple viewpoints in time with Z-buffer
+                          from depth map.
+
+                - 360-degree video (Uyttendaele, 2004)
+
+                        - Google street view, google jump (2015), Facebook
+                          surround 360: 6-dof true light field experience.
+
+                        - Low-cost 360 stereo photography and video capture
+                          (Matzen, SIGGRAPH 2017)
+
+        - Immersive video stabilization
+
+                - First-person hyperlapse: (Kopf, SIGGRAPH 2014)
+
+                        - Create a smooth path from scene reconstruction
+
+                        1. Track feature points in the video to get point
+                        cloud. Reconstruct scene.
+
+                                - Extract feature points and match them
+
+                        2. Optimize camera path to look in same direction all
+                        the way up.
+
+                        3. Spatio-temporal MRF stitching to warp previous
+                        images so that optimized path has a full field of view.
+
+                                - Poisson image blending
+
+                - Large scale reconstruction
+
+                        - Images from internet (photo tourism)
+
+                        - Move between images in a continuous way (smoothly
+                          interpolates between viewpoints)
+
+                        - Can label parts of the point cloud (transfer semantic
+                          information)
+
+                        - Piecewise planar proxies (Sinha, ICCV 2009)
+
+                        - Ambient point clouds (Goesele, SIGGRAPH 2010)
+                          combination of image rendering (where the geometry is
+                          certain) and non-photorealistic rendering.
+
+                        - Photo tours 2012 (Kushal, 3DIMPVT 2012)
+
+                        - Visual turing test (Shan, 3DV 2013)
+
+                                - Around the edges there is a white border:
+                                  why?
+
+                        - Casual 3D photography
+
+
+Open problems (what's missing):
+
+        - Reflections and transparency
+
+        - In large scale reconstruction you are still reconstructing textures
+          from a 3D triangle mesh. Can't deal with reflections
+
+        - Effect of reflection on image-based rendering (Sinha, 2012)
+
+                - Things that are at the wrong depth move the wrong way.
+
+                - Decompose the depth maps into two layers, one for reflections
+                  and one for not-reflections (transmission). Front depth and
+                  rear depth. (Reflection could be closer than the transmitted
+                  thing?)
+
+                - Image-based rendering in the gradient domain
+
+                        - Poisson image editing
+
+                - A computational approach for obstruction-free photography
+                  (Xue, SIGGRAPH 2015). Alpha channel.
+
+        - Improve stereo matching with plane and parallax representation
+          (deformation of glass hung in a window).
+
+        - Reflectivity (beta) estimation
+
+        - Realworld normal map capture for nearly flat reflective surfaces
+        (Pacquet, 2013)
+
+        - combine classic 3D reconstruction approaches with semantic understand
+          from DNNs.
+
+- Questions
+
+        - Applying 3D reconstruction in active vision (e.g., robot motion)
+
+                - robot motion is deliberate
+
+                - Apply same techniques to static domain (e.g., picking)
+
+                - People moving around: (e.g., autonomous vehicles). "Things
+                  get much more challenging". Multiple stereo cameras, active
+                  illumination, semantic understanding.
+
+        - What if you want to go beyond the hull of viewed textures?
+
+                - Use semantic understanding to "hallucinate a whole forest
+                  from just a local view". Open problem. Generative model.
+
+                        - Is it a commonly occurring case? Aerial 3D building
+                          models + street view (far view -> near view).
+
+        - Reconstruction and rendering of objects on the other side of the
+          glass. Does refraction through glass pose an issue?
+
+                - Reflection off of both the front and back side
+
+                - Refraction will mess up the parallax.
+
+        - Possibility of reflection and object in glass at a single depth
+          (e.g., gallery hall)

@@ -1,0 +1,33 @@
+Manifold geometry with fast automatic derivatives and coordinate frame
+semantics checking in C++
+
+
+- Geometric expressions in code, and derivatives of those expressions on a
+  manifold (SO(3), SE(3))
+
+        - Catch bugs at compile time with automatic differentiation
+
+- Coordinate frame semantics checking
+
+- Want: position in body frame, from camera frame.
+
+- Coordinate frame semantics: check subscripts of transformation with frame in
+  code
+
+        - Caller of function has to conform to the semantics of the return
+          value, without adhering to comments or something.
+
+- Supports operations on manifolds
+
+        - automatic differentation: Fast, compared to hand-optimized
+          derivatives?
+
+        - Manifold geometry: derivatives w.r.t. each SO(3) or SE(3) element,
+          instead of w.r.t. each matrix element.
+
+        - Use expression templates at compile time.
+
+        - Add unique types to everything in an expression (e.g., via frame
+          semantics)
+
+        - Block automatic differentiation

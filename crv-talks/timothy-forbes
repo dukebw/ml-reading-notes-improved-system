@@ -1,0 +1,17 @@
+Deep autoencoders with residual connections for urban reconstruction
+
+- SegNet + ResNeXt
+
+- ISPRS satellite imagery dataset
+
+- Cluster depth maps (predicted by SegNeXt) for reconstruction
+
+        - Nearest-neibhour interpolation
+
+        - Voronoi diagram computed for each cluster to get tree trunks
+
+        - PCA to determine average ratio between eigenvalues for the clusters.
+          Used to count how many cars are in a line (e.g., a two-car-length
+          line of car segmentation).
+
+        - Inverse solid geometry for reconstruction.

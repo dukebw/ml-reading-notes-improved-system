@@ -1,0 +1,12 @@
+Systematic street view sampling
+
+- Google street view for remote sensing
+
+- Systematically sample to avoid biases to certain types of geographies
+
+- Sample a grid, throw out water, throw out points outside bounding box, snap
+  to roads
+
+- Express sampling algorithm complexity as a function of API cal count.
+
+- Power infrastructure in rural Ontario. 18K images.
