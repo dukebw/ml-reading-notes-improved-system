@@ -1939,6 +1939,30 @@ shown to be difficult to get a good reconstruction using deep autoencoders,
 without pre-training.
 
 
+\section{Statistical Theory}
+
+\subsection{Stochastic Gradient Descent as Approximate Bayesian
+            Inference~\citet{mandt-sgd-2017}}
+
+SGD is viewed as a stochastic (Ornstein-Uhlenbeck) process, and thereby related
+to Bayesian inference.
+
+Shows how proper tuning of its learning rate, minibatch size, and
+pre-conditioning matrix parameters can make SGD an approximate Bayesian
+inference algorithm.
+
+Demonstrates that constant SGD can be used as a variational EM algorithm to
+optimize the hyperparameters of complex probabilistic models.
+
+Shows how SGD with momentum can be used for approximate sampling.
+
+Analyzes stochastic gradient MCMC algorithms: Stochastic Gradient Langevin
+Dynamics (SGLD), and Stochastic Gradient Fisher Scoring (SGFS).
+
+Uses the stochastic process perspective to show that Polyak averaging is
+optimal.
+
+
 \section{Visual Question-Answering (VQA)}
 
 \subsection{Tips and Tricks for Visual Question-Answering: Learnings from the
