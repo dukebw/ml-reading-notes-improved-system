@@ -1088,6 +1088,19 @@ absolute link relevance, due to the clicks' dependence on the ranking.
 Alternatively, the knowledge used is that lower ranked, clicked links are more
 relevant than higher ranked, unclicked links.
 
+The authors present an algorithm (RankSVM) that optimizes Kendall's tau, which
+is a measure of similarity between two rankings given by (P - Q)/(P + Q), where
+P is the number of concordant pairs (pair orderings both rankings agree on),
+and Q is the number of discordant pairs (pair orderings where the rankings
+differ).
+
+RankSVM works by minimizing $\norm{\mathbf{w}}_2 + C\sum \xi_{ijk}$ subject to
+$\mathbf{w}^\intercal (\Phi(q_k, d_i) - \Phi(q_k, d_j)) \geq 1 - \xi_{ijk}$,
+where $\Phi(q, d)$ is a similarity measure between query~$q$ and document~$d$,
+and $\xi$ are slack variables. RankSVM provides an approximate minimization of
+Kendall's tau, by casting the ordering problem as a two-class classification
+problem on pairs of features for the same query.
+
 
 \subsubsection{Data}
 
