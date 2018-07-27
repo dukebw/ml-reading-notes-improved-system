@@ -137,3 +137,122 @@
   might expect to get the Hessian if you do backprop twice. Didn't answer
   directly? Talked about autograd being able to compute Hessian-vector products
   (but not practical).
+
+
+# Generative models.
+
+
+## Probabilistic graphical models
+
+- Variational EM algorithms for non-Gaussian latent variable models. Palmer et al., NIPS 2005
+
+- Hoffman et al., NIPS 2010.
+
+- Ghahramani and Hinton, Neural Computation 2000.
+
+- Issue: not enough complexity (focus on exponential family models).
+
+
+## Differentiable latent-variable models
+
+- y = f_\theta(x)
+
+- y ~ N(u = f_\theta(z), \sigma = diag(g_\theta(z))) parametrize probability
+  distribution by NN.
+
+- Four approaches: sequential models (cons: O(N), impose order where there is
+  none), VAEs (cons: factorized likelihood causes blurry samples), normalized
+  models (cons: need to cripple layers, therefore need many parameters?),
+  implicit models (GANs) (cons: no likelihood, hard to train).
+
+        - Sequential models: pixel RNNs. van den Oord et al. Require an order
+          in images, which are inherently unordered.
+
+        - Variational inference: optimize a distribution q_\phi(z | x) to match
+          p_\theta(z | x). Optimize, for every single datapoint, q(z | x), to
+          match p(z | x).
+
+                - Adding priors isn't cool, integrating over entire hypotheses
+                  is cool.
+
+- Helmholtz machine. Dayan et al., 1996?
+
+- Real NVP (non-volume preserving transformations). Density estimation using
+  Real NVP. Dinh et al., 2016.
+
+        - First generative model class besides GANs with decent looking image
+          samples.
+
+- Flows as Euler integrators (normalizing flows -- class of density models).
+
+        - Normalizing the change of volume requires the determinant,
+          computation of which has cost O(D^3).
+
+        - For continuous transformations, only trace is needed (divergence?).
+
+        - Trained models predict a vector field to turn a Gaussian into another
+          distribution.
+
+        - Use GANs as a recognition network in a VAE: Lars et al., 2017.
+          Mohamed and Lakshminarayanan, 2016. Tran et al., 2017.
+
+- Boltzmann machines.
+
+- Composing graphical models. Johnson et al., NIPS 2016.
+
+- Sparse probabilistic projects. Archambeau and Bach, 2008.
+
+- Wiltschko, Johnson, et al., Neuron 2015. Mouse example.
+
+        - Sequence of discrete latent variables (with upper bound 50),
+          transformed into 100-dim.  continuous variables x.
+
+- Generating sentences from a continuous space. Bowman et al. Text
+  autoencoders.
+
+
+## Future work
+
+- Training GANs to generate text.
+
+- Training VAEs with discrete latent variables.
+
+- Training agents to communicate with each other using words.
+
+        - RL NTMs. Zaremba and Sutskever, 2015.
+
+- Training agents or programs to decide which discrete actions to take.
+
+- Training generative models of structures objects of large size (e.g.,
+  programs, graphs, large texts, etc.)
+
+- Why are things easy? Gradient descent and reverse-mode AD.
+
+        - If your objective function is differentiable, rather than get 1 bit
+          of information from it (e.g., good vs. bad), you get D many bits of
+          information (the derivative with respect to each parameter).
+
+- Neural sketch learning.
+
+- Killoran et al., 2017.
+
+- Attend, infer, repeat. Eslami et al.
+
+- Generating long action-conditional video.
+
+- Modeling uncertainty in the generative process.
+
+- Coherent multiscale models.
+
+        - Expensive to generate in large scale models.
+
+- Data-efficient model-based RL.
+
+        - "Planning by imagining things in your head". Generative models can't
+          look far enough ahead to be used for planning.
+
+- Utility framework separating modeling from decision making.
+
+- Composable language of models from simple components.
+
+- Approximate optimal thing (don't reinvent Bayes' rule).
