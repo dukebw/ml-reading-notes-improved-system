@@ -188,3 +188,15 @@
 
                 - Issues: scalability, kernel selection. Kernel learning is a
                   lot like architecture learning.
+
+- Architectures such as DenseNet have higher loss than AlexNet: better
+  generalization via inductive bias. Also generalize better on CIFAR 10.1.
+
+- Stochastic weight averaging: in the ensemble average, do a weighted average
+  of the parameters with weights being the losses, where the losses are the
+  negative log likelihoods (proportional to posterior when the prior is
+  uniform over all parameter configurations).
+
+- GP-LSTMs as RBF-kernel GPs on top of a feature space mapped to by an NN (the
+  mapping makes theinput feature space fittable with an RBF). Dr. Wilson notes
+  that the joint training is important.
