@@ -16,6 +16,8 @@
 \usepackage{txfonts}
 \usepackage{url}
 
+\DeclareMathOperator{\softmax}{softmax}
+
 \newcommand{\expect}{\operatorname{E}\expectarg}
 \DeclarePairedDelimiterX{\expectarg}[1]{[}{]}{%
   \ifnum\currentgrouptype=16 \else\begingroup\fi
@@ -2041,6 +2043,32 @@ performance boost over using hard binary scores.
 
 Individual sigmoids trained with cross-entropy on multiple annotations (i.e.,
 treat VQA as a multi-label problem).
+
+
+\subsection{Bilinear Attention Networks}
+
+Propose using a pairwise bilinear attention over question embeddings and visual
+image ``channels'' (e.g., RoIs of an object detection).
+
+\begin{equation}
+\mathbf{f}_k = {(X^T U)}^T_k \mathcal{A} {(Y^T V)}_k
+\end{equation}
+
+where $U \in \mathbb{R}^{N \times K}$, $V \in \mathbb{R}^{M \times K}$,
+$X \in \mathbb{R}^N$, $Y \in \mathbb{R}^M$. $\mathcal{A}$'s parameters give the
+pairwise weighting of interactions between ``channels'' of~$X$ and~$Y$. $K$
+here must be the length of the pre-classifier vector.
+
+The attention map~$\mathcal{A}$ itself is determined via:
+
+\begin{equation}
+        \mathcal{A} := \softmax\left(((\mathbf{1} \cdot \mathbf{p}^T) \odot X^T U) V^T Y\right)
+\end{equation}
+
+where~$\mathbf{1}$ is a vector of ones.
+
+Otherwise, datasets used were VQA 2.0 and Flickr 30k, and other details were
+similar to MLB\@.
 
 
 \section{Visual Geometry}
