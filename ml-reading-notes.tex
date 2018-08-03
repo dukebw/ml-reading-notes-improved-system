@@ -1897,6 +1897,38 @@ variance (namely black pixels in MNIST digits), hidden units are initialized
 with Gaussian noise.
 
 
+\section{Semantic Segmentation}
+
+\subsection{3D Graph Neural Networks for RGBD Semantic
+            Segmentation~\cite{qi20173d}}
+
+The idea in this paper is to use graph neural networks as a model of RGBD
+(i.e., 2.5D) data, in order to take depth into account in the prediction
+algorithm (2D CNNs have the drawback that their spatial prior does not take
+into account depth).
+
+The graph is defined as having edges between each pixel and its closest~$N$
+nodes in world coordinate space. The propagation algorithm runs iteratively for
+a fixed number of steps, where at each step~$t$ messages are propagated:
+
+\begin{align*}
+        m_v^t = \frac{1}{|\Omega_v|} \sum_{u \in \Omega_v} g(h_u^t) \\
+        h_v^{t + 1} = q([h_v^t, m_v^t])
+\end{align*}
+
+where $\Omega_v$ is the set of nodes adjacent to node~$v$, and~$g$ and~$q$ are
+NNs.
+
+The algorithm gets a small boost ($\approx 2\%$ mean AP and IoU) on the
+SUN-RGBD dataset.
+
+
+\subsubsection{Questions}
+
+Wouldn't the obvious approach to 2.5D data be to use a sparse tensor of the
+pixel data, and do a sparse 3D convolution on the sparse tensor features?
+
+
 \section{Semi-Supervised Learning (SSL)}
 
 \subsection{Why does unsupervised pre-training help deep
