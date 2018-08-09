@@ -1943,6 +1943,29 @@ Wouldn't the obvious approach to 2.5D data be to use a sparse tensor of the
 pixel data, and do a sparse 3D convolution on the sparse tensor features?
 
 
+\subsection{Normalized Cut Loss for Weakly-supervised CNN
+            Segmentation~\cite{tang2018normalized}}
+
+The authors used a normalized cut loss to train CNNs to perform semantic
+segmentation where the only labels are scribbles. The scribbles are used as a
+seed for the normalized cut algorithm.
+
+They get a relatively large boost ($\approx 3\%$ mIoU) from using the
+normalized cut loss on top of scribble supervision. They didn't have any
+experiment demonstrating whether the normalized cut loss still gave an
+improvement in the full supervision case.
+
+Their normalized cut loss is:
+
+\begin{equation}
+        E_{NC}(S) = \sum_k \frac{{S^k}^T W (\mathbf{1} - S^k)}{d' S^k}
+\end{equation}
+
+where $k$ is a class label, $W \in \mathbb{R}^{|\Omega| \times |\Omega|}$
+($\Omega$ is the set of all pixels), $S^k \in \mathbb{R}^{|\Omega| \times 1}$,
+and~$d = W\mathbf{1}$.
+
+
 \section{Semi-Supervised Learning (SSL)}
 
 \subsection{Why does unsupervised pre-training help deep
