@@ -1749,6 +1749,20 @@ measures the dissimilarity of probability distributions $P$ and $Q$. If this is
 the case, what are $P$ and $Q$ when optimizing the policy of an RL agent?
 
 
+\section{Model Search}
+
+\subsection{DARTS: Differentiable Architecture Search~\cite{liu2018darts}}
+
+DARTS uses a continuous relaxation of the NN architecture search space in order
+to use SGD to tune the architecture as a hyperparameter.
+
+
+\subsubsection{Comments}
+
+Since an argmax is taken after running the algorithm, the algorithm can't
+handle, e.g., bimodal distributions over optimal policies.
+
+
 \section{Natural Language Processing}
 
 
