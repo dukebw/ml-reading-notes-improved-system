@@ -1943,6 +1943,36 @@ Wouldn't the obvious approach to 2.5D data be to use a sparse tensor of the
 pixel data, and do a sparse 3D convolution on the sparse tensor features?
 
 
+\subsection{Annotating Object Instances with a
+            Polygon-RNN~\cite{castrejon2017annotating}}
+
+The authors used a convLSTM~\cite{shi2015convolutional} to predict polygon
+segmentation annotations, by minimizing the negative log-likelihood of the
+groundtruth annotated polygon vertices. The convLSTM takes as input features
+from a pretrained convnet, along with the previous two vertices, and outputs
+a~$D \times D + 1$ grid where the maximum cell is the output vertex (the extra
+cell is a stop token).
+
+The first vertex has to be treated specially, so two extra layers
+with~$D \times D$ output are added to the CNN backbone: one predicts object
+boundaries, and the other predicts vertices, taking the object boundary as
+input. Both are treated as binary classification tasks.
+
+Their model gets~\num{61.4} mIoU on Cityscapes.
+
+
+\subsubsection{Questions/Comments}
+
+The Conv-LSTM is being trained to maximize the likelihood of vertices that an
+annotator would place, which doesn't reflect the entire distribution of
+possible valid polygons. Similar to NLP word language model problem.
+
+Is there a nonsequential model that could achieve the same result of producing
+a segmentation polygon?
+
+Are transformers applicable (attention is all you need)?
+
+
 \subsection{Normalized Cut Loss for Weakly-supervised CNN
             Segmentation~\cite{tang2018normalized}}
 
