@@ -28,8 +28,14 @@ how that feature is implemented.
 - Put the code in a VCS, and add annotations (in the form of comments) to the
   code as you work through it.
 
+- If the project has build scripts, read them to get an idea of how the source
+  is pieced together in the binary.
+
 
 ## Dynamic software reading
+
+- If the project doesn't have proper build scripts, write a build script as you
+  figure out how to get it running.
 
 - Can use debugger/printf to isolate specific known problems.
 
