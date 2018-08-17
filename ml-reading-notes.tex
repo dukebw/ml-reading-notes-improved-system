@@ -1996,6 +1996,30 @@ where $k$ is a class label, $W \in \mathbb{R}^{|\Omega| \times |\Omega|}$
 and~$d = W\mathbf{1}$.
 
 
+\subsection{Context Encoding for Semantic Segmentation~\cite{Zhang_2018_CVPR}}
+
+The authors used a ``context encoding'' module to learn global context about
+whether or not each class is present in the image. The representations from
+this context encoder are then used to modulate the semantic segmentation
+predictions, by outputting an feature vector that has length equal to the
+number of classes, doing a sigmoid on each of those features, then multiplying
+channelwise with the ``main branch'' features used for semantic segmentation
+predictions.
+
+The interesting choice here is to modulate the~\num{512}-channel feature
+vector, rather than the predictions themselves. The trick is in an SE loss
+applied to the features used to modulate the main branch, where the SE loss is
+minimizing negative loglikelihood of each class's presence.
+
+Although the paper claims to modulate with~$y \* x$, where~$y$ is the
+modulating post-sigmoid outputs, their code uses~$x + y \* x$.
+
+Another interesting aspect of this paper is their implementation of a
+synchronized batchnorm, to overcome the issue of small minibatches due to high
+memory usage of dilated convolutions used in semantic segmentation. How would
+group normalization fare here?
+
+
 \section{Semi-Supervised Learning (SSL)}
 
 \subsection{Why does unsupervised pre-training help deep
