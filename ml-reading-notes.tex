@@ -1996,6 +1996,24 @@ where $k$ is a class label, $W \in \mathbb{R}^{|\Omega| \times |\Omega|}$
 and~$d = W\mathbf{1}$.
 
 
+\subsection{On the Importance of Label Quality for Semantic
+            Segmentation~\cite{Zlateski_2018_CVPR}}
+
+The authors created a large synthetic Cityscapes-esque segmentation dataset
+using CityEngine to generate a city, and Mitsuba to render it. They created
+coarse labels by generating inner polygons with between 4px and 32px error from
+the border, and found that performance of models trained on these coarse labels
+is correlated to the amount of ``labeler time'' spent creating them. They found
+that in general labeler time was used most efficiently in creating coarse
+labels, and the rule of thumb for trading off labeling time and perfomance was
+to split time evenly between labeling coarsely and finely (i.e., pixel
+accurately). Specifically, a 48k/3k coarse/fine split of labels performed
+better than 48k fine labels.
+
+An important point is that their coarse labels contained no incorrectly labeled
+pixels, just unlabeled regions.
+
+
 \subsection{Context Encoding for Semantic Segmentation~\cite{Zhang_2018_CVPR}}
 
 The authors used a ``context encoding'' module to learn global context about
