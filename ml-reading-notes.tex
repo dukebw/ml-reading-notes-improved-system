@@ -814,6 +814,32 @@ IoU with cGAN loss alone, compared with 0.35 class IoU with L1 loss and 0.80
 class IoU using the wide ResNets of~\citet{DBLP:journals/corr/WuSH16e}.
 
 
+\subsection{Video-to-Video Synthesis~\cite{wang2018vid2vid}}
+
+The authors used discriminators on image quality and temporal coherence to
+generate RGB video conditioned on semantic segmentation mask (FlowNet 2),
+detected edges (Canny), or pose input (?). They also used a bilinear
+interpolation between the warped previous image (using the estimated optical
+flow), and a ``hallucinated'' frame. They used the segmentation masks to split
+up their generators into foreground and background, where only the background
+generator takes the optical flow as input (foreground segmentations were masked
+as occluded).
+
+Based on human preference, the temporal coherence seems to come from the
+``video discriminator'' $D_V$, moreso than the optical flow warping.
+
+
+\subsubsection{Questions}
+
+There were some comments about sampling with a Gaussian mixture model on
+features in order to get multimodal video, which I didn't get without reading
+the code.
+
+Also I am not sure why in the Frechet Inception score, the trace of the
+difference of terms with covariance matrices is taken. It seems to penalize any
+ground truth distribution with high covariance between features.
+
+
 \section{Human Activity Recognition}
 
 
