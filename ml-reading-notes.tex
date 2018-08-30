@@ -568,6 +568,15 @@ referred to as motivating ``very deep'' models.
 % localization.
 
 
+\subsection{MobileNetV2: Inverted Residuals and Linear
+            Bottlenecks~\cite{Sandler_2018_CVPR}}
+
+They change residual blocks (with depthwise separable convolutions)
+to~\emph{expand} up to a higher number of channels in the ``bottleneck'', which
+performs 3x3 channel-wise convolutions. The expansion (and contraction) is done
+using 1x1 convolutions with~\emph{no nonlinearity} (hence linear bottlenecks).
+
+
 \subsection{Spatial Transformer Networks~\citet{jaderberg-spatial-2015}}
 
 Spatial Transformer Networks introduce a CNN submodule that sub-differentiably
@@ -1901,6 +1910,9 @@ The authors mention that directly learning the Q-function with the critic is
 unstable compared to advantage actor-critic. It would make sense as a sanity
 check to also compare against other baselines, such as averaged reward over the
 mini-batch (i.e.\ just using REINFORCE with a computed baseline).
+
+
+\section{Object Detection}
 
 
 \section{RNNs}
