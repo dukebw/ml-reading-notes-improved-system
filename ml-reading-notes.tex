@@ -1915,6 +1915,38 @@ mini-batch (i.e.\ just using REINFORCE with a computed baseline).
 \section{Object Detection}
 
 
+\subsection{SSD\@: Single Shot MultiBox Detector~\cite{liu2016ssd}}
+
+SSD is an object detection scheme that works by regressing location offsets,
+and ``confidence'' scores of a (large) set of~\emph{fixed} default boxes.
+Objects at multiple scales are detected by scoring boxes at different levels of
+feature maps (with different receptive fields): for~$m$ successive feature
+maps, each scale~$s_k$
+is~$s_k = s_{\textrm{min}} + \frac{s_{\textrm{max}} - s_{\textrm{min}}}{m - 1}(k - 1)$
+for~$k \in \{0, \dots, m - 1\}$.
+
+Each default box has six aspect ratios ranging from~$\sqrt{3}:1/\sqrt{3}$
+(tall) to the same (short) in five intervals, and also one extra box that is
+between the scale of this feature map and that of the successive one.
+
+Localization width and height are regressed as~$\log(w/w_d)$ where~$w$ is the
+ground truth width, and~$w_d$ is the width of the default box. Localization
+offsets are centered at the default box center, and normalized by their
+width/height.
+
+NMS is performed after discarding all boxes with confidence less
+than~\num{0.01}.
+
+
+\subsubsection{Comments}
+
+Would an additional CoordConv channel help improve the location offset
+prediction, since the predictor is convolutional?
+
+The confidence branch should perhaps regress Jaccard index, rather than
+(logistic) regress the~$\geq 0.5$ overlap of an object (in~$\{0, 1\}$).
+
+
 \section{RNNs}
 
 \subsection{Recurrent Batch
