@@ -1964,6 +1964,19 @@ They use a three-step process to prune/sparsify neural network weights:
         \item Set weights within each quantile to the average of that quantile.
 \end{enumerate}
 
+The steps above are performed for pruning proportion~$p$, and bits per
+layer~$b$, which are optimized over using an outer Bayesian optimization loop
+(for 20-30 iterations). The Bayes opt objective is to
+minimize~$\epsilon(\theta) - \lambda c_i(\theta)$,
+where~$c_i(\theta) = \frac{m_i - s_i(\theta)}{\sum_i m_i}$ minimizes the error,
+and maximizes the difference in uncompressed ($m_i$) and compressed
+($s_i(\theta)$) bits for the layer, normalized by the total number of allocated
+bits.
+
+An inner loop trains the network weights by forward propagating with the
+quantized weights, and backpropagtaing to update hte full precision weights
+(which are discarded after training).
+
 
 \section{RNNs}
 
