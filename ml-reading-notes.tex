@@ -1978,6 +1978,18 @@ quantized weights, and backpropagtaing to update hte full precision weights
 (which are discarded after training).
 
 
+\subsubsection{Future Work}
+
+Practical speed-ups with existing BLAS libraries, e.g., by structured pruning.
+``Generalized convolution is often implemented in modern DL frameworks by
+reshaping filter and patch matrices, and performing large matrix
+multiplications using highly optimized BLAS libraries''. How are convolutions
+actually implemented? I believe there is a Song Han paper about speeding up
+Winograd by pruning.
+
+Energy efficiency by considering memory access patterns.
+
+
 \section{RNNs}
 
 \subsection{Recurrent Batch
