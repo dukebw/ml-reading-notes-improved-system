@@ -2088,6 +2088,20 @@ Are transformers applicable (attention is all you need)?
 
 \subsection{Loss Max-Pooling for Semantic Image Segmentation~\cite{bulo2017loss}}
 
+Bulo and campadres tackle a loss-imbalance problem amongst pixels in the same
+image in semantic segmentation. Specifically, for a set of pixel
+losses~$l_{\hat{y} y}$, they propose to use a generalization of loss
+max-pooling: a weighting~$w \cdot l_{\hat{y} y}$ for~$w \in \mathcal{W}$,
+where~$\mathcal{W}$ is convex.
+
+
+\subsubsection{Comments/Questions}
+
+\begin{itemize}
+        \item Has anyone used this loss max-pooling over minibatches, in order
+                to work on class imbalance, or underrepresented examples?
+\end{itemize}
+
 
 \subsubsection{Interesting/Important References}
 
