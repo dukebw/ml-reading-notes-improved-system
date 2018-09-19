@@ -2094,6 +2094,12 @@ losses~$l_{\hat{y} y}$, they propose to use a generalization of loss
 max-pooling: a weighting~$w \cdot l_{\hat{y} y}$ for~$w \in \mathcal{W}$,
 where~$\mathcal{W}$ is convex.
 
+They use convex optimization to derive an algorithm for computing the optimal
+set of weights~$w$, which maximizes~$\sum l_{\hat{y} y}$ subject to the minimum
+number of pixels~$1 \leq m \leq n$, where~$n$ is the total number of pixels,
+$m = {(\gamma / \tau)}^p$, $\norm{w}_p \leq \gamma$, and
+$\norm{w}_\infty \leq \tau$, and~$\gamma = n^{-(p - 1)/p}$.
+
 
 \subsubsection{Comments/Questions}
 
