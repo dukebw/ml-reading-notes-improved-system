@@ -1974,7 +1974,7 @@ and maximizes the difference in uncompressed ($m_i$) and compressed
 bits.
 
 An inner loop trains the network weights by forward propagating with the
-quantized weights, and backpropagtaing to update hte full precision weights
+quantized weights, and backpropagating to update the full precision weights
 (which are discarded after training).
 
 
@@ -1988,6 +1988,54 @@ actually implemented? I believe there is a Song Han paper about speeding up
 Winograd by pruning.
 
 Energy efficiency by considering memory access patterns.
+
+
+\subsection{Constraint-Aware Deep Neural Network
+            Compression~\cite{chen2018constraint}}
+
+They use an outer (inequality constrained) Bayesian optimization loop to tune
+the pruning percentage (and potentially other) hyperparameters of a network
+compression algorithm, while gradually ``cooling'' a set of constraints. They
+get impressive results ($\approx 53\%$ vs. $\approx 59\%$) when compared to
+using an unconstrained baseline to compress the network and meet the
+constraints.
+
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item It's worth checking out~\cite{luo2018thinet}, which has code
+                at~\url{https://github.com/Roll920/ThiNet_Code}, for pruning
+                CNN filters for practical FLOPs reduction on existing deep
+                learning frameworks.
+
+        \item~\cite{gelbart2014bayesian} and~\cite{gardner2014bayesian} on
+                Bayes opt with inequality constraints.
+
+        \item Gaussian processes for ML (Rasmussen and Williams, 2016)
+                textbook.
+\end{itemize}
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item They made an interesting point that the progressive sequence of
+                networks~$F_t$ found during the cooling process is important in
+                helping the compressed network's accuracy, since the one-shot
+                compression performed much better when hyperparameters
+                \emph{and} sparsity structure were transferred from the final
+                cooling step, as opposed to just transferring the final
+                hyperparameters.
+
+        \item The above point raises the question whether the Bayes opt
+                hyperparameter search is necessary at all, since the cooling
+                process alone could have led to similar results.
+
+        \item (Figure 3) the constraint-aware methods all show alarmingly high
+                variance (in contrast to unconstrained) as the latency
+                constraint becomes more strict.
+\end{itemize}
 
 
 \section{RNNs}
