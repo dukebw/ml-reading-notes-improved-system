@@ -28,7 +28,7 @@
 \newcommand{\innermid}{\nonscript\;\delimsize\vert\nonscript\;}
 \newcommand{\activatebar}{%
   \begingroup\lccode`\~=`\|
-  \lowercase{\endgroup\let~}\innermid 
+  \lowercase{\endgroup\let~}\innermid
   \mathcode`|=\string"8000
 }
 
@@ -2035,6 +2035,35 @@ constraints.
         \item (Figure 3) the constraint-aware methods all show alarmingly high
                 variance (in contrast to unconstrained) as the latency
                 constraint becomes more strict.
+\end{itemize}
+
+
+\subsection{Scalable Methods for 8-bit Training of Neural
+            Networks~\cite{banner2018scalable}}
+
+They train using 8-bit gradients (mostly), activations, and weights. Their
+novel contribution is ``range batchnorm'', which divides by the input's range
+multiplied by~$C(n) = 1/\sqrt{2\ln n}$, as well as quantizing all weight
+gradients~$g_{W_l}$ to eight-bit, but not layer gradients~$g_l, g_{l - 1},
+\dots$ (they keep these as 16-bit). They have some proof as to the validity of
+the quanitization, which is based on the gradient distribution being Gaussian,
+which they show does not hold for~$g_l$.
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item~\cite{gupta2015deep} on stochastic rounding.
+
+        \item~\cite{hubara2017jmlr} apparently show a 16x speedup and 15x power
+                efficiency improvement for int8. Is this on existing CPUs?
+\end{itemize}
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item The gradient distribution plots are interesting. Why does~$g_l$
+                have such a sharp peak at zero, while~$g_{W_l}$ is more
+                Gaussian?
 \end{itemize}
 
 
