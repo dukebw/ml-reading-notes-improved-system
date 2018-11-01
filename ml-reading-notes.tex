@@ -2038,6 +2038,26 @@ constraints.
 \end{itemize}
 
 
+\subsection{Rethinking the Value of Network Pruning~\cite{liu2018rethinking}}
+
+They select five different pruning algorithms: three with predefined amount of
+channel pruning per layer, and two where amount of pruning per layer is
+optimized for, and retrain from scratch. Their main finding is that for channel
+pruning, models retrained from scratch with similar computation budget perform
+just as well as models finetuned from their unpruned counterpart. They don't
+find the same result for unstructured pruning.
+
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item~\cite{huang2018datadriven},~\cite{ye2018rethinking}, which force
+                a scaling parameter to zero during training to learn structured
+                sparsity. Do they use gradients from the validation set to
+                learn the scaling parameters?
+\end{itemize}
+
+
 \subsection{Scalable Methods for 8-bit Training of Neural
             Networks~\cite{banner2018scalable}}
 
