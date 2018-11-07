@@ -2038,6 +2038,39 @@ constraints.
 \end{itemize}
 
 
+\subsection{Learning Efficient Convolutional Networks Through Network
+            Slimming~\cite{liu2017learning}}
+
+They added a LASSO regularization on the scaling parameter~$\gamma$ of
+batchnorm, training with the LASSO, pruning the lowest channels, then
+finetuning (optionally repeating the process).
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item They claim there is an advantage to reusing the batchnorm scale
+                parameter as opposed to inserting arbitrarily a scale layer,
+                however it seems that the filter weights of the subsequent
+                convolutional layer could increase in magnitude to compensate
+                for bathnorm's reduced~$\gamma$. Perhaps L2-regularization on
+                the filter weights is a key part.
+
+        \item Another question is, how well does this work for transfer
+                learning? There are no experiments for transfer learning, in
+                particular when the learning rate for the transferred weights
+                is lower than any ``new'' randomly initialized layers.
+\end{itemize}
+
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item~\cite{changpinyo2017thepower},~\cite{liu2015sparse},~\cite{scardapane2016group},~\cite{wen2016learning},
+                and~\cite{zhou2016less} are sparse convolution papers.
+\end{itemize}
+
+
 \subsection{Rethinking the Value of Network Pruning~\cite{liu2018rethinking}}
 
 They select five different pruning algorithms: three with predefined amount of
