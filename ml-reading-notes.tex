@@ -2060,6 +2060,10 @@ finetuning (optionally repeating the process).
                 learning? There are no experiments for transfer learning, in
                 particular when the learning rate for the transferred weights
                 is lower than any ``new'' randomly initialized layers.
+
+        \item Idea: use gradients from a heldout set to finetune the per-layer
+                regularization scale parameter~$\lambda$. Differentiate through
+                pruning process to get these.
 \end{itemize}
 
 
