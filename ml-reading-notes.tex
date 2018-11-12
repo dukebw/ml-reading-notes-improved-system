@@ -1947,6 +1947,36 @@ The confidence branch should perhaps regress Jaccard index, rather than
 (logistic) regress the~$\geq 0.5$ overlap of an object (in~$\{0, 1\}$).
 
 
+\section{Optical Flow}
+
+
+\subsection{Fast Optical Flow using Dense Inverse
+            Search~\cite{kroeger2016fast}}
+
+The authors suggest a tradeoff between accuracy and speed in optical flow, by
+using inverse search to find patchwise correspondences at multiple scales, then
+variational inference to do pixelwise refinement.
+
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item~\cite{weinzaepfel2013deepflow} for optical flow with deep matching.
+
+        \item~\cite{brox2011large} classic,~\cite{wulff2015efficient} learned
+                prior.
+\end{itemize}
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item I guess like always the question is why people are still using
+                SIFT feature descriptors, although this is besides the point of
+                the paper.
+\end{itemize}
+
+
 \section{Network Compression/Resource Constrained}
 
 \subsection{CLIP-Q: Deep Network Compression Learning by In-Parallel
