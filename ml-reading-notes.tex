@@ -1957,6 +1957,22 @@ The authors suggest a tradeoff between accuracy and speed in optical flow, by
 using inverse search to find patchwise correspondences at multiple scales, then
 variational inference to do pixelwise refinement.
 
+At each scale in multiple image scales at the same patch size:
+
+\begin{enumerate}
+        \item Create patch grid.
+
+        \item Initialize patches (zero for coarsest scale, then initialize
+                finer scales with coarse flow).
+
+        \item Inverse matching of patches.
+
+        \item Densify by assigning to a pixel a weighted average of the flow of
+                patches that include it.
+
+        \item Variational refinement of dense flow predictions.
+\end{enumerate}
+
 
 \subsubsection{Interesting/Important References}
 
