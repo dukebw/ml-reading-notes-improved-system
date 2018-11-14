@@ -1973,6 +1973,12 @@ At each scale in multiple image scales at the same patch size:
         \item Variational refinement of dense flow predictions.
 \end{enumerate}
 
+Variational refinement is done by minimizing an energy function:
+
+\begin{equation*}
+E(\mathbf{U}) = \int_\Omega \sigma\Psi(E_I) + \gamma\Psi(E_G) + \alpha\Psi(E_S) d\mathbf{x}
+\end{equation*}
+
 
 \subsubsection{Interesting/Important References}
 
