@@ -2151,6 +2151,27 @@ find the same result for unstructured pruning.
 \end{itemize}
 
 
+\subsection{Rethinking the Smaller Norm Less Informative Assumption in Channel
+            Pruning of Convolution Layers~\cite{ye2018rethinking}}
+
+They adopt ISTA instead of~$L_1$ norm as a regularizer for the batchnorm scale
+parameter~$\gamma$ in channel pruning for CNNs. ISTA has an additional term
+regularization~$\grad_\gamma l_t$, where~$l_t$ is the loss, which prevents the
+proceeding weight matrix from exploding in magnitude in response to~$\gamma$
+(this may not have been the intention).
+
+A hyperparameter~$\alpha$ is used to increase the speed of optimization
+of~$\gamma$ relative to the weights in pretrained models.
+
+\subsubsection{Questions/Comments}
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item~\cite{beck2009afast} for ISTA.
+\end{itemize}
+
+
 \subsection{Scalable Methods for 8-bit Training of Neural
             Networks~\cite{banner2018scalable}}
 
