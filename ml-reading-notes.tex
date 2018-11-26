@@ -16,6 +16,7 @@
 \usepackage{txfonts}
 \usepackage{url}
 
+\DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\softmax}{softmax}
 
 \newcommand{\expect}{\operatorname{E}\expectarg}
@@ -34,6 +35,7 @@
 
 \newcommand\phantomlabel[1]{\phantomsection\label{#1}}
 
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 
 \DeclarePairedDelimiterX{\infdivx}[2]{(}{)}{%
@@ -2155,15 +2157,23 @@ find the same result for unstructured pruning.
             Pruning of Convolution Layers~\cite{ye2018rethinking}}
 
 They adopt ISTA instead of~$L_1$ norm as a regularizer for the batchnorm scale
-parameter~$\gamma$ in channel pruning for CNNs. ISTA has an additional term
-regularization~$\grad_\gamma l_t$, where~$l_t$ is the loss, which prevents the
-proceeding weight matrix from exploding in magnitude in response to~$\gamma$
-(this may not have been the intention).
+parameter~$\gamma$ in channel pruning for CNNs.
+
+The solution of ISTA
+is~$\gamma_{t + 1} = \max\{\abs{x} - \eta,\, 0\} \cdot \sign{x}$,
+where~$x = \gamma_t - \mu_t \nabla_\gamma l_t$, and~$\eta = \lambda \mu_t$.
+So~$\gamma$ gets updated with gradients until it goes below some threshold,
+where it is clipped to zero.
 
 A hyperparameter~$\alpha$ is used to increase the speed of optimization
 of~$\gamma$ relative to the weights in pretrained models.
 
 \subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item There is some unconvincing discussion about the use of~$\alpha$
+                to increase/decrease sparsification.
+\end{itemize}
 
 \subsubsection{Interesting/Important References}
 
