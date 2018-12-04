@@ -2053,7 +2053,22 @@ Energy efficiency by considering memory access patterns.
 
 Their motivation is to maximize mutual information (MI) between a given layer's
 activations with the correct labels~$I(h_i ; y)$ while minimizing MI with the
-next layer's output~$I(h_i ; h_{i + 1})$.
+next layer's output~$I(h_i ; h_{i + 1})$. Based on the definition of MI this
+gives the objective,
+
+\begin{equation}
+        \gamma_i \expect{\infdiv{p(h_{i + 1} \mid h_i)}{q(h_{i + 1})}} - \expect{\log q(y \mid h_L)}
+\end{equation}
+
+for each pair of layers.
+
+They assume that each layer's activations~$h_i$ is the product of a learned
+Gaussian with a function of the previous layer's activations,
+i.e.,~$h_i = (\mu_i + \epsilon \odot \sigma_i) \odot f_i(h_{i - 1})$, and
+that~$q(h_i) = N(h_i ; 0, diag[\xi_i])$. From these assumptions, they produce
+the regularization
+term~$\sum_{j = 1}^{r_i} \log\left(1 + \frac{\mu_{ij}^2}{\sigma_{ij}^2}\right)$
+for layer~$i$.
 
 
 \subsubsection{Interesting/Important References}
