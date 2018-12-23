@@ -8,6 +8,8 @@ how that feature is implemented.
 
 ## Static software reading
 
+- Can use `tree .` or `tree -d .` to show directory structure.
+
 - Initially, open all of the files in the codebase in a text editor with a tiny
   font, in order to see the high level structure of the code (without actually
   reading it). Scroll through this a few times.
