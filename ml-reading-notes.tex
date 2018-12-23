@@ -361,6 +361,33 @@ sentences per test set.
 \part{Paper Summaries}
 
 
+\section{Embedded Software Stack}
+
+\subsection{TVM: An Automated End-to-End Optimizing Compiler for Deep
+            Learning~\cite{chen2018tvm}}
+
+They present TVM, which is a ~50k lines of core C++ code optimizing compiler
+for deep learning systems. TVM performs both high-level graph optimizations, by
+e.g., fusing conv-BN-ReLU into backend-supported fused operators, as well as
+low-level kernel optimizations. The kernel optimizations use GBTs (also tried
+TreeRNNs) produce operators that outperform even heavily handtuned cuDNN
+kernels on e.g., Titan X (as of cuBLAS v8, cuDNN v7).
+
+
+\subsubsection{Future Work/Comments/Questions}
+
+\begin{itemize}
+        \item Improve the ML cost model, since GBTs were used for their speed,
+                but it's possible that there could be advantages from more
+                powerful models.
+
+        \item TVM has a runtime for high-level graph operator fusion, is this
+                runtime also required for kernel optimizations? Presumably
+                kernels can be generated offline and linked into an ML
+                framework.
+\end{itemize}
+
+
 \section{Human Pose}
 
 
@@ -2248,6 +2275,22 @@ which they show does not hold for~$g_l$.
         \item The gradient distribution plots are interesting. Why does~$g_l$
                 have such a sharp peak at zero, while~$g_{W_l}$ is more
                 Gaussian?
+\end{itemize}
+
+
+\subsection{TETRIS: TilE-matching the TRemendous Irregular
+            Sparsity~\cite{yu2018tetris}}
+
+They prune at 1x1 weight resolution, then re-order the weights by swapping rows
+and columns to minimize the~$L_1$ norm of the weights pruned by blocksparse
+pruning~\cite{wen2016learning} for a given sparsity level. They use blocksparse
+(Scott Gray sparse matmul GPU kernels) to get an on-device speedup.
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item Which norm is used for the convolutional layers? Presumably it is
+                some norm of the kernel.
 \end{itemize}
 
 
