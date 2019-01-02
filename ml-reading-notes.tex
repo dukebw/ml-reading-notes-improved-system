@@ -363,6 +363,30 @@ sentences per test set.
 
 \section{Embedded Software Stack}
 
+\subsection{Learning to Optimize Tensor Programs~\cite{chen2018learning}}
+
+This paper expands on the ``tensor program'' low level optimization component
+of TVM, called AutoTVM. They trade off exploration/exploitation in an online
+model-based operator search by using submodular optimization (local
+optimization) on the subset~$S_e$ found by simulated annealing (global
+optimization) of the total set of considered operator implementations,
+represented with a polyhedral model. This ``exploration module'' builds a
+dataset~$\mathcal{D}$ of schedules with ground truth measurements run in the
+hardware environment.
+
+The submodular optimization objective function used is,
+
+\begin{equation}
+        L(S) = - \sum_{s \in S} \hat{f}(g(e, s)) + \alpha \sum_{j = 1}^m \abs{\cup_{s \in S} \{s_j\}}
+\end{equation}
+
+They trained the cost model (GBT, TreeRNN, or random search) alternating
+with the exploration module, which generates the cost model's dataset. They
+found that a rank objective improved over a regression objective for training
+the cost model (could this perhaps be fixed with normalization? Regression
+makes sense here).
+
+
 \subsection{TVM: An Automated End-to-End Optimizing Compiler for Deep
             Learning~\cite{chen2018tvm}}
 
