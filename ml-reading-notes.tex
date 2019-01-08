@@ -876,6 +876,22 @@ IoU with cGAN loss alone, compared with 0.35 class IoU with L1 loss and 0.80
 class IoU using the wide ResNets of~\citet{DBLP:journals/corr/WuSH16e}.
 
 
+\subsection{Unsupervised Attention-guided Image-to-Image
+            Translation~\cite{mejjati2018unsupervised}}
+
+They use attention to blend the generated image with the background, and
+likewise the discriminator sees only the attended region (after~\num{30} epochs
+of full-image pretraining).
+
+
+\subsubsection{Ideas}
+
+\begin{itemize}
+        \item Train attention model with weak segmentation labels to get
+                matting.
+\end{itemize}
+
+
 \subsection{Video-to-Video Synthesis~\cite{wang2018vid2vid}}
 
 The authors used discriminators on image quality and temporal coherence to
