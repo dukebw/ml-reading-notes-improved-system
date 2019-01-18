@@ -918,6 +918,28 @@ difference of terms with covariance matrices is taken. It seems to penalize any
 ground truth distribution with high covariance between features.
 
 
+\section{Hand Pose}
+
+
+\subsection{Cross-Modal Deep Variational Hand Pose
+            Estimation~\cite{spurr2018crossmodal}}
+
+They experiment with embedding RGB and 3D hand pose inputs into a latent space
+and decoding those to both 3D hand pose and RGB in the VAE framework. Their VAE
+framework improves on the purely supervised RGB to 3D results
+from~\cite{zb2017hand}, but for some reason is worse than DeepPrior++ on depth
+images (perhaps network architecture and hyperparameter tweaking).
+
+
+\subsubsection{Comments/Questions}
+
+\begin{itemize}
+        \item One issue is that the regime is fairly data starved -- would the
+                VAE objective still help if 10x as much data were available for
+                supervised training?
+\end{itemize}
+
+
 \section{Human Activity Recognition}
 
 
