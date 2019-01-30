@@ -2311,6 +2311,27 @@ of~$\gamma$ relative to the weights in pretrained models.
 \end{itemize}
 
 
+\subsection{SBNet: Sparse Blocks Network for Fast
+            Inference~\cite{ren2018sbnet}}
+
+In this paper the authors introduce a sparse block module for fast convolution
+computation given an input mask. They produce a set of fixed-size blocks tiling
+the input mask, then stack these blocks and feed them to a dense convolutional
+kernel (e.g., a ResNet module), using a pair of scatter/gather operations to
+get the blocks from the input, then restore the computed features to the
+output.
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item How does this work for multiple stages? Is the mask downsized at
+                each stage to match the stride of the convolution? Does the
+                mask account for the receptive field of the convolutions? In
+                the output, are ignored regions just set to zero, or is the
+                output stored in a sparse format?
+\end{itemize}
+
+
 \subsection{Scalable Methods for 8-bit Training of Neural
             Networks~\cite{banner2018scalable}}
 
