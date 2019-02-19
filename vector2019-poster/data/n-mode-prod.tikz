@@ -1,0 +1,175 @@
+\input{data/tikzcuboid.tikz}
+
+\begin{tikzpicture}
+        % NOTE(brendan): Tc
+        \tikzcuboid{%
+            shiftx=0cm,%
+            shifty=0cm,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=\qvectikzdim,%
+            dimy=\vvectikzdim,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=green!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        % NOTE(brendan):
+        \tikzcuboid{%
+            shiftx=2.0cm,%
+            shifty=0cm,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=\vvectikzdim,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=green!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \tikzcuboid{%
+            shiftx=10pt,%
+            shifty=-15mm,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=\qvectikzdim,%
+            dimy=1,%
+            dimz=1,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=red!50,%
+            fillright=red!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \newcommand{\qbracesize}{8.5ex}
+        \newcommand{\vbracesize}{5ex}
+
+        \coordinate (qbrace) at (-0.35, -1.77);
+        \node at (qbrace) {\makebox[\qbracesize]{\upbracefill}};
+        \node at (qbrace) [below] {$t_q$};
+
+        \coordinate (Tcq brace) at (-0.42, -0.18);
+        \node at (Tcq brace) {\rotatebox{180}{\makebox[\qbracesize]{\upbracefill}}};
+        \node[inner sep=1pt] at (Tcq brace) [above, fill=white, fill opacity=0.8, text opacity=1, yshift=1.1mm] {$t_q$};
+
+        \node (Tc label) at (Tcq brace) [xshift=-3mm, yshift=18mm] {$\T_c$};
+        \node (Tcq label) at (Tc label) [xshift=27mm] {$\T_c^\q$};
+        \node (vtWv label) at (Tc label) [xshift=45mm] {$\vtWv$};
+        \node[inner sep=0pt] (qtWq label) at (Tc label) [yshift=-43mm, xshift=3mm] {$\qtWq$};
+        \node (Tcqv label) at (Tc label) [xshift=65mm] {$\T_c^{\q\v}$};
+
+        \newcommand{\Tcvy}{0.56}
+        \coordinate (Tcv brace) at (-1.9, \Tcvy);
+        \node at (Tcv brace) {\rotatebox{270}{\makebox[\vbracesize]{\upbracefill}}};
+        \node at (Tcv brace) [left] {$t_v$};
+
+        \coordinate (Tco brace) at (0.33, 1.05);
+        \node at (Tco brace) {\rotatebox{140}{\makebox[2ex]{\upbracefill}}};
+        \node at (Tco brace) [right, yshift=2.0mm, xshift=-1.0mm] {$t_o$};
+
+        \node at (qbrace) [yshift=10mm] {$\times_1$};
+
+        \tikzcuboid{%
+            shiftx=3.8cm,%
+            shifty=-7pt,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=\vvectikzdim,%
+            dimz=1,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=blue!50,%
+            filltop=blue!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \coordinate (vbrace) at (4.1, 0.18);
+        \node at (vbrace) {\rotatebox{90}{\makebox[\vbracesize]{\upbracefill}}};
+        \node at (vbrace) [right] {$t_v$};
+
+        \draw[->, thick, >= stealth] (0.85, 0.25) -- (1.35, 0.25) {};
+
+        \node at (vbrace) [xshift=-11.5mm, yshift=0mm] {$\times_2$};
+
+        \coordinate (tcqv pos) at (5.7, 0.31);
+
+        \draw[->, thick, >= stealth] (4.63, 0.25) -- (5.13, 0.25) {};
+
+        \tikzcuboid{%
+            shiftx=5.76cm,%
+            shifty=0.3cm,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=1,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=green!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+\end{tikzpicture}

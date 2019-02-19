@@ -1,0 +1,324 @@
+\input{data/tikzcuboid.tikz}
+
+\newcommand{\outveccuboid}[2]{%
+        \tikzcuboid{%
+            shiftx=#1,%
+            shifty=#2,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=1,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=green!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+}
+
+\begin{tikzpicture}
+        [hadamard/.style={circle,
+                          inner sep=0pt,
+                          minimum size=6mm,
+                          thick,
+                          draw=blue!75,
+                          fill=blue!20},
+         oplussty/.style={circle,
+                          inner sep=0pt,
+                          minimum size=6mm,
+                          thick,
+                          draw=cyan!80,
+                          fill=cyan!50},
+         pre/.style={<-, shorten <= 1pt, >=stealth, semithick},
+         post/.style={->, shorten >= 1pt, >=stealth, semithick},
+         sumsty/.style={circle,
+                        inner sep=0pt,
+                        minimum size=6mm,
+                        thick,
+                        draw=orange!80,
+                        fill=orange!50}]
+
+        % Nr
+        \newcommand{\nposx}{0.5mm}
+        \newcommand{\nposy}{0cm}
+
+        \newcommand{\mposx}{2.15cm}
+        \newcommand{\mposy}{-1.0cm}
+
+        \coordinate (mcoord) at (\mposx, \mposy);
+        \coordinate (ncoord) at (\nposx, \nposy);
+
+        \coordinate (mtopleft) at (\mposx -1.9cm, \mposy + 0.25cm);
+        \coordinate (mbottomright) at (\mposx + 0.5cm, \mposy - 1.5cm);
+        \coordinate (ntopleft) at (\nposx -2.0cm, \nposy + 1.15cm);
+        \coordinate (nbottomright) at (\nposx + 0.5cm, \nposy - 0.4cm);
+
+        \newcommand{\qtopcolour}{green}
+        \newcommand{\qcolourright}{blue}
+        \newcommand{\vtopcolour}{green}
+        \newcommand{\vcolourfront}{red}
+        \tikzcuboid{%
+            shiftx=\nposx,%
+            shifty=\nposy,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=\vvectikzdim,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=\vcolourfront!50,%
+            filltop=\vtopcolour!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \tikzcuboid{%
+            shiftx=\mposx,%
+            shifty=\mposy,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=\qvectikzdim,%
+            dimy=1,%
+            dimz=3,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=\qtopcolour!50,%
+            fillright=\qcolourright!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \newcommand{\vposx}{\nposx - 1.25cm}
+        \newcommand{\vposy}{\nposy - 0.24cm}
+        \tikzcuboid{%
+            shiftx=\vposx,%
+            shifty=\vposy,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=1,%
+            dimy=\vvectikzdim,%
+            dimz=1,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=blue!50,%
+            filltop=blue!50,%
+            fillright=blue!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \newcommand{\qposx}{\mposx + 0.35cm}
+        \newcommand{\qposy}{\mposy - 1.3cm}
+        \tikzcuboid{%
+            shiftx=\qposx,%
+            shifty=\qposy,%
+            scale=\cuboidscale,%
+            rotation=0,%
+            densityx=1,%
+            densityy=1,%
+            densityz=1,%
+            dimx=\qvectikzdim,%
+            dimy=1,%
+            dimz=1,%
+            linefront=black,%
+            linetop=black,%
+            lineright=black,%
+            fillfront=red!50,%
+            filltop=red!50,%
+            fillright=red!50,%
+            anglex=180,%
+            angley=90,%
+            anglez=225,%
+            scalex=1,%
+            scaley=0.8,%
+            scalez=0.6,%
+            emphedge=N,%
+        }
+
+        \node (times1) at (mcoord) [xshift=-4mm, yshift=-7mm] {$\times_1$};
+        \node (times2) at (ncoord) [xshift=-7mm, yshift=2.5mm] {$\times_2$};
+
+        \node[hadamard, xshift=-0.5cm, yshift=1.25cm] (mutanhadamard) at (mcoord) {$\odot$}
+                edge [pre] ($(mtopleft) + (14.0mm, 0.2cm)$)
+                edge [pre] ($(nbottomright) + (0.2cm, 6.5mm)$);
+
+        \node (mrqhadamardnrv) at (mutanhadamard) [xshift=4mm, yshift=7mm] {$M_r\mutanfeat{q} \odot N_r\mutanfeat{v}$}
+                edge [pre, shorten <= -2pt] (mutanhadamard);
+
+        \node (Rmany) [right=of mutanhadamard, xshift=0mm, yshift=-9mm] {\rotatebox{90}{\makebox[20ex]{\upbracefill}}};
+
+        \newcommand{\Rmanytextwidth}{15mm}
+        \newcommand{\Rmanydescrip}{Repeat $R$ times}
+        \node (Rmanytext) [right=of Rmany, xshift=-11mm, text width=\Rmanytextwidth] {\Rmanydescrip};
+
+        \node[matrix] (mutanR) [right=of Rmany, xshift=-8mm]
+                {%
+                        \node (r1) {};\\[2mm]
+                        \node (r2) [xshift=6mm] {};\\[2mm]
+                        \node (r3) {};\\
+                };
+
+        \node[sumsty] (sum) [right=of mutanR, xshift=-0.5cm] {$\Sigma$}
+              edge [pre, out=90, in=90] (r1) {}
+              edge [pre, out=180, in=0] (r2) {}
+              edge [pre, out=270, in=270] (r3) {};
+
+        \node (tcqv) [right=of sum, xshift=-0.5cm] {} edge [pre] (sum) {};
+
+        \pgfgetlastxy{\XCoord}{\YCoord};
+        \outveccuboid{\XCoord + 5mm}{\YCoord}
+
+        \begin{scope}[on background layer]
+                \node (Mbackground) [fill=red!10, rounded corners, fit=(mtopleft) (mbottomright)] {};
+        \end{scope}
+
+        \begin{scope}[on background layer]
+                \node (Nbackground) [fill=blue!10, rounded corners, fit=(ntopleft) (nbottomright)] {};
+        \end{scope}
+
+        \node[inner sep=0pt] (qlabel) at (mtopleft) [yshift=-1.5cm, xshift=2mm] {$\mutanfeat{q}$};
+        \node[inner sep=1pt] (Mlabel) at (mtopleft)
+                [yshift=-2mm, xshift=13mm, fill=white, fill opacity=0.9, text opacity=1] {$M_r$};
+
+        \node[inner sep=0pt] (vlabel) at (ntopleft) [yshift=-0.2cm, xshift=0.15cm] {$\mutanfeat{v}$};
+        \node[inner sep=1pt] (Nlabel) at (ntopleft)
+                [yshift=-8.5mm, xshift=20mm, fill=white, fill opacity=0.9, text opacity=1] {$N_r$};
+
+        \node[matrix] (legend) at (current bounding box.east) [xshift=3.5cm] {%
+                \node[hadamard, label=right:Element-wise multiplication.] {$\odot$};\\[2mm]
+                \node[sumsty, label=right: Element-wise sum.] {$\Sigma$};\\[2mm]
+                \node[oplussty, label=right: Binary operator~$b$.] {$\binopb$};\\[2mm]
+                \node[minimum size=6mm, label={[xshift=1mm]right: $\qtWq$}] {$\mutanfeat{q}$};\\[2mm]
+                \node[minimum size=6mm, label={[xshift=1mm]right: $\vtWv$}] {$\mutanfeat{v}$};\\
+        };
+
+        \begin{scope}[on background layer]
+                \node (r1) [fill=black!10, rounded corners, fit=(legend)] {};
+        \end{scope}
+
+
+        \newcommand{\ourstopleftx}{-1.5cm}
+        \newcommand{\ourstoplefty}{-2.5cm}
+        \coordinate (ours top left) at (\ourstopleftx, \ourstoplefty);
+
+        \node (q1) [below=of ours top left] {$M_{r}\mutanfeat{q}$};
+        \node (v1) [below=of q1] {$N_{r}\mutanfeat{v}$};
+        \node[hadamard, xshift=1.5cm] (h1) at ($(q1)!0.5!(v1)$) {$\odot$}
+                 edge [pre] node [below] {$f_{\mathrm{rv}}$} (v1) {}
+                 edge [pre] node [above, xshift=1mm] {$f_{\mathrm{rq}}$} (q1) {};
+
+        \begin{scope}
+                [cnode/.style={draw=black,fill=#1,minimum width=3mm,circle},
+                 scale=0.5,
+                 shift={($(h1) + (2.0cm, 3.0cm)$)}]
+                \newcommand{\layertwoxshift}{2}
+                \node at (0,-3.75) {$\vdots$};
+                \node at (\layertwoxshift,-3.75) {$\vdots$};
+                \foreach \x in {1,...,4}
+                {
+                        \pgfmathparse{\x<4 ? \x : "n"}
+                        \node[cnode=gray!50] (x-\x) at (0,{-\x-div(\x,4)}) {};
+                        \node[cnode=gray!50] (p-\x) at (\layertwoxshift,{-\x-div(\x,4)}) {};
+                }
+                \foreach \x in {1,...,4}
+                {   \foreach \y in {1,...,4}
+                {   \draw (x-\x) -- (p-\y);
+                }
+                }
+
+                \draw[post] (h1) -- (x-3);
+        \end{scope}
+
+        \node (oursRmany) [right=of p-1, xshift=-9mm, yshift=-10mm] {\rotatebox{90}{\makebox[12ex]{\upbracefill}}};
+        \node (oursRmanytext) [right=of oursRmany, xshift=-11mm, text width=\Rmanytextwidth] {\Rmanydescrip};
+
+        \pgfgetlastxy{\XCoord}{\YCoord};
+        \foreach \y/\ytext in {0cm/0, -0.75cm/1, -1.5cm/2, -2.25cm/3}
+        {
+                \node (outvec\ytext) at (\XCoord + 30mm, \YCoord + 11mm + \y) {}
+                        edge [pre, out=180, in=0, shorten <= 8pt, shorten >= -10pt] (oursRmanytext) {};
+                \outveccuboid{\XCoord + 30mm}{\YCoord + 10mm + \y}
+        }
+
+        \coordinate (outvec01mid) at ($(outvec0)!0.5!(outvec1)$);
+        \newcommand{\oplusedgexshift}{3pt};
+        \newcommand{\oplusinangleLO}{145}
+        \newcommand{\oplusinangleHI}{215}
+        \node[oplussty, label={[xshift=0.5mm, yshift=0mm]center:$\binop_1$}]
+                (oplus1) [right=of outvec01mid] {}
+                edge [pre, out=\oplusinangleLO, in=0, shorten >= \oplusedgexshift] (outvec0) {}
+                edge [pre, out=\oplusinangleHI, in=0, shorten >= \oplusedgexshift] (outvec1) {};
+
+        \coordinate (outvec23mid) at ($(outvec2)!0.5!(outvec3)$);
+        \node[oplussty, label={[xshift=0.5mm, yshift=0mm]center:$\binop_2$}]
+                (oplus2) [right=of outvec23mid] {}
+                edge [pre, out=\oplusinangleLO, in=0, shorten >= \oplusedgexshift] (outvec2) {}
+                edge [pre, out=\oplusinangleHI, in=0, shorten >= \oplusedgexshift] (outvec3) {};
+
+        \coordinate (oplusmid) at ($(oplus1)!0.5!(oplus2)$);
+        \newcommand{\oplusshortenTWO}{0pt};
+        \node[oplussty, label={[xshift=0.5mm, yshift=0mm]center:$\binop_3$}]
+                (oplus3) [right=of oplusmid] {}
+                edge [pre, out=90, in=0, shorten >= \oplusshortenTWO] (oplus1) {}
+                edge [pre, out=270, in=0, shorten >= \oplusshortenTWO] (oplus2) {};
+
+        \node (ourstcqv) [right=of oplus3, xshift=-0.5cm] {} edge [pre] (oplus3) {};
+
+        \pgfgetlastxy{\XCoord}{\YCoord};
+        \outveccuboid{\XCoord + 5mm}{\YCoord}
+
+        \newcommand{\leftlinexshift}{-2mm}
+        \coordinate (left line bottom) at
+                ($(current bounding box.south west) + (\leftlinexshift, 0)$);
+        \coordinate (left line top) at
+                ($(current bounding box.north west) + (\leftlinexshift, 0)$);
+        \draw[semithick] (left line bottom) -- (left line top);
+
+        \node[xshift=-3mm, yshift=-20mm, rotate=90]
+                (mutan label) at (left line top) {MUTAN};
+
+        \node[xshift=-3mm, yshift=15mm, rotate=90]
+                (mutan label) at (left line bottom) {Ours};
+\end{tikzpicture}

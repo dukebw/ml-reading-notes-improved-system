@@ -1,0 +1,299 @@
+\documentclass[a0paper,portrait]{baposter}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+% \usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{keyval}
+\usepackage{mathtools}
+\usepackage{placeins}
+\usepackage{siunitx}
+\usepackage{tabu}
+\usepackage{tikz}
+\usepackage{upgreek}
+
+\usepackage{wrapfig}
+\usepackage{lmodern}
+\usepackage{tabularx,booktabs}
+\newcolumntype{C}{>{\centering\arraybackslash}X} % centered version of "X" type
+% \usepackage{url}
+\usepackage{multirow}
+\usepackage{array}
+
+\usepackage[utf8]{inputenc} %unicode support
+\usepackage[T1]{fontenc}
+
+\usetikzlibrary{arrows.meta, backgrounds, calc, fit, positioning}
+
+\DeclareMathOperator*{\binop}{\oplus}
+
+\selectcolormodel{cmyk}
+
+\graphicspath{{data/}}
+
+\newcommand{\compresslist}{%
+\setlength{\itemsep}{0pt}%
+\setlength{\parskip}{0pt}%
+\setlength{\parsep}{0pt}%
+}
+
+\newenvironment{boenumerate}
+  {\begin{enumerate}\renewcommand\labelenumi{\textbf\theenumi.}}
+  {\end{enumerate}}
+
+% bold without changing font size
+% https://tex.stackexchange.com/questions/23678/textbftext-without-increasing-the-length-of-the-text
+\newsavebox\CBox
+\def\textBF#1{\sbox\CBox{#1}\resizebox{\wd\CBox}{\ht\CBox}{\textbf{#1}}}
+
+
+\begin{document}
+
+\newcommand{\thetavec}{\ensuremath{\boldsymbol{\theta}}}
+\newcommand{\fusop}{\ensuremath{\mathcal{F_{\thetavec}}}}
+\newcommand{\mutanfeat}[1]{\ensuremath{\tilde{\mathbf{#1}}}}
+\renewcommand{\m}{\ensuremath{\mathbf{m}}}
+\newcommand{\n}{\ensuremath{\mathbf{n}}}
+\newcommand{\q}{\ensuremath{\mathbf{q}}}
+\renewcommand{\v}{\ensuremath{\mathbf{v}}}
+\newcommand{\z}{\ensuremath{\mathbf{z}}}
+\renewcommand{\A}{\ensuremath{A}}
+\newcommand{\B}{\ensuremath{B}}
+\newcommand{\CC}{\ensuremath{C}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\T}{\ensuremath{\mathcal{T}}}
+\newcommand{\Tfibre}{\ensuremath{\T_{i_1 \cdots i_{n - 1} \,:\, i_{n + 1} \cdots i_N}}}
+\newcommand{\TsizeIn}[1]{\ensuremath{I_1 \times \cdots \times I_{n - 1} \times #1 \times I_{n + 1} \times \cdots \times I_N}}
+\newcommand{\binopb}{\ensuremath{\sideset{}{_b}\binop}}
+\newcommand{\binopseq}{\ensuremath{{(\binopb)}_{b = 1}^B}}
+\newcommand{\binoppartition}{\ensuremath{{\{\tuckbranch\}}_b}}
+\newcommand{\binoppartB}{\ensuremath{\mathbb{B}}}
+\newcommand{\binoppartBseq}{\ensuremath{{(\binoppartB_b)}_{b = 1}^B}}
+\newcommand{\tuckbranch}{\ensuremath{\T_r^{\q{}\v{}}}}
+\newcommand{\hadamardqv}{\ensuremath{N_r\mutanfeat{q} \odot M_r\mutanfeat{v}}}
+\newcommand{\qtWq}{\q^\intercal{} W_\q{}}
+\newcommand{\vtWv}{\v^\intercal{} W_\v{}}
+
+\definecolor{darkgreen}{cmyk}{0.8,0,0.8,0.45}
+\definecolor{lightgreen}{cmyk}{0.8,0,0.8,0.25}
+\definecolor{vector-magenta}{cmyk}{0,1,0,0}
+\definecolor{vector-teal}{cmyk}{.67,0,.41,0}
+\definecolor{vector-darkblue}{cmyk}{0.96,0.65,0.1,0.25}
+\begin{poster}
+{
+grid=false,
+headerborder=open, % Adds a border around the header of content boxes
+colspacing=0.5em, % Column spacing
+bgColorOne=white, % Background color for the gradient on the left side of the poster
+bgColorTwo=white, % Background color for the gradient on the right side of the poster
+borderColor=vector-magenta, % Border color
+headerColorOne=vector-magenta, % Background color for the header in the content boxes (left side)
+headerColorTwo=vector-magenta, % Background color for the header in the content boxes (right side)
+headerFontColor=white, % Text color for the header text in the content boxes
+boxColorOne=white, % Background color of the content boxes
+textborder=rounded, %rectangle, % Format of the border around content boxes,
+                    % can be: none, bars, coils, triangles, rectangle, rounded,
+                    % roundedsmall, roundedright or faded
+eyecatcher=false, % Set to false for ignoring the left logo in the title and move the title left
+headerheight=0.1\textheight, % Height of the header
+headershape=rounded, % Specify the rounded corner in the content box headers,
+                     % can be: rectangle, small-rounded, roundedright,
+                     % roundedleft or rounded
+headershade=plain,
+headerfont=\Large\textsf, % Large, bold and sans serif font in the headers of content boxes
+%textfont={\setlength{\parindent}{1.5em}}, % Uncomment for paragraph indentation
+linewidth=2pt % Width of the border lines around content boxes
+}
+{}
+%
+%----------------------------------------------------------------------------------------
+%	TITLE AND AUTHOR NAME
+%----------------------------------------------------------------------------------------
+%
+{
+\textsf %Sans Serif
+{Generalized Hadamard-Product\\
+Fusion Operators for Visual Question Answering}
+} % Poster title
+{\sf\vspace{0em}\\
+Brendan Duke\textsuperscript{1,2} and
+Graham W.~Taylor\textsuperscript{1,2,3}
+\vspace{0.1em}\\
+\small{
+\textsuperscript{1}University of Guelph,
+\textsuperscript{2}Vector Institute, and 
+\textsuperscript{3}Canadian Institute for Advanced Research
+\vspace{0.2em}\\
+\{bduke, gwtaylor\}@uoguelph.ca}
+}
+%{\includegraphics{logo}} % University/lab logo
+{
+\begin{minipage}[b]{0.15\linewidth}
+\begin{minipage}[b]{\linewidth}
+    \includegraphics[width=0.5\linewidth]{UofG_Cornerstone_cmyk.pdf}
+\end{minipage}
+
+\begin{minipage}[b]{\linewidth}
+    \includegraphics[width=0.5\linewidth]{Vector_Logo_Bilingual_VERT_CMYK.pdf}
+\end{minipage}
+\end{minipage}
+}
+
+\headerbox{1.~Introduction}{name=introduction,column=0,row=0, span=3}{%
+We propose a generalized class of multimodal fusion operators for the task of
+visual question answering (VQA). We identify generalizations of existing
+multimodal fusion operators based on the Hadamard product, and show that
+specific non-trivial instantiations of this generalized fusion operator exhibit
+superior performance in terms of OpenEnded accuracy on the VQA task. In
+particular, we introduce Nonlinearity Ensembling, Feature Gating, and
+post-fusion neural network layers as fusion operator components, culminating in
+an absolute percentage point improvement of~$1.1\%$ on the VQA~2.0 test-dev set
+over baseline fusion operators, which use the same features as input. We use
+our findings as evidence that our generalized class of fusion operators could
+lead to the discovery of even superior task-specific operators when used as a
+search space in an architecture search over fusion operators.
+}
+
+\headerbox{2.~VQA Task}{name=vqa-task,column=1,below=introduction,span=2}{%
+In general, we define a fusion operator for the VQA task as a function
+$\fusop$, parametrized by~$\thetavec$, of the question feature vector~$\q$ and
+the visual feature vector~$\v$. The fusion operator~$\fusop$ computes a vector
+output, which is consumed downstream by a function~$g$, e.g.\ a linear layer
+followed by a softmax layer, in order to model a probability distribution over
+the answer~$y$ conditional on~$\q$ and~$\v$:
+
+\begin{equation}
+        p(y \mid \q \,, \v \,; \thetavec) = g(\fusop{(\q \,, \v)}) \,.\
+\label{eqn:general-fusion-op}
+\end{equation}
+
+We looked for generalized expressions for the fusion operator~$\fusop$ based on
+the Tucker Decomposition.
+}
+
+\headerbox{3.~Tucker Decomposition}{name=tucker-decomp,column=0,below=introduction,span=1}{%
+\hspace{-65mm}\resizebox{1.9\linewidth}{!}{\input{data/n-mode-prod.tikz}}
+A geometric representation of the first two $n$-mode products of the
+right hand side Tucker decomposition
+$\T \approx \T_c \times_1 \A \times_2 \B \times_3 \CC$,
+where~$A = \qtWq$ and~$B = \vtWv$, i.e.\ $\T_c \times_1 \qtWq \times_2 \vtWv$.
+From left to right, the vector~$\qtWq$ is first combined with the core
+tensor~$\T_c$ by taking the inner product along the dimension of
+size~$t_q$ between~$\qtWq$ and each of the~$t_v \times t_o$ fibers
+composing~$\T_c$, producing the matrix $\T_c^\q$.  Then,~$\vtWv$ is
+combined with~$\T_c^\q$ by taking the inner product between~$\vtWv$
+and the~$t_o$ columns of~$\T_c^\q$, producing the
+vector~$\T_c^{\q{}\v{}}$.
+}
+
+\headerbox{4.~Comparison with MUTAN}{name=comparison-mutan,column=1,below=vqa-task,span=2}{%
+A comparison between the MUTAN fusion operator of~\cite{ben2017mutan} and our
+generalized fusion operator.
+
+Both MUTAN and our fusion operator take the features~$M_r\mutanfeat{q}$
+and~$N_r\mutanfeat{v}$ as input. MUTAN approximates the Tucker decomposition by
+constraining the bilinear interaction between the vectors~$\mutanfeat{q}$
+and~$\mutanfeat{v}$ to be of rank~$R$.
+
+\begin{center}
+\input{data/mutan-ours.tikz}
+\end{center}
+
+Our fusion operator generalizes MUTAN by allowing different
+nonlinearities~$f_{rq}$ and~$f_{rv}$ to act on the features~$M_r\mutanfeat{q}$
+and~$N_r\mutanfeat{v}$, followed with a neural network, producing a set of~$R$
+output features, as in MUTAN after the Hadamard product step~$M_r\mutanfeat{q}
+\odot N_r\mutanfeat{v}$.  In the case of MUTAN, the~$R$ output feature vectors
+are combined by element-wise summation, whereas in our fusion operator the~$R$
+feature vectors are combined by applying a tree of binary operators~$\binopb$.
+}
+
+\headerbox{5.~Ablation on Configurations}{name=ablation,span=1,column=0,below=tucker-decomp}{%
+We compare performance improvements between different instantiations of the
+generalized fusion operator, with the best one shown below.
+
+\hspace{-2mm}\resizebox{1.05\linewidth}{!}{\input{data/feature-gating.tikz}}
+
+\begin{centering}
+\begin{tabular}{rc}
+\textbf{Model} & \textbf{VQA 1.0 val} \\
+\midrule
+MUTAN~\cite{ben2017mutan} & 61.54 \\
+\midrule
+Nonlinearity Ensembling (NE) & 61.66 \\
+Feature Gating (FG) & 61.72 \\
+NE + Polarity Swap (PS) & 61.77 \\
+\textbf{NE + FG} & \textbf{61.86} \\
+\end{tabular}
+\end{centering}
+}
+
+\headerbox{6.~Results}{name=results,span=2,column=1,below=comparison-mutan}{%
+We evaluate our best model on VQA~2.0 test-dev, and compare to previous state
+of the art models upon which our work is based.
+
+\begin{center}
+% \begin{table*}[!t]
+% \centering
+% \caption{A comparison with the state of the art of our best single model on the
+%          VQA~2.0 test-dev and test-std sets.}
+\begin{tabular}{l*{5}{c}}
+\centering
+& \multicolumn{4}{c}{\textbf{VQA~2.0 test-dev}} \\
+\textbf{Model} & All & Y/N & Number & Other \\
+\midrule
+MCB~\cite{DBLP:conf/emnlp/FukuiPYRDR16} & 61.96 & 78.41 & 38.81 & 53.23 \\
+MUTAN~\cite{ben2017mutan} as trained and evaluated by us & 63.13 & 80.7 & 39.4 & 53.55 \\
+ResNet features~$7 \times 7$ (single)~\cite{teney2017tips} & 62.07 & 79.20 & 39.46 & 52.62 \\
+\midrule
+Ours (single) & 64.22 & 81.19 & 40.95 & 55.05 \\
+\midrule
+\end{tabular}
+% \label{tab:sota-comparison}
+% \end{table*}
+\end{center}
+
+We attribute our improvement in accuracy to the introduction of nonlinearities
+in the fusion operator.
+}
+
+\headerbox{7.~Conclusions}{name=conclusion,column=1,below=results,span=2,above=bottom}{%
+\begin{itemize}
+        \item Generalized the MUTAN multimodal fusion operator.
+
+        \item We found configurations that demonstrated significant gains
+                relative to MUTAN and MCB on the VQA 2.0 task.
+
+        \item Our future work is focused on leveraging this generalization as a
+                design space for architecture search by reinforcement learning
+                or other methods.
+\end{itemize}
+}
+
+\headerbox{8.~References}{name=references,column=0,span=1,below=ablation}{%
+
+%\small % Reduce the font size in this block
+\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+%\nocite{*} % Insert publications even if they are not cited in the poster
+
+
+\bibliographystyle{unsrt}
+\bibliography{poster} % Use sample.bib as the bibliography file
+}
+
+\headerbox{9.~Acknowledgements}{name=acknowledgements,column=0,span=1,below=references,above=bottom}{
+
+
+%\small % Reduce the font size in this block
+\renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
+%\nocite{*} % Insert publications even if they are not cited in the poster
+
+This work received funding from CIFAR and NSERC\@.
+}
+
+\end{poster}
+
+\end{document}
