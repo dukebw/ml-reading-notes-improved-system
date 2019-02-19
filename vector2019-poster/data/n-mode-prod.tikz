@@ -86,7 +86,7 @@
 
         \coordinate (qbrace) at (-0.35, -1.77);
         \node at (qbrace) {\makebox[\qbracesize]{\upbracefill}};
-        \node at (qbrace) [below] {$t_q$};
+        \node at (qbrace) [below, yshift=-1.0mm] {$t_q$};
 
         \coordinate (Tcq brace) at (-0.42, -0.18);
         \node at (Tcq brace) {\rotatebox{180}{\makebox[\qbracesize]{\upbracefill}}};
@@ -101,11 +101,11 @@
         \newcommand{\Tcvy}{0.56}
         \coordinate (Tcv brace) at (-1.9, \Tcvy);
         \node at (Tcv brace) {\rotatebox{270}{\makebox[\vbracesize]{\upbracefill}}};
-        \node at (Tcv brace) [left] {$t_v$};
+        \node at (Tcv brace) [left, xshift=-1.0mm] {$t_v$};
 
         \coordinate (Tco brace) at (0.33, 1.05);
         \node at (Tco brace) {\rotatebox{140}{\makebox[2ex]{\upbracefill}}};
-        \node at (Tco brace) [right, yshift=2.0mm, xshift=-1.0mm] {$t_o$};
+        \node at (Tco brace) [right, yshift=2.0mm, xshift=-0.5mm] {$t_o$};
 
         \node at (qbrace) [yshift=10mm] {$\times_1$};
 
@@ -137,7 +137,7 @@
 
         \coordinate (vbrace) at (4.1, 0.18);
         \node at (vbrace) {\rotatebox{90}{\makebox[\vbracesize]{\upbracefill}}};
-        \node at (vbrace) [right] {$t_v$};
+        \node at (vbrace) [right, xshift=1mm] {$t_v$};
 
         \draw[->, thick, >= stealth] (0.85, 0.25) -- (1.35, 0.25) {};
 

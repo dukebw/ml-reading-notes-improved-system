@@ -187,20 +187,20 @@
         \node (mrqhadamardnrv) at (mutanhadamard) [xshift=4mm, yshift=7mm] {$M_r\mutanfeat{q} \odot N_r\mutanfeat{v}$}
                 edge [pre, shorten <= -2pt] (mutanhadamard);
 
-        \node (Rmany) [right=of mutanhadamard, xshift=0mm, yshift=-9mm] {\rotatebox{90}{\makebox[20ex]{\upbracefill}}};
+        \node (Rmany) [right=of mutanhadamard, xshift=2mm, yshift=-9mm] {\rotatebox{90}{\makebox[20ex]{\upbracefill}}};
 
         \newcommand{\Rmanytextwidth}{15mm}
         \newcommand{\Rmanydescrip}{Repeat $R$ times}
-        \node (Rmanytext) [right=of Rmany, xshift=-11mm, text width=\Rmanytextwidth] {\Rmanydescrip};
+        \node (Rmanytext) [right=of Rmany, xshift=-9mm, text width=\Rmanytextwidth] {\Rmanydescrip};
 
         \node[matrix] (mutanR) [right=of Rmany, xshift=-8mm]
                 {%
-                        \node (r1) {};\\[2mm]
-                        \node (r2) [xshift=6mm] {};\\[2mm]
+                        \node (r1) [yshift=3mm] {};\\[2mm]
+                        \node (r2) [xshift=9mm] {};\\[2mm]
                         \node (r3) {};\\
                 };
 
-        \node[sumsty] (sum) [right=of mutanR, xshift=-0.5cm] {$\Sigma$}
+        \node[sumsty] (sum) [right=of mutanR, xshift=0mm] {$\Sigma$}
               edge [pre, out=90, in=90] (r1) {}
               edge [pre, out=180, in=0] (r2) {}
               edge [pre, out=270, in=270] (r3) {};
@@ -226,7 +226,7 @@
         \node[inner sep=1pt] (Nlabel) at (ntopleft)
                 [yshift=-8.5mm, xshift=20mm, fill=white, fill opacity=0.9, text opacity=1] {$N_r$};
 
-        \node[matrix] (legend) at (current bounding box.east) [xshift=3.5cm] {%
+        \node[matrix] (legend) at (current bounding box.east) [xshift=3cm] {%
                 \node[hadamard, label=right:Element-wise multiplication.] {$\odot$};\\[2mm]
                 \node[sumsty, label=right: Element-wise sum.] {$\Sigma$};\\[2mm]
                 \node[oplussty, label=right: Binary operator~$b$.] {$\binopb$};\\[2mm]
@@ -272,18 +272,18 @@
         \end{scope}
 
         \node (oursRmany) [right=of p-1, xshift=-9mm, yshift=-10mm] {\rotatebox{90}{\makebox[12ex]{\upbracefill}}};
-        \node (oursRmanytext) [right=of oursRmany, xshift=-11mm, text width=\Rmanytextwidth] {\Rmanydescrip};
+        \node (oursRmanytext) [right=of oursRmany, xshift=-8mm, text width=\Rmanytextwidth] {\Rmanydescrip};
 
         \pgfgetlastxy{\XCoord}{\YCoord};
         \foreach \y/\ytext in {0cm/0, -0.75cm/1, -1.5cm/2, -2.25cm/3}
         {
                 \node (outvec\ytext) at (\XCoord + 30mm, \YCoord + 11mm + \y) {}
                         edge [pre, out=180, in=0, shorten <= 8pt, shorten >= -10pt] (oursRmanytext) {};
-                \outveccuboid{\XCoord + 30mm}{\YCoord + 10mm + \y}
+                \outveccuboid{\XCoord + 31mm}{\YCoord + 10mm + \y}
         }
 
         \coordinate (outvec01mid) at ($(outvec0)!0.5!(outvec1)$);
-        \newcommand{\oplusedgexshift}{3pt};
+        \newcommand{\oplusedgexshift}{9pt};
         \newcommand{\oplusinangleLO}{145}
         \newcommand{\oplusinangleHI}{215}
         \node[oplussty, label={[xshift=0.5mm, yshift=0mm]center:$\binop_1$}]

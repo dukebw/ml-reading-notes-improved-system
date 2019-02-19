@@ -19,7 +19,7 @@
 \usepackage{lmodern}
 \usepackage{tabularx,booktabs}
 \newcolumntype{C}{>{\centering\arraybackslash}X} % centered version of "X" type
-% \usepackage{url}
+\usepackage{url}
 \usepackage{multirow}
 \usepackage{array}
 
@@ -125,9 +125,9 @@ Graham W.~Taylor\textsuperscript{1,2,3}
 \small{
 \textsuperscript{1}University of Guelph,
 \textsuperscript{2}Vector Institute, and 
-\textsuperscript{3}Canadian Institute for Advanced Research
-\vspace{0.2em}\\
-\{bduke, gwtaylor\}@uoguelph.ca}
+\textsuperscript{3}Canadian Institute for Advanced Research\\
+\{bduke, gwtaylor\}@uoguelph.ca}\\
+\url{https://arxiv.org/abs/1803.09374}
 }
 %{\includegraphics{logo}} % University/lab logo
 {
@@ -147,7 +147,7 @@ We propose a generalized class of multimodal fusion operators for the task of
 visual question answering (VQA). We identify generalizations of existing
 multimodal fusion operators based on the Hadamard product, and show that
 specific non-trivial instantiations of this generalized fusion operator exhibit
-superior performance in terms of OpenEnded accuracy on the VQA task. In
+superior performance in terms of Open-Ended accuracy on the VQA task. In
 particular, we introduce Nonlinearity Ensembling, Feature Gating, and
 post-fusion neural network layers as fusion operator components, culminating in
 an absolute percentage point improvement of~$1.1\%$ on the VQA~2.0 test-dev set
@@ -157,9 +157,9 @@ lead to the discovery of even superior task-specific operators when used as a
 search space in an architecture search over fusion operators.
 }
 
-\headerbox{2.~VQA Task}{name=vqa-task,column=1,below=introduction,span=2}{%
-In general, we define a fusion operator for the VQA task as a function
-$\fusop$, parametrized by~$\thetavec$, of the question feature vector~$\q$ and
+\headerbox{2.~VQA Task}{name=vqa-task,column=0,below=introduction,span=2}{%
+We define a fusion operator for the VQA task as a function $\fusop$,
+parametrized by~$\thetavec$, of the text-based question feature vector~$\q$ and
 the visual feature vector~$\v$. The fusion operator~$\fusop$ computes a vector
 output, which is consumed downstream by a function~$g$, e.g.\ a linear layer
 followed by a softmax layer, in order to model a probability distribution over
@@ -174,7 +174,7 @@ We looked for generalized expressions for the fusion operator~$\fusop$ based on
 the Tucker Decomposition.
 }
 
-\headerbox{3.~Tucker Decomposition}{name=tucker-decomp,column=0,below=introduction,span=1}{%
+\headerbox{3.~Tucker Decomposition}{name=tucker-decomp,column=2,below=introduction,span=1}{%
 \hspace{-65mm}\resizebox{1.9\linewidth}{!}{\input{data/n-mode-prod.tikz}}
 A geometric representation of the first two $n$-mode products of the
 right hand side Tucker decomposition
@@ -189,9 +189,9 @@ and the~$t_o$ columns of~$\T_c^\q$, producing the
 vector~$\T_c^{\q{}\v{}}$.
 }
 
-\headerbox{4.~Comparison with MUTAN}{name=comparison-mutan,column=1,below=vqa-task,span=2}{%
-A comparison between the MUTAN fusion operator of~\cite{ben2017mutan} and our
-generalized fusion operator.
+\headerbox{4.~Comparison with MUTAN}{name=comparison-mutan,column=0,below=vqa-task,span=2}{%
+Shown below we compare the MUTAN fusion operator of~\cite{ben2017mutan} with
+our generalized fusion operator.
 
 Both MUTAN and our fusion operator take the features~$M_r\mutanfeat{q}$
 and~$N_r\mutanfeat{v}$ as input. MUTAN approximates the Tucker decomposition by
@@ -199,27 +199,28 @@ constraining the bilinear interaction between the vectors~$\mutanfeat{q}$
 and~$\mutanfeat{v}$ to be of rank~$R$.
 
 \begin{center}
-\input{data/mutan-ours.tikz}
+\hspace{-7.4cm}\resizebox{1.48\linewidth}{!}{\input{data/mutan-ours.tikz}}
 \end{center}
 
 Our fusion operator generalizes MUTAN by allowing different
 nonlinearities~$f_{rq}$ and~$f_{rv}$ to act on the features~$M_r\mutanfeat{q}$
-and~$N_r\mutanfeat{v}$, followed with a neural network, producing a set of~$R$
+and~$N_r\mutanfeat{v}$, followed by a neural network, producing a set of~$R$
 output features, as in MUTAN after the Hadamard product step~$M_r\mutanfeat{q}
 \odot N_r\mutanfeat{v}$.  In the case of MUTAN, the~$R$ output feature vectors
-are combined by element-wise summation, whereas in our fusion operator the~$R$
+are combined by element-wise summation, whereas in our fusion operator, the~$R$
 feature vectors are combined by applying a tree of binary operators~$\binopb$.
 }
 
-\headerbox{5.~Ablation on Configurations}{name=ablation,span=1,column=0,below=tucker-decomp}{%
-We compare performance improvements between different instantiations of the
+\headerbox{5.~Ablation Study}{name=ablation,span=1,column=2,below=tucker-decomp}{%
+We compare improvements in accuracy between different instantiations of the
 generalized fusion operator, with the best one shown below.
 
 \hspace{-2mm}\resizebox{1.05\linewidth}{!}{\input{data/feature-gating.tikz}}
 
 \begin{centering}
 \begin{tabular}{rc}
-\textbf{Model} & \textbf{VQA 1.0 val} \\
+\multirow{2}{*}{\textbf{Model}} & \textbf{VQA 1.0} \\
+& \textbf{val.\ acc.}\\
 \midrule
 MUTAN~\cite{ben2017mutan} & 61.54 \\
 \midrule
@@ -231,9 +232,9 @@ NE + Polarity Swap (PS) & 61.77 \\
 \end{centering}
 }
 
-\headerbox{6.~Results}{name=results,span=2,column=1,below=comparison-mutan}{%
-We evaluate our best model on VQA~2.0 test-dev, and compare to previous state
-of the art models upon which our work is based.
+\headerbox{6.~Results}{name=results,span=2,column=0,below=comparison-mutan}{%
+We evaluate our best model on VQA~2.0 test-dev, and compare to previous
+state-of-the-art models upon which our work is based.
 
 \begin{center}
 % \begin{table*}[!t]
@@ -242,7 +243,7 @@ of the art models upon which our work is based.
 %          VQA~2.0 test-dev and test-std sets.}
 \begin{tabular}{l*{5}{c}}
 \centering
-& \multicolumn{4}{c}{\textbf{VQA~2.0 test-dev}} \\
+& \multicolumn{4}{c}{\textbf{VQA~2.0 test-dev accuracy}} \\
 \textbf{Model} & All & Y/N & Number & Other \\
 \midrule
 MCB~\cite{DBLP:conf/emnlp/FukuiPYRDR16} & 61.96 & 78.41 & 38.81 & 53.23 \\
@@ -260,9 +261,9 @@ We attribute our improvement in accuracy to the introduction of nonlinearities
 in the fusion operator.
 }
 
-\headerbox{7.~Conclusions}{name=conclusion,column=1,below=results,span=2,above=bottom}{%
+\headerbox{7.~Conclusions}{name=conclusion,column=0,below=results,span=2,above=bottom}{%
 \begin{itemize}
-        \item Generalized the MUTAN multimodal fusion operator.
+        \item We generalized the MUTAN multimodal fusion operator.
 
         \item We found configurations that demonstrated significant gains
                 relative to MUTAN and MCB on the VQA 2.0 task.
@@ -273,7 +274,7 @@ in the fusion operator.
 \end{itemize}
 }
 
-\headerbox{8.~References}{name=references,column=0,span=1,below=ablation}{%
+\headerbox{8.~References}{name=references,column=2,span=1,below=ablation}{%
 
 %\small % Reduce the font size in this block
 \renewcommand{\section}[2]{\vskip 0.05em} % Get rid of the default "References" section title
@@ -284,7 +285,7 @@ in the fusion operator.
 \bibliography{poster} % Use sample.bib as the bibliography file
 }
 
-\headerbox{9.~Acknowledgements}{name=acknowledgements,column=0,span=1,below=references,above=bottom}{
+\headerbox{9.~Acknowledgements}{name=acknowledgements,column=2,span=1,below=references,above=bottom}{
 
 
 %\small % Reduce the font size in this block
