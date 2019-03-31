@@ -918,6 +918,12 @@ difference of terms with covariance matrices is taken. It seems to penalize any
 ground truth distribution with high covariance between features.
 
 
+\section{Graphics}
+
+
+\subsection{Fun With Premultiplied Alpha (Jim Blinn)}
+
+
 \section{Hand Pose}
 
 
@@ -2358,6 +2364,28 @@ which they show does not hold for~$g_l$.
         \item The gradient distribution plots are interesting. Why does~$g_l$
                 have such a sharp peak at zero, while~$g_{W_l}$ is more
                 Gaussian?
+\end{itemize}
+
+
+\subsection{Structured Bayesian Pruning via Log-Normal Multiplicative
+            Noise~\cite{neklyudov2017structured}}
+
+They do general structured pruning by putting a sparsifying prior on
+noise~$\theta_i$, which is multiplied with channels (convolutions) or input
+features (FC layers), while suggesting that their technique would also
+generalize to connection pruning (related to DropConnect).
+They put a sparsifying prior on the prunable structures, namely a truncated
+log-uniform prior, approximated with a truncated log-normal prior (see
+equations 9--11).
+At test time they replace the sampled noise with its expected value.
+
+
+\subsubsection{Interesting/Important References}
+
+\begin{itemize}
+        \item They mention that it is important that the multiplicative noise
+                is positive, although they did not provide any experiments
+                verifying this.
 \end{itemize}
 
 
