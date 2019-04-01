@@ -2405,6 +2405,23 @@ pruning~\cite{wen2016learning} for a given sparsity level. They use blocksparse
 \end{itemize}
 
 
+\subsection{The State of Sparsity in Deep Neural
+            Networks~\cite{gale2019thestate}}
+
+They did an empirical cross-comparison of magnitude pruning with variational
+pruning~\cite{molchanov2017variational} and~$L_0$ regularization
+pruning~\cite{louizos2018learning}, using ResNet-50 on ImageNet and transformer
+on German-English WMT2014 as testbeds.
+They found that~$L_0$ regularization performs equivalently well to magnitude
+pruning and variational dropout performs worse (nearly as bad as random
+pruning) on WMT2014.
+On ImageNet, they found that variational dropout outperforms magnitude pruning,
+and they couldn't get their implementation of~$L_0$ regularization to work.
+They also refuted the ``training from scratch'' hypothesis for both the
+``lottery ticket'' case (re-initialize with pre-pruning initialization) and
+random initialization case.
+
+
 \section{RNNs}
 
 \subsection{Recurrent Batch
