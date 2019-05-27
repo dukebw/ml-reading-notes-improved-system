@@ -881,13 +881,13 @@ class IoU using the wide ResNets of~\citet{DBLP:journals/corr/WuSH16e}.
 
 They made a variant of CycleGAN that performs better for image-to-image
 translation where the two domains involve a major shape transfiguration, e.g.,
-from giraffe to sheep. For the source domain, they extract features from the
-RGB image, as well as separately from each ``instance attribute'' (instance
-segmentation mask). Translated images are generated from the concatenation of
-image features~$f_{GX}(x)$ and aggregated mask
-features~$\sum_{i = 1}^N f_{GA}(a_i)$, while translated masks are generated
-from the same, except for the~$j$th mask the individual mask
-features~$f_{GA}(a_j)$ are also concatenated.
+from giraffe to sheep, of many instances.
+For the source domain, they extract features from the RGB image, as well as
+separately from each ``instance attribute'' (instance segmentation mask).
+Translated images are generated from the concatenation of image
+features~$f_{GX}(x)$ and aggregated mask features~$\sum_{i = 1}^N f_{GA}(a_i)$,
+while translated masks are generated from the same, except for the~$j$th mask
+the individual mask features~$f_{GA}(a_j)$ are also concatenated.
 
 The discriminator sees features~$f_{DX}(x')$ and~$\sum_{i = 1}^N f_{DA}(a_i')$.
 
