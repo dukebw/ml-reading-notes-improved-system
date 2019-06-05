@@ -2656,6 +2656,20 @@ memory usage of dilated convolutions used in semantic segmentation. How would
 group normalization fare here?
 
 
+\subsection{Fast User-Guided Video Object Segmentation by
+            Interaction-and-Propagation Networks~\cite{oh2019fast}}
+
+They made a system of dual networks for interactive video segmentation, which
+they run in a series of rounds. The first (interaction) network is conditioned
+on input scribbles and the previous round's mask, while the second
+(propagation) network is conditioned on the previous timestep's and the
+previous round's mask. There is a ``feature aggregation'' recurrent module
+connecting the dual networks.
+
+They train on fully-supervised labels, tested on DAVIS-2018, and fine-tuned on
+GyGo and YouTube-VOS\@.
+
+
 \section{Semi-Supervised Learning (SSL)}
 
 \subsection{Why does unsupervised pre-training help deep
