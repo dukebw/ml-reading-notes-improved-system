@@ -2591,6 +2591,16 @@ $\norm{w}_\infty \leq \tau$, and~$\gamma = n^{-(p - 1)/p}$.
 \end{itemize}
 
 
+\subsection{Interactive Image Segmentation via Backpropagating Reﬁnement
+            Scheme~\cite{jang2019interactive}}
+
+They train a network to take an RGB image + guidance maps as input, and to
+output a foreground/background segmentation. They accept user interaction by
+placing points on the image, and enforce the network to correctly classify the
+user-annotated points by doing L-BFGS to optimize the guidance maps until the
+pretrained (frozen weight) network gets all user-annotated points correct.
+
+
 \subsection{Normalized Cut Loss for Weakly-supervised CNN
             Segmentation~\cite{tang2018normalized}}
 
