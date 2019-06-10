@@ -2642,6 +2642,30 @@ An important point is that their coarse labels contained no incorrectly labeled
 pixels, just unlabeled regions.
 
 
+\subsection{One-Shot Video Object Segmentation~\cite{caelles2017oneshot}}
+
+They do video object segmentation on a video clip by fine-tuning a network
+(pre-trained on ImageNet then DAVIS) on a fully annotated first-frame.
+They use the fast bilateral solver (FBS) as well as a two-stream foreground and
+contour branches FCN architecture to snap boundaries from the foreground branch
+with FBS to the learned contours.
+
+\subsubsection{Comments/Questions}
+
+\begin{itemize}
+        \item Not sure about the contour snapping/FBS part.
+
+        \item Could you make more accurate/efficient use of interaction?
+
+        \item Self-supervision instead of pre-training on DAVIS\@.
+
+        \item Using frame-diffs as an input feature?
+
+        \item Explicitly training for the accuracy of the roll-outs (i.e.,
+                meta-learning it).
+\end{itemize}
+
+
 \subsection{Context Encoding for Semantic Segmentation~\cite{Zhang_2018_CVPR}}
 
 The authors used a ``context encoding'' module to learn global context about
