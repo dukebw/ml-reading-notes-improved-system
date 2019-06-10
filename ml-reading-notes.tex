@@ -2548,6 +2548,27 @@ a segmentation polygon?
 Are transformers applicable (attention is all you need)?
 
 
+\subsection{Deep Extreme Cut: From Extreme Points to Object
+            Segmentation~\cite{maninis2018deep}}
+
+They made an interactive segmentation model that takes an image along with
+extreme points (concatenated as gaussians in an additional channel) and
+produces a foreground/background object segmentation.
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item They supposedly compare interactive performance by adding a fifth
+                ``hard-example mined'' point, but they also train directly on
+                these examples.
+                So their interactive component could be improved.
+
+        \item Relatively poor performance on improving video object
+                segmentation performance on DAVIS when trained on labels
+                produced by DEXTR as opposed to ground-truth.
+\end{itemize}
+
 
 \subsection{ICNet for Real-Time Semantic Segmentation on High-Resolution
             Images~\cite{zhao2017icnet}}
