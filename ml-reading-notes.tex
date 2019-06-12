@@ -2518,6 +2518,23 @@ Wouldn't the obvious approach to 2.5D data be to use a sparse tensor of the
 pixel data, and do a sparse 3D convolution on the sparse tensor features?
 
 
+\subsection{3D Hand Shape and Pose Estimation from a Single {RGB}
+            Image~\cite{ge20193dhand}}
+
+They present a system for full 3d hand mesh estimation from a single RGB image.
+They pre-train on a synthetic dataset with a mesh loss, 3d-pose loss, and
+heatmap loss.
+The mesh loss is composed of vertex loss, edge loss, normals loss, and
+Laplacian (smoothness) loss.
+They then finetune on a real RGB dataset, using a heatmap loss,
+weakly-supervised depth loss (rendering their estimated meshes to depth with a
+differentiable renderer), and ``pseudo''-mesh loss, which uses predictions from
+a model pretrained on the synthetic dataset as ground truth, and applies only
+the edge and Laplacian losses for those.
+They created the synthetic dataset with Maya (for the 3d hand model) and the
+Arnold renderer for rendering with global illumination.
+
+
 \subsection{Annotating Object Instances with a
             Polygon-RNN~\cite{castrejon2017annotating}}
 
