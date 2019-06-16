@@ -1238,6 +1238,34 @@ following~\citet{DBLP:journals/corr/WangXW0LTG16}.
 \subsubsection{Similar Work}
 
 
+\subsection{Temporal Shift Modules for Efficient Video
+            Understanding~\cite{lin2018temporal}}
+
+For an NCTHW video tensor, they shift a fraction of the frames backwards (in
+the temporal dimension), and another fraction forwards, at each residual unit
+of a 2-D ResNet, padding with zeros.
+
+\begin{verbatim}
+# shape of x: [N, T, C, H, W]
+out = torch.zeros_like(x)
+fold = c // fold_div
+out[:, :-1, :fold] = x[:, 1:, :fold]  # shift left
+out[:, 1:, fold: 2 * fold] = x[:, :-1, fold: 2 * fold]  # shift right
+out[:, :, 2 * fold:] = x[:, :, 2 * fold:]  # not shift
+return out
+\end{verbatim}
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item Multi-stride shifts (e.g., shift
+                by~$\dots, 1/4, 1/2, 1, 2, 4, \dots$).
+
+        \item Temporal shift for dense prediction?
+\end{itemize}
+
+
 \section{Learning to Rank}
 
 
