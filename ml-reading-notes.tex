@@ -662,6 +662,46 @@ using an expectation over all selections in general, then to evaluate different
 gradient estimators for this selection.
 
 
+\section{Correspondence}
+
+\subsection{Learning Correspondence from the Cycle-Consistency of
+            Time~\cite{wang2019learning}}
+
+They present a self-supervised method for learning features trained for finding
+correspondences, by following an image patch forwards and backwards in time
+with a simple tracker~$\mathcal{T}$ and minimizing localization error, i.e.,
+enforcing cycle-consistency.
+They encode features of a patch in the initial image, then use~$\mathcal{T}$ to
+follow the patch back-and-forth over cycles of different lengths.
+The tracker takes normalized cross-correlation (attention) of the patch
+features over the entire past/future frame as input.
+
+They use three losses: the tracking cycle-consistency loss, a skip loss
+(cycle-consistency over skipped frames), and a feature similarity loss.
+
+
+\subsubsection{Comments/Questions/Future Work}
+
+\begin{itemize}
+        \item Choosing what to track, e.g., not tracking background parts of
+                the image.
+
+        \item Improving robustness to occlusion and partial observability,
+                e.g., with a better strategy for finding cycles (at training
+                time?).
+
+        \item How should one track a patch with two objects that eventually
+                diverge?
+
+        \item More context for tracking (does this mean correspondences between
+                a sequence of frames?)
+
+        \item The feature similarity loss seems to be dominant (other two
+                losses are weighted by~\num{0.1}).
+                Replace this with mutual information maximization?
+\end{itemize}
+
+
 \section{GANs}
 
 
