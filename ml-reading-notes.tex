@@ -2772,6 +2772,34 @@ with FBS to the learned contours.
 \end{itemize}
 
 
+\subsection{PReMVOS: Proposal-generation, Refinement and Merging for Video
+            Object Segmentation~\cite{luiten2018premvos}}
+
+They use a system consisting of the following stages:
+
+1. Segmentation mask proposals with Mask-RCNN,
+
+2. Mask refinement with DeepLab-v3+,
+
+3. A ReID step using a network trained with triplet loss, and,
+
+4. A merging and tracking algorithm.
+
+
+They merge proposals according to an affine combination of the following five
+scores:
+
+- Inverse mask proposal score (warp first mask proposal?),
+
+- Inverse ReID score,
+
+- Mask propagation score,
+
+- ReID score, and,
+
+- Objectness score (from Mask R-CNN).
+
+
 \subsection{Context Encoding for Semantic Segmentation~\cite{Zhang_2018_CVPR}}
 
 The authors used a ``context encoding'' module to learn global context about
