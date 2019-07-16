@@ -2655,6 +2655,28 @@ produces a foreground/background object segmentation.
 \end{itemize}
 
 
+\subsection{FEELVOS: Fast End-to-End Embedding Learning for Video Object
+            Segmentation~\cite{feelvos2019}}
+
+They propose an end-to-end VOS system that doesn't use finetuning.
+For each pixel of each object of each frame, they do global matching against
+the first frame, and local matching against the previous frame's predictions to
+produce two distance maps.
+A dynamic segmentation head takes the concatenation of the local and global
+distance maps with global shared features and probability masks for each class
+to predict an object segmentation mask.
+
+
+\subsubsection{Questions/Comments}
+
+\begin{itemize}
+        \item One possible future direction: closing the performance gap with
+                PReMVOS\@.
+
+        \item Another possibility would be using FEELVOS for interactive VOS\@.
+\end{itemize}
+
+
 \subsection{ICNet for Real-Time Semantic Segmentation on High-Resolution
             Images~\cite{zhao2017icnet}}
 
