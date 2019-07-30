@@ -1016,6 +1016,22 @@ images (perhaps network architecture and hyperparameter tweaking).
 \end{itemize}
 
 
+\subsection{3D Hand Shape and Pose from Images in the
+            Wild~\cite{boukhayma20193d}}
+
+They predict 3D hand pose and shape from input RGB images, and optionally 2D
+heatmaps.
+They predict the parameters~$\theta$ (joint angles),~$\beta$ (shape),
+and~$(R, t, s)$ (camera view) of a 3D hand model, MANO\@.
+MANO is a linear blend skinning model learned from~\num{31} subjects
+doing~\num{51} hand poses.
+Shape and rotation parameters are dimensionality reduced using PCA\@.
+They train the thing with orthographic projection loss onto ground-truth 2D
+landmarks ($L_{2D} = \norm{\hat{x} - x}_1$), ground-truth 3D joint annotations
+($L_{3D} = \norm{RJ(\beta, \theta) - x_{3D}}^2_2$, and hand mask
+loss~$L_{mask} = 1 - \frac{1}{N}\sum_i H(\hat{y}_i)$).
+
+
 \section{Human Activity Recognition}
 
 
