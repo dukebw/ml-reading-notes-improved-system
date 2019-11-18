@@ -662,6 +662,19 @@ using an expectation over all selections in general, then to evaluate different
 gradient estimators for this selection.
 
 
+\section{Colour Constancy}
+
+\subsection{On Finding Gray Pixels~\cite{qian2019cvpr}}
+
+They determine the spatial illumination map~$L_i(x, y)$ by finding the
+top~$N\%$ of gray pixels (assumed based on neutral interface reflection to
+have~$j \in \{s,b\}$ surface and body
+reflection~$R_{j,R} = R_{j,G} = R_{j,B} = \bar{R_j}$) using a grayness
+index~$GI(x, y) = \norm{[C\{\log I_R - \log\abs{I}\}, C\{\log I_B -
+\log\abs{I}\}]}$ in regions of varying intensity of light, i.e.,
+where~$C\{I_i\} > \epsilon, \forall i\in \{R,G,B\}$.
+
+
 \section{Correspondence}
 
 \subsection{Learning Correspondence from the Cycle-Consistency of
