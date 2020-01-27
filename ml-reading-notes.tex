@@ -2662,6 +2662,21 @@ a segmentation polygon?
 Are transformers applicable (attention is all you need)?
 
 
+\subsection{CCNet: Criss-Cross Attention for Semantic
+            Segmentation~\cite{huang2018ccnet}}
+
+They compute an ``attention map'' by doing an outer product on~$CHW$ feature
+tensors where feature vectors only interact with other feature vectors sharing
+the same row and column.
+
+A so-called ``affinity operation'' generates attention
+maps~$A\in \mathbb{R}^{(H + W - 1)\times H\times W}$ from feature
+maps~$\{Q, K\} \in \mathbb{R}^{C'\times H\times W}$.
+The affinity operation is~$d_{k,u} = {Q_u}^\intercal K_{\pi(k)}$
+where~$u = (i, j)$,~$k$ ranges from~$1..W + H - 1$ and~$\pi$ maps~$k \leq W$
+to~$(k, j)$ and~$k > W$ to~$(i, k - W)$.
+
+
 \subsection{Deep Extreme Cut: From Extreme Points to Object
             Segmentation~\cite{maninis2018deep}}
 
