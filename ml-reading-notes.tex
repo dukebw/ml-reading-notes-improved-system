@@ -715,6 +715,71 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 \end{itemize}
 
 
+\section{Face}
+
+
+\subsection{Generating 3D faces using Convolutional Mesh
+            Autoencoders~\cite{ranjan2018generating}}
+
+\subsubsection{Content / Contributions}
+
+\begin{itemize}
+\item Novel mesh sampling operations that preserve mesh topology at different
+        scales.
+
+\item Convolve facial mesh with Chebyshev filters.
+
+\item Compact model (CoMA).
+
+\item Dataset of~\num{20466} meshes of~\num{12} subjects in~\num{12} facial
+        expressions.
+\end{itemize}
+
+
+\subsubsection{Motivation}
+
+\begin{itemize}
+\item Existing linear 3D face models don't capture nonlinear deformations.
+
+\item Extending the success of hierarchical 2D CNN structure to 3D meshes.
+        3D convolution is a poor substitute due to inefficiency, while 3D
+        mesh convolutions can process 3D efficiently at high-res.
+
+\item
+\end{itemize}
+
+
+\subsubsection{Method}
+
+\begin{itemize}
+\item Can sample faces from a Gaussian distribution.
+\end{itemize}
+
+
+\subsubsection{Results}
+
+\begin{itemize}
+\item 50\% better performance than linear 3D face model, while CoMA has 75\%
+        fewer parameters.
+
+\item Replacing FLAME's expression space with CoMA improves FLAME's
+        reconstruction accuracy.
+\end{itemize}
+
+
+\subsubsection{Background}
+
+
+\subsubsection{Open Challenges}
+
+\begin{itemize}
+\item Scarcity of 3D face training data.
+\end{itemize}
+
+
+\subsubsection{Comments}
+
+
 \section{GANs}
 
 
