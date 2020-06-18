@@ -782,6 +782,70 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 
 \section{GANs}
 
+% Few-Shot Adversarial Learning Of Realistic Neural Talking Head Models
+
+% Content / Contributions
+%
+% Problem: synthesizing photorealistic talking head videos from a set of face
+% landmarks.
+%
+% Contribution: bring adversarial finetuning into the metalearning framework.
+%
+%
+% Motivation
+%
+% Challenge: complexity of modeling face along with hair, garments, mouth
+% cavity, upper torso.
+% Uncanny valley.
+%
+% Existing photorealistic head generations require large models to be trained
+% specially for one person.
+%
+%
+% Method
+%
+% Simulate metalearning during training by providing a few example images and
+% landmarks, and pretraining on those.
+% Then there is an adversarial learning problem with a high-capacity
+% discriminator and generator pretrained by metalearning.
+%
+% Rasterize connected landmark image into 3-channels.
+%
+%
+% Results
+%
+%
+% Background
+%
+% Warping methods (intro)
+% Multimodal Unsupervised Image-to-Image Translation
+% MAML
+% Text-to-speech [3, 19]
+%
+%
+% Open Challenges
+%
+%
+% Prerequisites
+%
+% High-resolution image synthesis and semantic manipulation with conditional
+% GANs (feature matching)
+% cgans with projection discriminator (W_i embeddings that correspond to
+% individual videos i)
+% Arbitrary style transfer in realtime with adaptive instance normalization
+% Perceptual losses for real-time style transfer and super-resolution
+% BigGAN
+% Spectral norm
+% Self-attention / SAGAN
+%
+%
+% Comments
+
+% Few-Shot vid2vid
+%
+% Prerequisites
+%
+% SPADE
 
 \subsection{Generative Adversarial Networks\citet{NIPS2014_5423}}
 \label{gan}
