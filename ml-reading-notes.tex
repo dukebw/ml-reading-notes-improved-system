@@ -782,71 +782,6 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 
 \section{GANs}
 
-% Few-Shot Adversarial Learning Of Realistic Neural Talking Head Models
-
-% Content / Contributions
-%
-% Problem: synthesizing photorealistic talking head videos from a set of face
-% landmarks.
-%
-% Contribution: bring adversarial finetuning into the metalearning framework.
-%
-%
-% Motivation
-%
-% Challenge: complexity of modeling face along with hair, garments, mouth
-% cavity, upper torso.
-% Uncanny valley.
-%
-% Existing photorealistic head generations require large models to be trained
-% specially for one person.
-%
-%
-% Method
-%
-% Simulate metalearning during training by providing a few example images and
-% landmarks, and pretraining on those.
-% Then there is an adversarial learning problem with a high-capacity
-% discriminator and generator pretrained by metalearning.
-%
-% Rasterize connected landmark image into 3-channels.
-%
-%
-% Results
-%
-%
-% Background
-%
-% Warping methods (intro)
-% Multimodal Unsupervised Image-to-Image Translation
-% MAML
-% Text-to-speech [3, 19]
-%
-%
-% Open Challenges
-%
-%
-% Prerequisites
-%
-% High-resolution image synthesis and semantic manipulation with conditional
-% GANs (feature matching)
-% cgans with projection discriminator (W_i embeddings that correspond to
-% individual videos i)
-% Arbitrary style transfer in realtime with adaptive instance normalization
-% Perceptual losses for real-time style transfer and super-resolution
-% BigGAN
-% Spectral norm
-% Self-attention / SAGAN
-%
-%
-% Comments
-
-% Few-Shot vid2vid
-%
-% Prerequisites
-%
-% SPADE
-
 \subsection{Generative Adversarial Networks\citet{NIPS2014_5423}}
 \label{gan}
 
@@ -860,6 +795,161 @@ Motivation points to~\citet{deepSpeechReviewSPM2012} and~\citet{NIPS2012_4824} a
 successful uses of deep discriminative networks for classification based on
 \hyperref[backprop]{back propagation}, \hyperref[dropout]{dropout} and
 piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
+
+
+\subsection{A Style-Based Generator Architecture for Generative Adversarial
+            Networks~\cite{karras2019astylebased}}
+
+\subsubsection{Content / Contributions}
+
+\begin{itemize}
+        \item New StyleGAN generator architecture
+
+        \item FFHQ dataset of high-res faces
+
+        \item Perpetual path length and linear separability metrics for
+                evaluating GAN latent space interpolation.
+\end{itemize}
+
+
+\subsubsection{Motivation}
+
+\begin{itemize}
+        \item Unsupervised separation of style (e.g., pose and identity) via
+                latent code from stochastic variation (e.g., freckles and hair)
+                via injected noise
+
+        \item Allow disentangling of latent space by projecting latent code
+                into an intermediate space
+\end{itemize}
+
+
+\subsubsection{Method}
+
+\begin{itemize}
+        \item Embeds latent code into intermediate latent space using an
+                8-layer MLP.
+                An affine transformation projects the intermediate latent
+                vector to a set of per-feature map styles and biases.
+                Styles and biases scale the normalized output feature map from
+                each layer (i.e., control the mean and std of each independent
+                feature map).
+
+        \item Each style controls one convolution, since the input to the next
+                convolution layer depends only on the statistics determined by
+                the style.
+                The style is then overriden by the next layer's AdaIN layer.
+
+        \item Each generator layer's output sums with uncorrelated Gaussian
+                noise, scaled by a learned factor.
+
+        \item Mixing regularization: use different latent codes for different
+                layers.
+                Improves FID when using multiple latent codes at test time.
+                Desirable to use latent codes of a source to manipulate a
+                target (paper Figure 3 and Table 2).
+
+        \item Used truncation trick, performed in the intermediate instead of
+                input latent space.
+\end{itemize}
+
+
+\subsubsection{Results}
+
+
+\subsubsection{Background}
+
+\begin{itemize}
+        \item Arbitrary style transfer in real-time with adaptive instance normalization
+
+        \item Progressive growing of GANs for improved quality, stability, and
+                variation (same first author)
+\end{itemize}
+
+
+\subsubsection{Open Challenges}
+
+
+\subsubsection{Prerequisites}
+
+
+\subsubsection{Comments / Questions}
+
+\begin{itemize}
+        \item Is the input latent vector sampled from a uniform distribution?
+
+        \item The footnote about disentanglement studies with designed datasets
+                hiding the issue where each combination of input latent vectors
+                has to match its density in the training data.
+\end{itemize}
+
+
+
+\subsection{Few-Shot Adversarial Learning Of Realistic Neural Talking Head
+            Models~\cite{zakharov2019fewshot}}
+
+\subsubsection{Content / Contributions}
+
+Problem: synthesizing photorealistic talking head videos from a set of face
+landmarks.
+
+Contribution: bring adversarial finetuning into the metalearning framework.
+
+
+\subsubsection{Motivation}
+
+Challenge: complexity of modeling face along with hair, garments, mouth
+cavity, upper torso.
+Uncanny valley.
+
+Existing photorealistic head generations require large models to be trained
+specially for one person.
+
+
+\subsubsection{Method}
+
+Simulate metalearning during training by providing a few example images and
+landmarks, and pretraining on those.
+Then there is an adversarial learning problem with a high-capacity
+discriminator and generator pretrained by metalearning.
+
+Rasterize connected landmark image into 3-channels.
+
+
+\subsubsection{Results}
+
+
+\subsubsection{Background}
+
+\begin{itemize}
+        \item Warping methods (intro)
+        \item Multimodal Unsupervised Image-to-Image Translation
+        \item MAML
+        \item Text-to-speech [3, 19]
+\end{itemize}
+
+
+\subsubsection{Open Challenges}
+
+
+\subsubsection{Prerequisites}
+
+\begin{itemize}
+        \item High-resolution image synthesis and semantic manipulation with
+                conditional GANs (feature matching)
+        \item cgans with projection discriminator ($W_i$ embeddings that correspond to individual videos i)
+        \item Arbitrary style transfer in realtime with adaptive instance normalization
+        \item Perceptual losses for real-time style transfer and super-resolution
+        \item BigGAN
+        \item Spectral norm
+        \item Self-attention / SAGAN
+        \item SPADE
+\end{itemize}
+
+
+\subsubsection{Comments}
+
+Few-Shot vid2vid
 
 
 \subsection{Image-to-Image Translation with Conditional Adversarial
