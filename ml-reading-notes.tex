@@ -820,7 +820,9 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
                 via injected noise
 
         \item Allow disentangling of latent space by projecting latent code
-                into an intermediate space
+                into an intermediate space.
+                The generator should find it easier to generate from
+                disentangled latent codes, therefore the.
 \end{itemize}
 
 
@@ -838,7 +840,7 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
         \item Each style controls one convolution, since the input to the next
                 convolution layer depends only on the statistics determined by
                 the style.
-                The style is then overriden by the next layer's AdaIN layer.
+                The style is then overridden by the next layer's AdaIN layer.
 
         \item Each generator layer's output sums with uncorrelated Gaussian
                 noise, scaled by a learned factor.
@@ -856,6 +858,10 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
 
 \subsubsection{Results}
 
+\begin{itemize}
+        \item
+\end{itemize}
+
 
 \subsubsection{Background}
 
@@ -872,6 +878,11 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
 
 \subsubsection{Prerequisites}
 
+\begin{itemize}
+        \item Slerp spherical interpolation operator ``Sampling generative
+                networks: Notes on a few effective techniques''
+\end{itemize}
+
 
 \subsubsection{Comments / Questions}
 
@@ -881,6 +892,10 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
         \item The footnote about disentanglement studies with designed datasets
                 hiding the issue where each combination of input latent vectors
                 has to match its density in the training data.
+
+        \item Hand-wavy motivation for disentangled intermediate latent space
+                (easier for generator to generate from disentangled latent
+                variables).
 \end{itemize}
 
 
