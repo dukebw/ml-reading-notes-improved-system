@@ -7,7 +7,7 @@
 \usepackage{cite}
 \usepackage{fullpage}
 \usepackage{graphicx}
-\usepackage{hyperref}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 \usepackage{inputenc}
 \usepackage{mathtools}
 \usepackage{natbib}
@@ -718,6 +718,76 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 \section{Face}
 
 
+\subsection{Face Alignment in Full Pose Range: A 3D Total
+            Solution~\cite{zhu2017face}}
+
+\subsubsection{Content / Contributions}
+
+\begin{itemize}
+\item This paper provides a solution for ``face alignment'', which seems have
+        been used to refer to registration of either 2D~\cite{kazemi2014one} or
+        3D models.
+        The paper addresses face alignment in large pose ranges (\ang{90}).
+
+\item Large pose range face alignment poses challenges:
+
+        \begin{itemize}
+        \item Existing pose algorithms assume that landmarks are visible.
+        \item Large appearance change for large poses.
+        \item It is difficult to annotate occluded points.
+        \end{itemize}
+
+\item To solve the challenges, this paper proposes solving face alignment as a
+        3D problem, rather than 2D, by fitting translation, scale, rotation,
+        and expression and shape parameters of a 3DMM\@.
+\end{itemize}
+
+
+\subsubsection{Motivation}
+
+\begin{itemize}
+\item At the time of writing, most face alignment models worked only for small
+        or medium angle rotations (yaw angle less than~\ang{45}).
+
+\end{itemize}
+
+
+\subsubsection{Method}
+
+
+\subsubsection{Results}
+
+
+\subsubsection{Background}
+
+\begin{itemize}
+\item \href{http://www.csc.kth.se/~vahidk/face_ert.html}{One
+        Millisecond Face Alignment with an Ensemble of Regression Trees}~\cite{kazemi2014one}
+        for a classical (gradient boosting) solution.
+\end{itemize}
+
+
+\subsubsection{Open Challenges}
+
+
+\subsubsection{Prerequisites}
+
+\begin{itemize}
+\item Euler angles.
+\item Quaternions.
+
+\item Quadratic programming.
+\end{itemize}
+
+
+\subsubsection{Comments / Questions}
+
+\begin{itemize}
+\item Can a 3D model be unambiguously registered only with correspondences to
+        2D keypoints?
+\end{itemize}
+
+
 \subsection{Generating 3D faces using Convolutional Mesh
             Autoencoders~\cite{ranjan2018generating}}
 
@@ -807,7 +877,7 @@ piecewise linear units (such as \hyperref[rectified_linear_units]{ReLUs}).
 
         \item FFHQ dataset of high-res faces
 
-        \item Perpetual path length and linear separability metrics for
+        \item Perceptual path length and linear separability metrics for
                 evaluating GAN latent space interpolation.
 \end{itemize}
 
