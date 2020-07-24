@@ -737,9 +737,19 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
         \item It is difficult to annotate occluded points.
         \end{itemize}
 
-\item To solve the challenges, this paper proposes solving face alignment as a
-        3D problem, rather than 2D, by fitting translation, scale, rotation,
-        and expression and shape parameters of a 3DMM\@.
+\item To solve the landmark visibility (self-occlusion) issue, this paper
+        proposes solving face alignment as a 3D problem, rather than 2D, by
+        fitting translation, scale, rotation, and expression and shape
+        parameters of a 3DMM\@.
+
+\item The paper introduces Projected Normalized Coordinate Code (PNCC) and Pose
+        Adaptive Features (PAF) to deal with appearance changes.
+        The paper also uses OWPDC to prioritize 3DMM parameters.
+
+\item The paper constructs a database of 2D face images and 3D face models, and
+        combines these to synthesize more than~\num{60000} profile-view images
+        to create artificial profile-view data with ground-truth occluded
+        landmark annotations.
 \end{itemize}
 
 
@@ -754,6 +764,12 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 
 \subsubsection{Method}
 
+\begin{itemize}
+\item Quaternion rotation representation.
+\item Optimized Weighted Parameter Distance Cost (OWPDC).
+        The paper asserts that different 3DMM parameters should be given
+        different priorities during model fitting to minimize alignment error.
+\end{itemize}
 
 \subsubsection{Results}
 
@@ -764,6 +780,14 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 \item \href{http://www.csc.kth.se/~vahidk/face_ert.html}{One
         Millisecond Face Alignment with an Ensemble of Regression Trees}~\cite{kazemi2014one}
         for a classical (gradient boosting) solution.
+
+\item Active appearance models~\cite{Cootes98activeappearance}.
+
+\item 3DMM, analysis-by-synthesis 3DMM fitting~\cite{egger20203dmm}.
+
+\item Regression-based 3DMM fitting~\cite{jourabloo2017poseinvariantface}.
+
+\item Cascaded regression~\cite{dollar2010cascadedpose}.
 \end{itemize}
 
 
@@ -785,6 +809,8 @@ They use three losses: the tracking cycle-consistency loss, a skip loss
 \begin{itemize}
 \item Can a 3D model be unambiguously registered only with correspondences to
         2D keypoints?
+        It seems single-view 3d reconstruction is ill-posed.
+        Why?
 \end{itemize}
 
 
