@@ -43,3 +43,9 @@
         - Template
 
 - et al. -> and friends
+
+- Prototype in colab notebook -> refactor into codebase and deploy experiments
+  on cluster -> analyze results in colab.
+
+        - For results and visualizations, each colab is dated and corresponds
+          to one experiment.
